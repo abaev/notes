@@ -8,6 +8,10 @@
 
 # dependencies
 /node_modules
+/server-side/node_modules
+
+#MongoDB data directory
+/server-side/data/db
 
 # IDEs and editors
 /.idea
