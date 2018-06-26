@@ -1,20 +1,20 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/dist-server
-/tmp
-/out-tsc
+client/dist
+client/dist-server
+client/tmp
+client/out-tsc
 
 # dependencies
-/node_modules
-/server-side/node_modules
+client/node_modules
+/server/node_modules
 
 #MongoDB data directory
-/server-side/data/db
+/server/data/db
 
 # IDEs and editors
-/.idea
+client/.idea
 .project
 .classpath
 .c9/
@@ -30,18 +30,18 @@
 !.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+client/.sass-cache
+client/connect.lock
+client/coverage
+client/libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+client/typings
 
 # e2e
-/e2e/*.js
-/e2e/*.map
+client/e2e/*.js
+client/e2e/*.map
 
 # System Files
 .DS_Store

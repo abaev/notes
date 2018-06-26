@@ -17,12 +17,14 @@ const uuidv4 = require('uuid/v4');
 const conf = require('./notes.server.config.js');
 const User = require('./models/user.model.js');
 const userCtrl = require('./user.controller.js');
-const mockUsers = require('./mock-users.js'); // TODO: Delete this
 
 const app = express();
 
 // NOTE: app.get('env') === 'development' (=== 'production' )
 // NOTE: bcrypt requires for user password must be <= 72 symbols
+
+// TODO: Use Helmet and other methods for security 
+// http://expressjs.com/ru/advanced/best-practice-security.html
 
 // Connecting to MongoDB via mongoose
 mongoose.connect(conf.mongodbUrl).then(() => {
@@ -136,7 +138,9 @@ app.use(session({
   //   return uuidv4(); // use UUIDs for session IDs
   // },
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  secret: 'keyboard cat', //TODO: Set to random string in prod
+  // TODO: Make secret secret 
+  // http://pmuellr.blogspot.com/2014/09/keeping-secrets-secret.html
+  secret: 'keyboard cat',
   // TODO: Set cookie: {} in recomended values when use HTTPS
 	resave: false,
   saveUninitialized: true
