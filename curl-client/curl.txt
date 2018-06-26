@@ -1,0 +1,28 @@
+-c - create cookie file
+-l - follow redirects
+
+LOG IN
+curl -X POST http://localhost:3000/login -c cookie-file.txt -v -H "Content-Type: application/json" -d "{\"username\":\"Sasha\", \"password\":\"Password123\"}"
+
+curl -X POST http://localhost:3000/login -b cookie-file.txt -v -H "Content-Type: application/json" -d "{\"username\":\"Sasha\", \"password\":\"Password123\"}"
+
+CHECK LOGGED IN
+curl -X GET http://localhost:3000/authrequired -b cookie-file.txt -L
+
+GET USER
+curl -X GET http://localhost:3000/user -b cookie-file.txt -L
+
+DELETE
+curl -X DELETE http://localhost:3000/deleteuser -b cookie-file.txt -L
+
+ADD NEW USER
+curl -X POST http://localhost:3000/adduser -c cookie-file.txt -v -H "Content-Type: application/json" -d "{\"username\":\"Tyler\", \"password\":\"soap\"}"
+
+USER FOR ADD/LOGIN/DELETE
+curl -X POST http://localhost:3000/adduser -c cookie-file.txt -v -H "Content-Type: application/json" -d "{\"username\":\"delme\", \"password\":\"urr\"}"
+
+UPDATE USER
+curl -X PUT http://localhost:3000/updateuser -b cookie-file.txt -v -H "Content-Type: application/json" -d "{\"notes\":{\"veryImportant\": [{\"description\": \"Keep\",\"notificationDate\": \"Sat Jun 23 2018 05:14:01 GMT+1100\"}]}}"
+
+curl -X PUT http://localhost:3000/updateuser -b cookie-file.txt -v -H "Content-Type: application/json" -d "{\"notes\":{\"veryImportant\": [{\"description\": \"New\"}]}}"
+
