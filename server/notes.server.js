@@ -45,6 +45,24 @@ mongoose.connect(conf.mongodbUrl).then(() => {
 );
 
 
+// Allow CORS
+// TODO: Delete this, in production server
+// and client side will be the same origin
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 
+    conf.notesUrl);
+  res.header('Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+});
+
+app.options('/*', (req, res, next) => {
+  res.status(200).send();
+});
+
+
 // Configure passport.js to use the local strategy
 passport.use(new LocalStrategy(
   // Optional, defaults to 'username' and 'password'
@@ -54,17 +72,12 @@ passport.use(new LocalStrategy(
     console.log('Inside local strategy callback');
         
     User.findOne( { username: username} ).exec().then(user => {
-    	if (!user) {
-      	console.log('Incorrect username');
-        return done(null, false, { message: 'Incorrect username' });
-      }
-      
       // Or should I use asynchronous version bcrypt.compare??
-      if (!bcrypt.compareSync(password, user.hashedPassword)) {
-      	console.log('Incorrect password');
-        return done(null, false, { message: 'Incorrect password' });
+      if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+        console.log('Incorrect username/password');
+        return done(null, false, { message: 'Incorrect username/password' });
       }
-      
+            
       return done(null, user);
     }, err => {
     	console.error('DB error');
@@ -102,20 +115,6 @@ passport.deserializeUser((id, done) => {
   	// than we respond to client that error ocured 
 		return done(err);
   });
-});
-
-
-// Allow CORS
-// TODO: Delete this, in production server
-// and client side will be the same origin
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin',
-  	conf.notesUrl);
-  res.header('Access-Control-Allow-Headers',
-  	'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods',
-  	'GET, POST, PUT, DELETE, OPTIONS');
-  next();
 });
 
 
@@ -170,7 +169,7 @@ app.post('/login', (req, res, next) => {
       console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
       console.log(`req.user: ${JSON.stringify(req.user)}`);
     
-      return res.send(`You were logged in!\n`);
+      return res.status(200).send();
     })
   })(req, res, next);
 });
@@ -186,9 +185,9 @@ app.post('/adduser', userCtrl.add);
 
 app.delete('/deleteuser', userCtrl.deleteUser);
 
-app.get('/user', userCtrl.get);
+app.get('/notes', userCtrl.get);
 
-app.put('/updateuser', userCtrl.update);
+app.put('/updatenotes', userCtrl.update);
 
 // TODO: Delete this
 app.get('/authrequired', (req, res) => {

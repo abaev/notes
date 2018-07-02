@@ -1,6 +1,7 @@
 // Simple actions with DB for use in user.controller.js module
 
 const User = require('./models/user.model.js');
+const conf = require('./notes.server.config.js');
 module.exports.get = get;
 module.exports.update = update;
 module.exports.add = add;
@@ -11,7 +12,12 @@ async function get(conditions){
 	let user;
 
 	try {
-		user = await User.findOne(conditions).lean().exec();
+		user = await User.findOne(conditions)
+			// Include only necessary fields,
+			// without mongooose (or MongoDB?) service fields,
+			// like _id, and __v and others
+			.select('-_id') 
+			.select(conf.userFields).lean().exec();
 		return user;
 	} catch(err) {
 		throw new Error('Error occured while getting user');

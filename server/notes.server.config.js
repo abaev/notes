@@ -4,7 +4,8 @@ const conf = {
 	notesUrl: 'http://localhost:4200',
 	saltRounds: 10,
 	// Max length of description property in User.notes object
-	descLength: 10
+	descLength: 10,
+	userFields: 'userId username notes veryImportant alsoImportant waitALittle later'
 }
 
 module.exports = conf;

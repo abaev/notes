@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { Router }  from '@angular/router';
+
+import { User } from '../user';
+import { ConfigService } from '../config.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-notes',
@@ -7,9 +14,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotesComponent implements OnInit {
 
-  constructor() { }
+	user: User;
+
+  constructor(private userService: UserService,
+  	private conf: ConfigService) { }
 
   ngOnInit() {
+  	this.getNotes();
+  }
+
+  private getNotes(): void {
+  	this.userService.getNotes().subscribe(res => {
+  		this.user = res;
+  	});
   }
 
 }

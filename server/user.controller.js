@@ -22,12 +22,11 @@ async function get(req, res, next) {
 	let user;
 
 	if(!req.isAuthenticated()) {
-		return next({ statusCode: 403, message: 'Forbidden' });
+		return next({ statusCode: 403, message: 'Forbidden (user.controller.js get())' });
 	}
 
 	try {
 		user = await userServ.get({ userId: req.user.userId });
-		delete user.hashedPassword;
 		res.status(200).send(user);
 	} catch(err) {
 		return next(err);

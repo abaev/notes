@@ -5,13 +5,31 @@
 				<h2 class="text-center">Notes</h2>
 			  <div class="form-group">
 			    <label for="username">Username</label>
-			    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="" [(ngModel)]="username" required name="username">
+			    <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="" [(ngModel)]="username" required name="username" #usernameState="ngModel">
 			  </div>
 			  <div class="form-group">
 			    <label for="password">Password</label>
-			    <input type="password" class="form-control" id="password" placeholder="" [(ngModel)]="password" required name="password">
+			    <input type="password" class="form-control" id="password" placeholder="" [(ngModel)]="password" required name="password" #passwordState="ngModel">
 			  </div>
-			  <button type="submit" class="btn btn-primary">Log in</button>
+				
+				<!-- Error messages -->
+			  <p class="text-danger">{{loginError}}</p>
+			  <p class="text-danger" *ngIf="userInputError
+			  	&& (usernameState.untouched && passwordState.untouched)">
+			  	{{userInputError}}
+			  </p>
+			  <p class="text-danger" *ngIf="(usernameState.invalid
+			  	&& (usernameState.touched || passwordState.touched))
+			  	|| (passwordState.invalid &&
+			  	(usernameState.touched || passwordState.touched))">
+			  	Please, type your username and password
+			  </p>
+
+			  <button type="submit" [disabled]="(usernameState.invalid
+			  	&& (usernameState.touched || passwordState.touched))
+			  	|| (passwordState.invalid && (usernameState.touched
+			  	|| passwordState.touched))"
+			  	class="btn btn-primary" (click)="login();">Log in</button>
 			  <button type="button" class="btn btn-link">Sign up</button>
 			</form>
 		</div>
