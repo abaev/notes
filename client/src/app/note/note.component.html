@@ -1,0 +1,6 @@
+<div class="h-100" [ngClass]="noteClass">
+	<p>{{note?.description}}</p>
+	<p>{{note?.notificationDate | date}}</p>
+	<p *ngIf="note" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
+</div>
+

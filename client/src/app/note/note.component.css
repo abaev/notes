@@ -1,0 +1,75 @@
+.app-vi-note {
+	background-color: orange;
+	padding: 10px 15px;
+	overflow: hidden;
+}
+
+.app-vi-note-empty {
+	min-height: 124px;
+	background-color: orange;
+	padding: 10px 15px;
+	overflow: hidden;
+	opacity: .3
+}
+
+.app-ai-note {
+	background-color: teal;
+	padding: 10px 15px;
+	overflow: hidden;
+}
+
+.app-ai-note-empty {
+	min-height: 124px;
+	background-color: teal;
+	padding: 10px 15px;
+	overflow: hidden;
+	opacity: .3
+}
+
+.app-wal-note {
+	background-color: #0a0;
+	padding: 10px 15px;
+	overflow: hidden;
+}
+
+.app-wal-note-empty {
+	min-height: 124px;
+	background-color: #0a0;
+	padding: 10px 15px;
+	overflow: hidden;
+	opacity: .3
+}
+
+.app-l-note {
+	background-color: silver;
+	padding: 10px 15px;
+	overflow: hidden;
+}
+
+.app-l-note-empty {
+	min-height: 124px;
+	background-color: silver;
+	padding: 10px 15px;
+	overflow: hidden;
+	opacity: .3;
+}
+
+.app-delete-icon {
+	display: none;
+	display: inline;
+	position: absolute;
+	bottom: 0px;
+	right: 16px;
+	font-size: 2em;
+	opacity: .3;
+}
+
+div:hover .app-delete-icon:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+div {
+	box-shadow: 2px 2px 3px #ccc;
+	position: relative;
+}

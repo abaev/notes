@@ -7,21 +7,20 @@ import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
 import { ErrorClasses } from '../error-classes';
 
-
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-add-user',
+  templateUrl: './add-user.component.html',
+  styleUrls: ['./add-user.component.css']
 })
-export class LoginComponent implements OnInit {
+export class AddUserComponent implements OnInit {
 
-	loginError: string;
+	addUserError: string;
 	userInputError: string;
 	username: string;
 	password: string;
-	errorClasses: ErrorClasses; 
+	errorClasses: ErrorClasses;
 
-	constructor(private userService: UserService,
+  constructor(private userService: UserService,
   	private conf: ConfigService,
   	private router: Router
   ) {
@@ -30,13 +29,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
-	
-	login(): void {
-		// In login form Submit button is disabled if user don't filled
-		// all fields, but this works only if user interacts with form.
-		// (Since I guess that to show disabled Submit button to user at page
-		// loaded it's bad idea). So, we should check, that user don't click
-		// Subbmit at first time, before makes any actions with form.
+
+  addUser(): void {
+  	// Submit button behavior like in Log in form:
+  	// it's not disabled, if user don't interact with form yet.
+  	// So, here the same check, as in login.component.ts
 		if(!this.username || !this.password) {
 			this.userInputError = 'Please, type your username and password';
 			for(let k in this.errorClasses) this.errorClasses[k] = true;
@@ -44,24 +41,24 @@ export class LoginComponent implements OnInit {
 			return;
 		}
 
-		this.userService.login(this.username, this.password)
+		this.userService.addUser(this.username, this.password)
 			.subscribe(res => {
 				this.router.navigateByUrl('notes');
   		}, error => {
   			switch (error) {
   				case 500:
-  					this.loginError = 'Sorry, server error. Try again later';
+  					this.addUserError = 'Sorry, server error. Try again later';
+  					break;
+  				case 400:
+  					this.addUserError = 'Incorrect credentials. Try other username/password';
   					break;
   				case 403:
-  					this.loginError = 'Incorrect username/password';
-  					break;
-  				case 0:
-  					this.loginError = 'Something bad happened, please try again later';
+  					this.addUserError = 'This username already exsists, please choose other one';
   					break;
   				default:
-  					this.loginError = error;
+  					this.addUserError = error;
   					break;
   			}
-  		});
+  		});;
 	}
 }

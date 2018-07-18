@@ -9,13 +9,17 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ConfigService } from './config.service';
 import { UserService } from './user.service';
+import { AddUserComponent } from './add-user/add-user.component';
+import { NoteComponent } from './note/note.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NotesComponent,
-    LoginComponent
+    LoginComponent,
+    AddUserComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,8 @@ async function get(conditions){
 			// like _id, and __v and others
 			.select('-_id') 
 			.select(conf.userFields).lean().exec();
+		// Delete ALL '_id' fields from doc
+		_deleteProperty(user, '_id');
 		return user;
 	} catch(err) {
 		throw new Error('Error occured while getting user');
@@ -50,5 +52,13 @@ async function deleteUser(userId) {
 		await User.remove({ userId: userId });
 	} catch(err) {
 		return next(err);
+	}
+}
+
+function _deleteProperty(obj, key) {
+	for(let k in obj) {
+		if(k === key) {
+			delete obj[k];
+		} else if(typeof obj[k] === 'object') _deleteProperty(obj[k], key);
 	}
 }

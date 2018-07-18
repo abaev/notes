@@ -3,10 +3,12 @@ import { RouterModule, Routes }  from '@angular/router';
 
 import { NotesComponent } from './notes/notes.component';
 import { LoginComponent } from './login/login.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 const appRoutes: Routes = [
-  { path: 'notes', component: NotesComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'notes', component: NotesComponent },
+  { path: 'adduser', component: AddUserComponent },
   { path: '', redirectTo: '/notes', pathMatch: 'full' }
 ];
 

@@ -77,7 +77,11 @@ async function update (req, res, next) {
 
 	try {
 		await userServ.update(updatedUser);
-		return res.sendStatus(200);
+		// Send {} in response for Angular will not to
+		// fire ERROR 200 (lol). It's may be not a good practice,
+		// but I don't now how to make it in a right way so far.
+		return res.status(200).send({});
+
 	
 	} catch(err) {
 		return next(err);
@@ -111,7 +115,7 @@ async function add (req, res, next) {
 		// the same username yet, create and log in
 		if (user) {
     	return next( { statusCode: 403,
-      	message: 'This username already exsists, please choose another one'} );
+      	message: 'This username already exsists, please choose other one'} );
     }
 
     // Everything OK, creating and log in new user
@@ -130,7 +134,7 @@ async function add (req, res, next) {
 	    req.login(user, err => {
 	    	if(err) return next(err);
 	      			    
-	      return res.send(`You were seccessfully registered and logged in!\n`);
+	      return res.status(200).send();
 	    })
 	  })(req, res, next);
 

@@ -1,0 +1,62 @@
+{
+	"notes": {
+		"veryImportant": [
+			{
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": " Ut enim ad minim veniam",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			}
+		],
+
+		"alsoImportant": [
+			{
+				"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "Duis aute irure dolor in reprehenderit in voluptate."
+			}
+		],
+
+		"waitALittle": [
+			{
+				"description": "Морковь, увеличенные скидки, но они делают труд и боль, и жизнеспособность, так что в некоторых важных вещах. На протяжении многих лет.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "Из нее преимущества упражнений, так что усилия по стимулированию, если школьный округ, который имеет nostrud продукты.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "DUIs была подвергнута критике в удовольствии хотят быть боль в cupidatat cillum производит не результирующая и др Dolore магна не бежать."
+			}
+		],
+
+		"later": [
+			{
+				"description": "Import the NgbModule from the Angular bootstrap Library and add that to the imports array of app.module.ts file",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "At this point the browser at http://localhost:4200 has become blank. Now we’ll start adding the Models to the Angular Project.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			},
+			{
+				"description": "Go to the src/app directory and create a models folder. Create a todo.models.ts file under the folder.",
+				"notificationDate": "Tue Jul 30 2018 23:28:21 GMT+1100"
+			}
+		]
+	}
+}
+

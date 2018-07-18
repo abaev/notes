@@ -24,5 +24,21 @@ curl -X POST http://localhost:3000/adduser -c cookie-file.txt -v -H "Content-Typ
 UPDATE USER
 curl -X PUT http://localhost:3000/updatenotes -b cookie-file.txt -v -H "Content-Type: application/json" -d "{\"notes\":{\"veryImportant\": [{\"description\": \"Keep\",\"notificationDate\": \"Sat Jun 23 2018 05:14:01 GMT+1100\"}]}}"
 
-curl -X PUT http://localhost:3000/updatenotes -b cookie-file.txt -v -H "Content-Type: application/json" -d "{\"notes\":{\"veryImportant\": [{\"description\": \"New\"}]}}"
+ADD NOTES (With russian letters send payload only from file, not from Far Manager, for correct encoding)
+curl -X PUT http://localhost:3000/updatenotes -b cookie-file.txt -v -H "Content-Type: application/json; charset=utf-8" -d "{\"notes\":{\"veryImportant\": [{\"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \"Sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua.\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \" Ut enim ad minim veniam\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"}],
+\"alsoImportant\": [{\"description\": \"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \"
+Tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud.\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \"Duis aute irure dolor in reprehenderit in voluptate.\"}],
+\"waitALittle\": [{\"description\": \"Морковь, увеличенные скидки, но они делают труд и боль, и жизнеспособность, так что в некоторых важных вещах. На протяжении многих лет.\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \"Из нее преимущества упражнений, так что усилия по стимулированию, если школьный округ, который имеет nostrud
+продукты.\",\"notificationDate\": \"Tue Jul 30 2018 23:28:21 GMT+1100\"},
+{\"description\": \"DUIs была подвергнута критике в удовольствии хотят быть боль в cupidatat
+cillum производит не результирующая и др Dolore магна не бежать.\"}]}}"
+
+curl -X PUT http://localhost:3000/updatenotes -b cookie-file.txt -v -H "Content-Type: application/json; charset=utf-8" -d @data.json
 

@@ -10,7 +10,7 @@ var userSchema = mongoose.Schema({
   notes: {
   	veryImportant: [{
   		description: String,
-  		notificationDate: Date
+  		notificationDate: Date,
   	}],
   	alsoImportant: [{
   		description: String,

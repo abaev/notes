@@ -1,0 +1,37 @@
+.app-vi-header {
+	color: orange;
+}
+
+.app-ai-header {
+	color: teal;
+}
+
+.app-wal-header {
+	color: #0a0;
+}
+
+.app-l-header {
+	color: silver;
+}
+
+@media (min-width: 576px) {
+
+	app-note {
+		padding-left: 0px !important;
+	}
+
+	app-note:first-child {
+		padding-left: 30px !important;
+	}
+
+	app-note:last-child {
+		padding-right: 30px !important;
+	}
+}
+
+@media (max-width: 575px) {
+
+	app-note:not(:first-child) {
+		margin-top: 15px;
+	}
+}

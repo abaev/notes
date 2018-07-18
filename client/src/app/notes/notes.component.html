@@ -1,4 +1,41 @@
-<p>
-  notes works!
-</p>
-<div>{{user}}</div>
+<div *ngIf="notesError" class="text-danger">{{notesError}}</div>
+<div class="container-fluid app-h-100">
+	
+	<h2 class="text-center display-4 app-vi-header">Very important</h2>
+	<div class="row">
+		<app-note *ngFor="let note of user.notes.veryImportant;
+		index as i"
+		[note]="note" 
+		[noteClass]="note ? 'app-vi-note' : 'app-vi-note-empty'"
+		(onDeleteNote)="deleteNote('veryImportant', i)"
+		class="col-sm-4"></app-note>
+	</div>
+		
+	<h2 class="text-center display-4 app-ai-header">Also important</h2>
+	<div class="row">
+		<app-note *ngFor="let note of user.notes.alsoImportant;
+		index as i"
+		[note]="note" [noteClass]="note ? 'app-ai-note' : 'app-ai-note-empty'"
+		(onDeleteNote)="deleteNote('alsoImportant', i)"
+		class="col-sm-4"></app-note>
+	</div>
+
+	<h2 class="text-center display-4 app-wal-header">Wait a little</h2>
+	<div class="row">
+		<app-note *ngFor="let note of user.notes.waitALittle;
+		index as i"
+		[note]="note" [noteClass]="note ? 'app-wal-note' : 'app-wal-note-empty'"
+		(onDeleteNote)="deleteNote('waitALittle', i)"
+		class="col-sm-4"></app-note>
+	</div>
+
+	<h2 class="text-center display-4 app-l-header">Later</h2>
+	<div class="row">
+		<app-note *ngFor="let note of user.notes.later;
+		index as i"
+		[note]="note" [noteClass]="note ? 'app-l-note' : 'app-l-note-empty'"
+		(onDeleteNote)="deleteNote('later', i)"
+		class="col-sm-4"></app-note>
+	</div>
+	
+</div>

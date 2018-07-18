@@ -18,18 +18,41 @@ export class UserService {
   	return this.http.post(this.conf.serverUrl + 'login', {
   		username: username,
   		password: password
-  	}).pipe(catchError(this.handleError));
+  	}, { withCredentials: true })
+  		.pipe(catchError(this.handleError));
   }
 
 
-  getNotes(): Observable<User> {
-  	return this.http.get(this.conf.serverUrl + 'notes')
+  getNotes(): Observable<any> {
+  	return this.http.get(this.conf.serverUrl + 'notes',
+  		{ withCredentials: true })
+  			.pipe(catchError(this.handleError));
+  }
+
+
+  addUser(username: string, password: string): Observable<any> {
+  	return this.http.post(this.conf.serverUrl + 'adduser', {
+  		username: username,
+  		password: password
+  	}, { withCredentials: true })
+  		.pipe(catchError(this.handleError));
+  }
+
+
+  updateUser(user: User): Observable<any> {
+  	return this.http.put(this.conf.serverUrl + 'updatenotes',
+  		user,
+  		{
+  			withCredentials: true
+  			// ,
+  			// headers: new HttpHeaders({ 'Content-Type': 'application/json, text/plain, */*' })
+  		})
   		.pipe(catchError(this.handleError));
   }
 
 
   private handleError(error: HttpErrorResponse) {
-  	let message;
+  	let message: string | number;
 	  
 	  if (error.error instanceof ErrorEvent) {
 	    // A client-side or network error occurred. Handle it accordingly.
