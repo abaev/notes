@@ -1,41 +1,110 @@
-<div *ngIf="notesError" class="text-danger">{{notesError}}</div>
 <div class="container-fluid app-h-100">
-	
-	<h2 class="text-center display-4 app-vi-header">Very important</h2>
-	<div class="row">
-		<app-note *ngFor="let note of user.notes.veryImportant;
-		index as i"
-		[note]="note" 
-		[noteClass]="note ? 'app-vi-note' : 'app-vi-note-empty'"
-		(onDeleteNote)="deleteNote('veryImportant', i)"
-		class="col-sm-4"></app-note>
-	</div>
-		
-	<h2 class="text-center display-4 app-ai-header">Also important</h2>
-	<div class="row">
-		<app-note *ngFor="let note of user.notes.alsoImportant;
-		index as i"
-		[note]="note" [noteClass]="note ? 'app-ai-note' : 'app-ai-note-empty'"
-		(onDeleteNote)="deleteNote('alsoImportant', i)"
-		class="col-sm-4"></app-note>
+	<div class="alert alert-danger" role="alert"
+	*ngIf="notesError">
+	  {{notesError}}
 	</div>
 
-	<h2 class="text-center display-4 app-wal-header">Wait a little</h2>
-	<div class="row">
-		<app-note *ngFor="let note of user.notes.waitALittle;
-		index as i"
-		[note]="note" [noteClass]="note ? 'app-wal-note' : 'app-wal-note-empty'"
-		(onDeleteNote)="deleteNote('waitALittle', i)"
-		class="col-sm-4"></app-note>
+	<!-- Visible only larger than xs -->
+	<div class="d-none d-sm-block" *ngIf="!notesError">
+		<h2 class="text-center display-4 app-vi-header">Very important</h2>
+		<div class="row">
+			<app-note *ngFor="let note of user.notes.veryImportant;
+			index as i"
+			[note]="note" 
+			[noteClass]="note ? 'app-vi-note' : 'app-vi-note-empty'"
+			(onDeleteNote)="deleteNote('veryImportant', i)"
+			class="col-sm-4"></app-note>
+		</div>
+			
+		<h2 class="text-center display-4 app-ai-header">Also important</h2>
+		<div class="row">
+			<app-note *ngFor="let note of user.notes.alsoImportant;
+			index as i"
+			[note]="note" [noteClass]="note ? 'app-ai-note' : 'app-ai-note-empty'"
+			(onDeleteNote)="deleteNote('alsoImportant', i)"
+			class="col-sm-4"></app-note>
+		</div>
+
+		<h2 class="text-center display-4 app-wal-header">Wait a little</h2>
+		<div class="row">
+			<app-note *ngFor="let note of user.notes.waitALittle;
+			index as i"
+			[note]="note" [noteClass]="note ? 'app-wal-note' : 'app-wal-note-empty'"
+			(onDeleteNote)="deleteNote('waitALittle', i)"
+			class="col-sm-4"></app-note>
+		</div>
+
+		<h2 class="text-center display-4 app-l-header">Later</h2>
+		<div class="row">
+			<app-note *ngFor="let note of user.notes.later;
+			index as i"
+			[note]="note" [noteClass]="note ? 'app-l-note' : 'app-l-note-empty'"
+			(onDeleteNote)="deleteNote('later', i)"
+			class="col-sm-4"></app-note>
+		</div>
 	</div>
 
-	<h2 class="text-center display-4 app-l-header">Later</h2>
-	<div class="row">
-		<app-note *ngFor="let note of user.notes.later;
-		index as i"
-		[note]="note" [noteClass]="note ? 'app-l-note' : 'app-l-note-empty'"
-		(onDeleteNote)="deleteNote('later', i)"
-		class="col-sm-4"></app-note>
+	<!-- Visible as carousel only on xs -->
+	<div class="d-block d-sm-none" *ngIf="!notesError">
+		<div id="carouselNotes" class="carousel slide" data-ride="carousel" data-interval="false"
+		(swipeleft)="onSwipe('carousel-control-next')"
+    (swiperight)="onSwipe('carousel-control-prev')">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <h2 class="text-center display-4 app-vi-header">Very important</h2>
+					<div class="row d-block w-100 no-gutters">
+						<app-note *ngFor="let note of user.notes.veryImportant;
+						index as i"
+						[note]="note" 
+						[noteClass]="note ? 'app-vi-note' : 'app-vi-note-empty'"
+						(onDeleteNote)="deleteNote('veryImportant', i)"
+						class="col-sm-4 d-block w-100"></app-note>
+					</div>
+		    </div>
+		    <div class="carousel-item">
+		      <h2 class="text-center display-4 app-ai-header">Also important</h2>
+					<div class="row d-block w-100 no-gutters">
+						<app-note *ngFor="let note of user.notes.alsoImportant;
+						index as i"
+						[note]="note" [noteClass]="note ? 'app-ai-note' : 'app-ai-note-empty'"
+						(onDeleteNote)="deleteNote('alsoImportant', i)"
+						class="col-sm-4 d-block w-100"></app-note>
+					</div>
+		    </div>
+		    <div class="carousel-item">
+		      <h2 class="text-center display-4 app-wal-header">Wait a little</h2>
+					<div class="row d-block w-100 no-gutters">
+						<app-note *ngFor="let note of user.notes.waitALittle;
+						index as i"
+						[note]="note" [noteClass]="note ? 'app-wal-note' : 'app-wal-note-empty'"
+						(onDeleteNote)="deleteNote('waitALittle', i)"
+						class="col-sm-4 d-block w-100"></app-note>
+					</div>
+		    </div>
+		    <div class="carousel-item">
+		    	<h2 class="text-center display-4 app-l-header">Later</h2>
+					<div class="row d-block w-100 no-gutters">
+						<app-note *ngFor="let note of user.notes.later;
+						index as i"
+						[note]="note" [noteClass]="note ? 'app-l-note' : 'app-l-note-empty'"
+						(onDeleteNote)="deleteNote('later', i)"
+						class="col-sm-4 d-block w-100"></app-note>
+					</div>
+		    </div>
+		  </div>
+		  <a class="carousel-control-prev app-carousel-control" href="#carouselNotes" role="button" data-slide="prev"
+		  id="carousel-control-prev" (click)="selectControlClass(-1)">
+		    <span class="carousel-control-prev-icon display-4" aria-hidden="true"
+		    [ngClass]="'app-carousel-control-prev-' + currentNotesNum"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next app-carousel-control" href="#carouselNotes" role="button" data-slide="next"
+		  id="carousel-control-next" (click)="selectControlClass(1)">
+		    <span class="carousel-control-next-icon" aria-hidden="true"
+		    [ngClass]="'app-carousel-control-next-' + currentNotesNum"></span>
+			   <span class="sr-only">Next</span>
+		  </a>
+		</div>
 	</div>
-	
 </div>
+

@@ -6,6 +6,7 @@ import { Router }  from '@angular/router';
 import { User } from '../user';
 import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-notes',
@@ -16,6 +17,8 @@ export class NotesComponent implements OnInit {
 
 	user: User;
 	notesError: string;
+	currentNotesNum: number;
+	jQuery = $;
 
   constructor(private userService: UserService,
   	private conf: ConfigService
@@ -25,11 +28,12 @@ export class NotesComponent implements OnInit {
 
   ngOnInit() {
   	this.getNotes();
+  	this.currentNotesNum = 0;
   }
+
 
   deleteNote(noteType, index) {
   	let userToSend = this.user;
-  	console.log(`Deleting note ${index} from ${noteType}`);
   	this.user.notes[noteType].splice(index, 1);
   	
   	// Deleting null elements from notes arrays
@@ -63,8 +67,8 @@ export class NotesComponent implements OnInit {
   					break;
   			}
 			});
-
   }
+
 
   private getNotes(): void {
   	this.userService.getNotes().subscribe(res => {
@@ -78,7 +82,6 @@ export class NotesComponent implements OnInit {
   		})
 
   		this.user = res;
-  		console.log(`user = ${JSON.stringify(this.user)}`);
   	}, error => {
   			switch (error) {
   				case 500:
@@ -97,4 +100,17 @@ export class NotesComponent implements OnInit {
   		});
   }
 
+  selectControlClass(m: number): void {
+  	// 4 kinds of notes = 4 values
+  	// for this.currentNotesNum (0, 1, 2 and 3)
+  	// that defines class names for changing conrols
+  	// colors in xs carousel mode 
+  	let t: number = this.currentNotesNum + m;
+  	if(t < 0) t = 4 + m;
+  	this.currentNotesNum = t % 4;
+  }
+
+  onSwipe(id: string): void {
+  	document.getElementById(id).click();
+  }
 }
