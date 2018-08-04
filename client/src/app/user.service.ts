@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry, map, tap } from 'rxjs/operators';
 
 import { User } from './user';
@@ -64,6 +64,6 @@ export class UserService {
       // body = error.error
 	    message = error.status;
 	  }
-	  return new ErrorObservable(message);
+	  return throwError(message);
 	};
 }

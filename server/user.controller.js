@@ -40,25 +40,47 @@ async function update (req, res, next) {
 	// Define validation object
 	const validNotes = Joi.object({
 		veryImportant: Joi.array().items(Joi.object({
-			description: Joi.string().max(conf.descLength),
-			notificationDate: Joi.date().min('now')
-		}).with('notificationDate', 'description')).max(3),
+			description: Joi.string().allow('').max(conf.descLength),
+			notificationDate: Joi.date()
+		})).max(3),
 
 		alsoImportant: Joi.array().items(Joi.object({
-			description: Joi.string().max(conf.descLength),
-			notificationDate: Joi.date().min('now')
-		}).with('notificationDate', 'description')).max(3),
+			description: Joi.string().allow('').max(conf.descLength),
+			notificationDate: Joi.date()
+		})).max(3),
 
 		waitALittle: Joi.array().items(Joi.object({
-			description: Joi.string().max(conf.descLength),
-			notificationDate: Joi.date().min('now')
-		}).with('notificationDate', 'description')).max(3),
+			description: Joi.string().allow('').max(conf.descLength),
+			notificationDate: Joi.date()
+		})).max(3),
 
 		later: Joi.array().items(Joi.object({
-			description: Joi.string().max(conf.descLength),
-			notificationDate: Joi.date().min('now')
-		}).with('notificationDate', 'description')).max(3)
+			description: Joi.string().allow('').max(conf.descLength),
+			notificationDate: Joi.date()
+		})).max(3)
 	});
+
+	// const validNotes = Joi.object({
+	// 	veryImportant: Joi.array().items(Joi.object({
+	// 		description: Joi.string().max(conf.descLength),
+	// 		notificationDate: Joi.date()
+	// 	}).with('notificationDate', 'description')).max(3),
+
+	// 	alsoImportant: Joi.array().items(Joi.object({
+	// 		description: Joi.string().max(conf.descLength),
+	// 		notificationDate: Joi.date()
+	// 	}).with('notificationDate', 'description')).max(3),
+
+	// 	waitALittle: Joi.array().items(Joi.object({
+	// 		description: Joi.string().max(conf.descLength),
+	// 		notificationDate: Joi.date()
+	// 	}).with('notificationDate', 'description')).max(3),
+
+	// 	later: Joi.array().items(Joi.object({
+	// 		description: Joi.string().max(conf.descLength),
+	// 		notificationDate: Joi.date()
+	// 	}).with('notificationDate', 'description')).max(3)
+	// });
 
 	if(!req.isAuthenticated()) {
 		return next({ statusCode: 403, message: 'Forbidden' });

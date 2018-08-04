@@ -1,0 +1,16 @@
+.app-padding-t-b {
+	padding: 15px !important;
+}
+
+.app-border {
+	border: 1px #ccc solid;
+	border-radius: 5px;
+}
+.app-margin-l-r {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.ng-dirty.ng-touched.ng-invalid, .ng-pristine.ng-invalid.ng-touched {
+	border-color: #dc3545!important;
+}

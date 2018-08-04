@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router }  from '@angular/router';
 
 import { User } from '../user';
 import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-notes',
@@ -18,11 +17,10 @@ export class NotesComponent implements OnInit {
 	user: User;
 	notesError: string;
 	currentNotesNum: number;
-	jQuery = $;
 
   constructor(private userService: UserService,
   	private conf: ConfigService
-  ) {
+  ) {	
   		this.user = new User;
   }
 
@@ -33,8 +31,10 @@ export class NotesComponent implements OnInit {
 
 
   deleteNote(noteType, index) {
-  	let userToSend = this.user;
+  	let userToSend;
+  	
   	this.user.notes[noteType].splice(index, 1);
+  	userToSend = this.user;
   	
   	// Deleting null elements from notes arrays
   	// for pass validation on server
@@ -48,25 +48,29 @@ export class NotesComponent implements OnInit {
 
   	this.userService.updateUser(userToSend).subscribe(res => {
   		this.getNotes();
-  	}, error => {
-  			switch (error) {
-  				case 500:
-  					this.notesError = 'Sorry, server error. Try again later';
-  					break;
-  				case 403:
-  					this.notesError = 'Forbidden';
-  					break;
-  				case 400:
-  					this.notesError = 'Bad request';
-  					break;
-  				case 0:
-  					this.notesError = 'Something bad happened, please try again later';
-  					break;
-  				default:
-  					this.notesError = error;
-  					break;
-  			}
-			});
+  	}, error => { this.notesError = this.errorMessage(error)	});
+  }
+
+
+  updateNote(noteType, index, note) {
+  	let userToSend;
+  	
+  	this.user.notes[noteType][index] = note;
+  	userToSend = this.user;
+  	
+  	// Deleting null elements from notes arrays
+  	// for pass validation on server
+  	for(let k in userToSend.notes) {
+  		for(let i = 2; i >= 0; i--) {
+				if(userToSend.notes[k][i] === null) {
+					userToSend.notes[k].splice(i, 1);
+				}
+			}
+  	}
+  	
+  	this.userService.updateUser(userToSend).subscribe(res => {
+  		this.getNotes();
+  	}, error => { this.notesError = this.errorMessage(error)	});
   }
 
 
@@ -82,22 +86,7 @@ export class NotesComponent implements OnInit {
   		})
 
   		this.user = res;
-  	}, error => {
-  			switch (error) {
-  				case 500:
-  					this.notesError = 'Sorry, server error. Try again later';
-  					break;
-  				case 403:
-  					this.notesError = 'Forbidden';
-  					break;
-  				case 0:
-  					this.notesError = 'Something bad happened, please try again later';
-  					break;
-  				default:
-  					this.notesError = error;
-  					break;
-  			}
-  		});
+  	}, error => { this.notesError = this.errorMessage(error)	});
   }
 
   selectControlClass(m: number): void {
@@ -112,5 +101,22 @@ export class NotesComponent implements OnInit {
 
   onSwipe(id: string): void {
   	document.getElementById(id).click();
+  }
+
+  errorMessage(error: number): string;
+  errorMessage(error: number): number;
+  errorMessage(error: number): any {
+  	switch (error) {
+			case 500:
+				return 'Sorry, server error. Try again later';
+			case 403:
+				return 'Forbidden';
+			case 400:
+				return 'Bad request';
+			case 0:
+				return 'Something bad happened, please try again later';
+			default:
+				return error;
+		}
   }
 }

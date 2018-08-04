@@ -1,4 +1,4 @@
 export class Note {
-	description: string;
+	description?: string;
 	notificationDate?: Date;
 }
