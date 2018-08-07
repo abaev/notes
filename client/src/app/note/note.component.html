@@ -1,3 +1,58 @@
+<div class="h-100 app-shadow" [ngClass]="(note.description || note.notificationDate) ? noteClass.noteExist : noteClass.noteEmpty">
+	<p contenteditable [(appContenteditableModel)]="note.description"
+	(blur)="updateNote()"
+	(keydown)="note.description = $event.target.textContent; updateNote($event)"
+	(paste)="updateNote($event); note.description = $event.target.textContent"
+	[ngbPopover]="descMaxLength + ' characters maximum'" triggers="manual" #p="ngbPopover"
+	(click)="p.open()"
+	popoverTitle=""
+	container="body"></p>
+	<!-- <p>{{note?.notificationDate | date}}</p> -->
+	
+	<ng-template #popContent>
+		<ngb-datepicker
+			(select)="onDateSelect($event)"
+			autoClose="true">
+		</ngb-datepicker>
+	</ng-template>
+	
+	<div class="btn-group btn-group-sm" role="group" aria-label="Date select">
+		<button class="btn btn-outline-dark btn-sm"
+			[ngbPopover]="popContent" container="body"
+			placement="right">
+			<span class="material-icons">calendar_today</span>
+			{{note?.notificationDate | date}}
+		</button>
+		<button *ngIf="note.notificationDate"
+			class="btn btn-outline-dark btn-sm"
+			[ngbPopover]="popContent" container="body"
+			placement="right">
+			<span class="material-icons">query_builder</span>
+			{{note?.notificationDate | date: 'shortTime'}}
+		</button>
+		<button *ngIf="note.notificationDate"
+			class="btn btn-dark btn-sm"
+			(click)="onDateClear()">
+			<span class="material-icons">clear</span>
+		</button>
+	</div>
+
+	<!-- <button class="btn btn-outline-dark btn-sm"
+			[ngbPopover]="popContent" container="body"
+			placement="right">
+			<span class="material-icons">calendar_today</span>
+			{{note?.notificationDate | date}}
+		</button>
+		<button class="btn btn-outline-dark btn-sm">
+			<span class="material-icons">clear</span>
+		</button> -->
+
+	
+	
+	<p *ngIf="note.description || note.notificationDate" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
+</div>
+
+<!-- 
 <div class="h-100" [ngClass]="noteClass">
 	<p contenteditable [(appContenteditableModel)]="note.description"
 	(blur)="updateNote()"
@@ -7,7 +62,7 @@
 	(click)="p.open()"
 	popoverTitle=""
 	container="body"></p>
-	<p>{{note?.notificationDate | date}}</p>
-	<ngb-datepicker #d></ngb-datepicker>
-	<p *ngIf="note.description || note.notificationDate" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
-</div>
+	<p>{{note?.notificationDate | date}}</p> -->
+	<!-- <ngb-datepicker #d></ngb-datepicker> -->
+<!-- 	<p *ngIf="note.description || note.notificationDate" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
+</div> -->

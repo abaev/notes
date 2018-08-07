@@ -69,7 +69,31 @@ div:hover .app-delete-icon:hover {
 	cursor: pointer;
 }
 
-div {
+.app-shadow {
 	box-shadow: 2px 2px 3px #ccc;
 	position: relative;
+}
+
+/*OMG, OMG, I DID IT WITH PURE CSS ONLY!!
+Showing 'Click here to add' on empty notes,
+and then immediately hide this message if user start to typing.
+But I don't know, wy
+div.[class*="empty"] p[contenteditable]::after
+don't working */
+div.app-vi-note-empty p[contenteditable]::after,
+div.app-ai-note-empty p[contenteditable]::after,
+div.app-wal-note-empty p[contenteditable]::after,
+div.app-l-note-empty p[contenteditable]::after {
+	content: 'Click here to add';
+}
+
+div.app-vi-note-empty p[contenteditable]:focus::after,
+div.app-ai-note-empty p[contenteditable]:focus::after,
+div.app-wal-note-empty p[contenteditable]:focus::after,
+div.app-l-note-empty p[contenteditable]:focus::after {
+	content: '';
+}
+
+button span.material-icons {
+	font-size: 1em;
 }
