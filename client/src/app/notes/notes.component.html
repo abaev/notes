@@ -13,8 +13,11 @@
 			[note]="note" 
 			[noteClass]="{ noteExist: 'app-vi-note',
 				noteEmpty: 'app-vi-note-empty' }"
-			(onDeleteNote)="deleteNote('veryImportant', i)"
-			(onUpdateNote)="updateNote('veryImportant', i, $event)"
+			[noteSpec]="{ type: 'veryImportant', index: i }"
+			[activeNote]="activeNote"
+			(selectingDateTime)="onDateTimeSelect($event)"
+			(deletedNote)="onDeletedNote('veryImportant', i)"
+			(updatedNote)="onUpdatedNote('veryImportant', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 			
@@ -25,8 +28,11 @@
 			[note]="note"
 			[noteClass]="{ noteExist: 'app-ai-note',
 				noteEmpty: 'app-ai-note-empty' }"
-			(onDeleteNote)="deleteNote('alsoImportant', i)"
-			(onUpdateNote)="updateNote('alsoImportant', i, $event)"
+			[noteSpec]="{ type: 'alsoImportant', index: i }"
+			[activeNote]="activeNote"
+			(selectingDateTime)="onDateTimeSelect($event)"
+			(deletedNote)="onDeletedNote('alsoImportant', i)"
+			(updatedNote)="onUpdatedNote('alsoImportant', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 
@@ -37,8 +43,11 @@
 			[note]="note"
 			[noteClass]="{ noteExist: 'app-wal-note',
 				noteEmpty: 'app-wal-note-empty' }"
-			(onDeleteNote)="deleteNote('waitALittle', i)"
-			(onUpdateNote)="updateNote('waitALittle', i, $event)"
+			[noteSpec]="{ type: 'waitALittle', index: i }"
+			[activeNote]="activeNote"
+			(selectingDateTime)="onDateTimeSelect($event)"
+			(deletedNote)="onDeletedNote('waitALittle', i)"
+			(updatedNote)="onUpdatedNote('waitALittle', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 
@@ -49,8 +58,11 @@
 			[note]="note"
 			[noteClass]="{ noteExist: 'app-l-note',
 				noteEmpty: 'app-l-note-empty' }"
-			(onDeleteNote)="deleteNote('later', i)"
-			(onUpdateNote)="updateNote('later', i, $event)"
+			[noteSpec]="{ type: 'later', index: i }"
+			[activeNote]="activeNote"
+			(selectingDateTime)="onDateTimeSelect($event)"
+			(deletedNote)="onDeletedNote('later', i)"
+			(updatedNote)="onUpdatedNote('later', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 	</div>
@@ -61,7 +73,6 @@
 	(a and span elements), but it's are not in the
 	HTML template of ng-bootstrap Carousel Conponent
 	(Angular Bootstrap generates these elements in a runtime) -->
-
 	<div class="d-block d-sm-none" *ngIf="!notesError">
 		<div id="carouselNotes" class="carousel slide" data-ride="carousel" data-interval="false"
 		(swipeleft)="onSwipe('carousel-control-next')"
@@ -74,9 +85,12 @@
 						index as i"
 						[note]="note"
 						[noteClass]="{ noteExist: 'app-vi-note',
-							noteEmpty: 'app-vi-note-empty' }" 
-						(onDeleteNote)="deleteNote('veryImportant', i)"
-						(onUpdateNote)="updateNote('veryImportant', i, $event)"
+							noteEmpty: 'app-vi-note-empty' }"
+						[noteSpec]="{ type: 'veryImportant', index: i }"
+						[activeNote]="activeNote"
+						(selectingDateTime)="onDateTimeSelect($event)" 
+						(deletedNote)="onDeletedNote('veryImportant', i)"
+						(updatedNote)="onUpdatedNote('veryImportant', i, $event)"
 						class="col-sm-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -88,8 +102,11 @@
 						[note]="note"
 						[noteClass]="{ noteExist: 'app-ai-note',
 							noteEmpty: 'app-ai-note-empty' }"
-						(onDeleteNote)="deleteNote('alsoImportant', i)"
-						(onUpdateNote)="updateNote('alsoImportant', i, $event)"
+						[noteSpec]="{ type: 'alsoImportant', index: i }"
+						[activeNote]="activeNote"
+						(selectingDateTime)="onDateTimeSelect($event)"
+						(deletedNote)="onDeletedNote('alsoImportant', i)"
+						(updatedNote)="onUpdatedNote('alsoImportant', i, $event)"
 						class="col-sm-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -101,8 +118,11 @@
 						[note]="note"
 						[noteClass]="{ noteExist: 'app-wal-note',
 							noteEmpty: 'app-wal-note-empty' }"
-						(onDeleteNote)="deleteNote('waitALittle', i)"
-						(onUpdateNote)="updateNote('waitALittle', i, $event)"
+						[noteSpec]="{ type: 'waitALittle', index: i }"
+						[activeNote]="activeNote"
+						(selectingDateTime)="onDateTimeSelect($event)"
+						(deletedNote)="onDeletedNote('waitALittle', i)"
+						(updatedNote)="onUpdatedNote('waitALittle', i, $event)"
 						class="col-sm-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -114,8 +134,11 @@
 						[note]="note"
 						[noteClass]="{ noteExist: 'app-l-note',
 							noteEmpty: 'app-l-note-empty' }"
-						(onDeleteNote)="deleteNote('later', i)"
-						(onUpdateNote)="updateNote('later', i, $event)"
+						[noteSpec]="{ type: 'later', index: i }"
+						[activeNote]="activeNote"
+						(selectingDateTime)="onDateTimeSelect($event)"
+						(deletedNote)="onDeletedNote('later', i)"
+						(updatedNote)="onUpdatedNote('later', i, $event)"
 						class="col-sm-4 d-block w-100"></app-note>
 					</div>
 		    </div>

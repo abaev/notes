@@ -17,8 +17,9 @@ export class NotesComponent implements OnInit {
 	user: User;
 	notesError: string;
 	currentNotesNum: number;
+	activeNote: any;
 
-  constructor(private userService: UserService,
+	constructor(private userService: UserService,
   	private conf: ConfigService
   ) {	
   		this.user = new User;
@@ -27,10 +28,11 @@ export class NotesComponent implements OnInit {
   ngOnInit() {
   	this.getNotes();
   	this.currentNotesNum = 0;
+  	this.activeNote = {};
   }
 
 
-  deleteNote(noteType, index) {
+  onDeletedNote(noteType, index) {
   	let userToSend;
   	
   	this.user.notes[noteType].splice(index, 1);
@@ -52,7 +54,7 @@ export class NotesComponent implements OnInit {
   }
 
 
-  updateNote(noteType, index, note) {
+  onUpdatedNote(noteType, index, note) {
   	let userToSend;
   	
   	this.user.notes[noteType][index] = note;
@@ -82,6 +84,13 @@ export class NotesComponent implements OnInit {
   			if(!res.notes[k]) res.notes[k] = [];
   			for(let i = 0; i < 3; i++) {
   				if(!res.notes[k][i]) res.notes[k].push(null);
+  				
+  				// Transform note.notificationDate: string to
+  				// note.notificationDate: Date
+  				if(res.notes[k][i] && res.notes[k][i].notificationDate) {
+  					res.notes[k][i].notificationDate = 
+  						new Date(res.notes[k][i].notificationDate);
+  				}
   			}
   		})
 
@@ -101,6 +110,22 @@ export class NotesComponent implements OnInit {
 
   onSwipe(id: string): void {
   	document.getElementById(id).click();
+  }
+
+  onDateTimeSelect($event?: any): void {
+  	// Set disable = true, to avoid
+  	// multiple Date or Time Pickers
+  	if($event) {
+  		this.activeNote = {
+	  		type: $event.type,
+	  		index: $event.index
+	  	}
+  	} else {
+  		// Selecting was done, so set disabled = false
+			// at all buttons with Date and Time Pickers
+			this.activeNote = {};
+  	}
+  	
   }
 
   errorMessage(error: number): string;

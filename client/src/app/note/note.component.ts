@@ -1,5 +1,9 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
+
+import { NgbTimeStruct, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
 import { Note } from '../note';
+
 
 @Component({
   selector: 'app-note',
@@ -10,10 +14,14 @@ export class NoteComponent implements OnInit {
 
 	@Input() note: Note;
 	@Input() noteClass: string;
-	@Output() onDeleteNote: EventEmitter<any> = new EventEmitter();
-	@Output() onUpdateNote: EventEmitter<any> = new EventEmitter();
+	@Input() noteSpec: any;
+	@Input() activeNote: any;
+	@Output() deletedNote: EventEmitter<any> = new EventEmitter();
+	@Output() updatedNote: EventEmitter<any> = new EventEmitter();
+	@Output() selectingDateTime: EventEmitter<any> = new EventEmitter();
 
 	descMaxLength = 140;
+	time: NgbTimeStruct;
 
 	constructor() {
 		
@@ -24,7 +32,7 @@ export class NoteComponent implements OnInit {
   }
 
 	deleteNote() {
-		this.onDeleteNote.emit();
+		this.deletedNote.emit();
 	}
 
 	updateNote($event?: any) {
@@ -57,13 +65,12 @@ export class NoteComponent implements OnInit {
 		if($event) keyCode = $event.which || $event.keyCode;
 		// Emit on blur or press Enter events
 		if(!$event || keyCode == 13) {
-			this.onUpdateNote.emit(this.note);
+			this.updatedNote.emit(this.note);
 		}
 	}
 
 
-	onDateSelect($event: any): void {
-		console.log($event);
+	onDateSelect($event: NgbDateStruct): void {
 		// Note: this should change in the near future with
 		// using native Date for all public APIs
 		// Datepicker uses NgbDateStruct as a model and not the
@@ -72,12 +79,52 @@ export class NoteComponent implements OnInit {
 		this.note.notificationDate = new Date(
 			$event.year, $event.month - 1, $event.day);
 
+		// Selecting was done, so set disabled = false
+		// at all buttons with Date and Time Pickers
+		this.selectingDateTime.emit();
+
 		this.updateNote();
 	}
 
 
-	onDateClear() {
+	onTimeSelect() {
+		console.log(this.time);
+	}
+
+
+	clearNotification() {
 		delete this.note.notificationDate;
 		this.updateNote();
+	}
+
+	
+	selectDateTime() {
+		// Timepicker have not select event,
+		// so updating note.notificationDate here
+		if(this.time) {
+			let date = this.note.notificationDate;
+			
+			this.note.notificationDate = new Date(
+				date.getFullYear(),	date.getMonth(), date.getDate(),
+				this.time.hour, this.time.minute, 0, 0);
+
+			this.updateNote();
+		}
+
+		if(!this.activeNote.type) {
+			this.selectingDateTime.emit(this.noteSpec);
+		} else { 
+			// If user don't  pick a date,
+			// but press Date or Time buttons,
+			// set disabled = false to all buttons
+			this.selectingDateTime.emit();
+		}
+	}
+
+
+	isDisabled(): boolean {
+		return (this.activeNote.type && (this.activeNote.type !== this.noteSpec.type))
+							|| (this.activeNote.index !== undefined &&
+								(this.activeNote.index !== this.noteSpec.index));
 	}
 }
