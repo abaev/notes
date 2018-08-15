@@ -1,12 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
-.app-h-100 {
-	height: 100vh;
-}
 
-/*body {
-	background-color: black !important;
+/*.app-h-100 {
+	height: 100vh;
 }*/
 
+.app-h-wo-footer {
+	height: calc(100vh - 52px);
+}
 
+.footer {
+	width: 100%;
+  height: 52px;
+  padding-top: 12px;
+  background-color: #90bfee52;
+}
 
+p img {
+	width: 20px;
+	height: 20px;
+}
 
