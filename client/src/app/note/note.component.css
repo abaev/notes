@@ -6,10 +6,9 @@
 
 .app-vi-note-empty {
 	min-height: 124px;
-	background-color: orange;
+	background-color: #ffe4b3;
 	padding: 10px 15px;
 	overflow: hidden;
-	opacity: .3
 }
 
 .app-ai-note {
@@ -20,10 +19,9 @@
 
 .app-ai-note-empty {
 	min-height: 124px;
-	background-color: teal;
+	background-color: #b3d9d9;
 	padding: 10px 15px;
 	overflow: hidden;
-	opacity: .3
 }
 
 .app-wal-note {
@@ -34,10 +32,9 @@
 
 .app-wal-note-empty {
 	min-height: 124px;
-	background-color: #0a0;
+	background-color: #b3e6b3;
 	padding: 10px 15px;
 	overflow: hidden;
-	opacity: .3
 }
 
 .app-l-note {
@@ -48,10 +45,9 @@
 
 .app-l-note-empty {
 	min-height: 124px;
-	background-color: silver;
+	background-color: #ececec;
 	padding: 10px 15px;
 	overflow: hidden;
-	opacity: .3;
 }
 
 .app-delete-icon {
@@ -85,6 +81,8 @@ div.app-ai-note-empty p[contenteditable]::after,
 div.app-wal-note-empty p[contenteditable]::after,
 div.app-l-note-empty p[contenteditable]::after {
 	content: 'Click here to add';
+	cursor: pointer;
+	opacity: .3;
 }
 
 div.app-vi-note-empty p[contenteditable]:focus::after,
@@ -92,6 +90,13 @@ div.app-ai-note-empty p[contenteditable]:focus::after,
 div.app-wal-note-empty p[contenteditable]:focus::after,
 div.app-l-note-empty p[contenteditable]:focus::after {
 	content: '';
+}
+
+div.app-vi-note-empty button,
+div.app-ai-note-empty button,
+div.app-wal-note-empty button,
+div.app-l-note-empty button {
+	opacity: .3;
 }
 
 button span.material-icons {

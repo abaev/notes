@@ -99,6 +99,8 @@ export class NoteComponent implements OnInit {
 
 	
 	selectDateTime() {
+		// Updating note.notificationDate and toggle disabled property
+		
 		// Timepicker have not select event,
 		// so updating note.notificationDate here
 		if(this.time) {
@@ -111,6 +113,7 @@ export class NoteComponent implements OnInit {
 			this.updateNote();
 		}
 
+		// Toggle disabled property
 		if(!this.activeNote.type) {
 			this.selectingDateTime.emit(this.noteSpec);
 		} else { 

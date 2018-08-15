@@ -1,9 +1,15 @@
 <div class="container-fluid app-h-100">
 	
-  <ngb-alert [dismissible]="false" *ngIf="notesError">
-  	<strong>{{notesError}}</strong>
-  </ngb-alert>
-	
+	<div *ngIf="notesError">
+	  <ngb-alert [dismissible]="false">
+	  	<strong>{{notesError}}</strong>
+	  </ngb-alert>
+	  <p>
+	  	You have to <a routerLink="/login" routerLinkActive="active" class="text-primary">Log In</a>
+  	  or you may to
+  	  <a routerLink="/adduser" routerLinkActive="active" class="text-primary">Sign up</a>
+	  </p>
+	</div>
 	<!-- Visible only larger than xs -->
 	<div class="d-none d-sm-block" *ngIf="!notesError">
 		<h2 class="text-center display-4 app-vi-header">Very important</h2>

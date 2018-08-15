@@ -20,6 +20,7 @@
 	</ng-template>
 	
 	<div class="btn-group btn-group-sm" role="group" aria-label="Date select">
+		
 		<!-- Date and datepicker -->
 		<button class="btn btn-outline-dark btn-sm"
 			[ngbPopover]="popDate" container="body"
@@ -29,6 +30,7 @@
 			<span class="material-icons">calendar_today</span>
 			{{note?.notificationDate | date}}
 		</button>
+		
 		<!-- Time and timepicker -->
 		<button *ngIf="note.notificationDate"
 			class="btn btn-outline-dark btn-sm"
@@ -39,6 +41,7 @@
 			<span class="material-icons">query_builder</span>
 			{{note?.notificationDate | date: 'HH:mm'}}
 		</button>
+		
 		<!-- Delete notification -->
 		<button *ngIf="note.notificationDate"
 			class="btn btn-dark btn-sm"
@@ -47,8 +50,9 @@
 			<span class="material-icons">clear</span>
 		</button>
 	</div>
-
-	<p *ngIf="note.description || note.notificationDate" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
+	
+	<!-- Delete note -->
+	<p *ngIf="(note.description || note.notificationDate) && !isDisabled()" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
 </div>
 
 
