@@ -20,7 +20,8 @@ export class NotesComponent implements OnInit {
 	activeNote: any;
 
 	constructor(private userService: UserService,
-  	private conf: ConfigService
+  	private conf: ConfigService,
+  	private router: Router
   ) {	
   		this.user = new User;
   }
@@ -126,6 +127,15 @@ export class NotesComponent implements OnInit {
 			this.activeNote = {};
   	}
   	
+  }
+
+  logout() {
+  	this.userService.logout().subscribe(res => {
+  		this.router.navigateByUrl('login');
+  	},
+  		error => { 
+  			this.notesError = this.errorMessage(error)
+  		});
   }
 
   errorMessage(error: number): string;

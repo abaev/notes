@@ -22,7 +22,7 @@ async function get(req, res, next) {
 	let user;
 
 	if(!req.isAuthenticated()) {
-		return next({ statusCode: 403, message: 'Forbidden (user.controller.js get())' });
+		return next({ statusCode: 403, message: 'Forbidden' });
 	}
 
 	try {
@@ -102,7 +102,7 @@ async function update (req, res, next) {
 		// Send {} in response for Angular will not to
 		// fire ERROR 200 (lol). It's may be not a good practice,
 		// but I don't now how to make it in a right way so far.
-		return res.status(200).send({});
+		return res.status(200).send();
 
 	
 	} catch(err) {

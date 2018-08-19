@@ -34,9 +34,13 @@
 			  	&& (usernameState.touched || passwordState.touched))
 			  	|| (passwordState.invalid && (usernameState.touched
 			  	|| passwordState.touched))"
-			  	class="btn btn-outline-primary" (click)="login();">Log in</button>&nbsp;&nbsp;
+			  	class="btn btn-outline-primary" (click)="login();">
+			  	Log in
+			  </button>&nbsp;&nbsp;
 			  <a routerLink="/adduser" routerLinkActive="active" class="text-secondary">Sign up</a>
 			</form>
 		</div>
 	</div>
 </div>
+
+<app-footer></app-footer>

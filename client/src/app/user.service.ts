@@ -18,7 +18,10 @@ export class UserService {
   	return this.http.post(this.conf.serverUrl + 'login', {
   		username: username,
   		password: password
-  	}, { withCredentials: true })
+  	}, { 
+  				withCredentials: true,
+  				responseType: 'text'
+  			})
   		.pipe(catchError(this.handleError));
   }
 
@@ -34,7 +37,10 @@ export class UserService {
   	return this.http.post(this.conf.serverUrl + 'adduser', {
   		username: username,
   		password: password
-  	}, { withCredentials: true })
+  	}, {
+  				withCredentials: true,
+  				responseType: 'text'
+  			})
   		.pipe(catchError(this.handleError));
   }
 
@@ -43,7 +49,20 @@ export class UserService {
   	return this.http.put(this.conf.serverUrl + 'updatenotes',
   		user,
   		{
-  			withCredentials: true
+  			withCredentials: true,
+  			responseType: 'text'
+  			// ,
+  			// headers: new HttpHeaders({ 'Content-Type': 'application/json, text/plain, */*' })
+  		})
+  		.pipe(catchError(this.handleError));
+  }
+
+  logout(): Observable<any> {
+  	return this.http.get(this.conf.serverUrl + 'logout',
+  		// null,
+  		{
+  			withCredentials: true,
+  			responseType: 'text'
   			// ,
   			// headers: new HttpHeaders({ 'Content-Type': 'application/json, text/plain, */*' })
   		})

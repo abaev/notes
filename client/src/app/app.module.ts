@@ -15,6 +15,7 @@ import { UserService } from './user.service';
 import { AddUserComponent } from './add-user/add-user.component';
 import { NoteComponent } from './note/note.component';
 import { ContenteditableModelDirective } from './contenteditable-model.directive';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ContenteditableModelDirective } from './contenteditable-model.directive
     LoginComponent,
     AddUserComponent,
     NoteComponent,
-    ContenteditableModelDirective
+    ContenteditableModelDirective,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
