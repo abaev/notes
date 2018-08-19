@@ -8,4 +8,9 @@
 	height: calc(100vh - 52px);
 }
 
-
+@media screen and (max-width: 767px) and (orientation: landscape) {
+	.app-h-wo-footer {
+		height: calc(100% - 52px);
+		margin-bottom: 10px;
+	}
+}
