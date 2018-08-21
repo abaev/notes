@@ -138,6 +138,16 @@ export class NotesComponent implements OnInit {
   		});
   }
 
+  deleteAccount() {
+  	this.userService.deleteAccount().subscribe(res => {
+  		console.log(res);
+  		this.router.navigateByUrl('login');
+  	},
+  		error => { 
+  			this.notesError = this.errorMessage(error)
+  		});
+  }
+
   errorMessage(error: number): string;
   errorMessage(error: number): number;
   errorMessage(error: number): any {

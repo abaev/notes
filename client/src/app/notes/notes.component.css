@@ -68,6 +68,10 @@
 	}
 
 	.app-exit-button {
+		padding-left: 15px !important;
+	}
+
+	.app-exit-button {
 		padding-right: 15px !important;
 	}
 }
@@ -79,6 +83,25 @@
 	}
 }
 
-button span.material-icons {
-	font-size: 1em;
+@media (max-width: 576px) {
+	.app-button-delete {
+		margin-top: 15px !important;
+	}
 }
+
+/*Fix align bugs inside buttons caused by Google Icon*/
+button {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	overflow: hidden;
+}
+
+button p {
+	display: flex;
+	align-content: center;
+	margin-bottom: 0px !important;
+	margin: auto auto;
+}
+/*- - - - - - -*/
+

@@ -57,9 +57,21 @@ export class UserService {
   		.pipe(catchError(this.handleError));
   }
 
+ 
   logout(): Observable<any> {
   	return this.http.get(this.conf.serverUrl + 'logout',
-  		// null,
+  		{
+  			withCredentials: true,
+  			responseType: 'text'
+  			// ,
+  			// headers: new HttpHeaders({ 'Content-Type': 'application/json, text/plain, */*' })
+  		})
+  		.pipe(catchError(this.handleError));
+  }
+
+
+  deleteAccount(): Observable<any> {
+  	return this.http.delete(this.conf.serverUrl + 'deleteuser',
   		{
   			withCredentials: true,
   			responseType: 'text'
