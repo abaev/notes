@@ -1,14 +1,17 @@
 <div class="container-fluid">
 	
-	<div *ngIf="notesError" class="app-h-wo-footer">
-	  <ngb-alert [dismissible]="false">
-	  	<strong>{{notesError}}</strong>
-	  </ngb-alert>
-	  <p>
-	  	You have to <a routerLink="/login" routerLinkActive="active" class="text-primary">Log In</a>
-  	  or you may to
-  	  <a routerLink="/adduser" routerLinkActive="active" class="text-primary">Sign up</a>
-	  </p>
+	<div *ngIf="notesError" class="">
+	  <div class="app-h-wo-footer">
+		  <ngb-alert [dismissible]="false">
+		  	<strong>{{notesError}}</strong>
+		  </ngb-alert>
+		  <p>
+		  	You have to <a routerLink="/login" routerLinkActive="active" class="text-primary">Log In</a>
+	  	  or you may to
+	  	  <a routerLink="/adduser" routerLinkActive="active" class="text-primary">Sign up</a>
+		  </p>
+		</div>
+	  <app-footer></app-footer>
 	</div>
 
 	<!-- Visible only larger than xs -->
@@ -23,8 +26,8 @@
 			[noteSpec]="{ type: 'veryImportant', index: i }"
 			[activeNote]="activeNote"
 			(selectingDateTime)="onDateTimeSelect($event)"
-			(deletedNote)="onDeletedNote('veryImportant', i)"
-			(updatedNote)="onUpdatedNote('veryImportant', i, $event)"
+			(deleteNote)="onDeleteNote('veryImportant', i)"
+			(updateNote)="onUpdateNote('veryImportant', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 			
@@ -38,8 +41,8 @@
 			[noteSpec]="{ type: 'alsoImportant', index: i }"
 			[activeNote]="activeNote"
 			(selectingDateTime)="onDateTimeSelect($event)"
-			(deletedNote)="onDeletedNote('alsoImportant', i)"
-			(updatedNote)="onUpdatedNote('alsoImportant', i, $event)"
+			(deleteNote)="onDeleteNote('alsoImportant', i)"
+			(updateNote)="onUpdateNote('alsoImportant', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 
@@ -53,8 +56,8 @@
 			[noteSpec]="{ type: 'waitALittle', index: i }"
 			[activeNote]="activeNote"
 			(selectingDateTime)="onDateTimeSelect($event)"
-			(deletedNote)="onDeletedNote('waitALittle', i)"
-			(updatedNote)="onUpdatedNote('waitALittle', i, $event)"
+			(deleteNote)="onDeleteNote('waitALittle', i)"
+			(updateNote)="onUpdateNote('waitALittle', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 
@@ -68,13 +71,13 @@
 			[noteSpec]="{ type: 'later', index: i }"
 			[activeNote]="activeNote"
 			(selectingDateTime)="onDateTimeSelect($event)"
-			(deletedNote)="onDeletedNote('later', i)"
-			(updatedNote)="onUpdatedNote('later', i, $event)"
+			(deleteNote)="onDeleteNote('later', i)"
+			(updateNote)="onUpdateNote('later', i, $event)"
 			class="col-sm-4"></app-note>
 		</div>
 		
 		<br> <!-- Delete account and exit buttons -->
-		<div class="row app-exit-button">
+		<div class="row app-exit-del-button">
 			<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
 				<button class="btn btn-outline-primary w-100"
 				(click)="logout();">
@@ -84,10 +87,10 @@
 					</p>
 				</button>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-lg-2">
 				<button class="btn btn-outline-danger w-100 app-button-delete"
-				(click)="deleteAccount();">
+				(click)="openModal();">
 					<p>
 						<span class="app-button-text">Delete account</span>
 						<span class="material-icons">delete</span>
@@ -122,8 +125,8 @@
 						[noteSpec]="{ type: 'veryImportant', index: i }"
 						[activeNote]="activeNote"
 						(selectingDateTime)="onDateTimeSelect($event)" 
-						(deletedNote)="onDeletedNote('veryImportant', i)"
-						(updatedNote)="onUpdatedNote('veryImportant', i, $event)"
+						(deleteNote)="onDeleteNote('veryImportant', i)"
+						(updateNote)="onUpdateNote('veryImportant', i, $event)"
 						class="col-md-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -138,8 +141,8 @@
 						[noteSpec]="{ type: 'alsoImportant', index: i }"
 						[activeNote]="activeNote"
 						(selectingDateTime)="onDateTimeSelect($event)"
-						(deletedNote)="onDeletedNote('alsoImportant', i)"
-						(updatedNote)="onUpdatedNote('alsoImportant', i, $event)"
+						(deleteNote)="onDeleteNote('alsoImportant', i)"
+						(updateNote)="onUpdateNote('alsoImportant', i, $event)"
 						class="col-md-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -154,8 +157,8 @@
 						[noteSpec]="{ type: 'waitALittle', index: i }"
 						[activeNote]="activeNote"
 						(selectingDateTime)="onDateTimeSelect($event)"
-						(deletedNote)="onDeletedNote('waitALittle', i)"
-						(updatedNote)="onUpdatedNote('waitALittle', i, $event)"
+						(deleteNote)="onDeleteNote('waitALittle', i)"
+						(updateNote)="onUpdateNote('waitALittle', i, $event)"
 						class="col-md-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -170,8 +173,8 @@
 						[noteSpec]="{ type: 'later', index: i }"
 						[activeNote]="activeNote"
 						(selectingDateTime)="onDateTimeSelect($event)"
-						(deletedNote)="onDeletedNote('later', i)"
-						(updatedNote)="onUpdatedNote('later', i, $event)"
+						(deleteNote)="onDeleteNote('later', i)"
+						(updateNote)="onUpdateNote('later', i, $event)"
 						class="col-md-4 d-block w-100"></app-note>
 					</div>
 		    </div>
@@ -191,7 +194,7 @@
 		</div>
 		
 		<br> <!-- Delete account and exit buttons -->
-		<div class="row app-exit-button">
+		<div class="row app-exit-del-button">
 			<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
 				<button class="btn btn-outline-primary w-100"
 				(click)="logout();">
@@ -201,10 +204,10 @@
 					</p>
 				</button>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-lg-2">
 				<button class="btn btn-outline-danger w-100 app-button-delete"
-				(click)="deleteAccount();">
+				(click)="openModal();">
 					<p>
 						<span class="app-button-text">Delete account</span>
 						<span class="material-icons">delete</span>

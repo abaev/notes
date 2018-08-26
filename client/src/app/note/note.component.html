@@ -1,8 +1,8 @@
 <div class="h-100 app-shadow" [ngClass]="(note.description || note.notificationDate) ? noteClass.noteExist : noteClass.noteEmpty">
 	<p contenteditable [(appContenteditableModel)]="note.description"
-	(blur)="updateNote()"
-	(keydown)="note.description = $event.target.textContent; updateNote($event)"
-	(paste)="updateNote($event); note.description = $event.target.textContent"
+	(blur)="updNote()"
+	(keydown)="note.description = $event.target.textContent; updNote($event)"
+	(paste)="updNote($event); note.description = $event.target.textContent"
 	[ngbPopover]="descMaxLength + ' characters maximum'" triggers="manual" #p="ngbPopover"
 	(click)="p.open()"
 	popoverTitle=""
@@ -52,7 +52,7 @@
 	</div>
 	
 	<!-- Delete note -->
-	<p *ngIf="(note.description || note.notificationDate) && !isDisabled()" class="material-icons app-delete-icon" (click)="deleteNote()">delete</p>
+	<p *ngIf="(note.description || note.notificationDate) && !isDisabled()" class="material-icons app-delete-icon" (click)="delNote()">delete</p>
 </div>
 
 

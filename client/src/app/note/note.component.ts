@@ -3,6 +3,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { NgbTimeStruct, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { Note } from '../note';
+import { ConfigService } from '../config.service';
 
 
 @Component({
@@ -16,31 +17,31 @@ export class NoteComponent implements OnInit {
 	@Input() noteClass: string;
 	@Input() noteSpec: any;
 	@Input() activeNote: any;
-	@Output() deletedNote: EventEmitter<any> = new EventEmitter();
-	@Output() updatedNote: EventEmitter<any> = new EventEmitter();
+	@Output() deleteNote: EventEmitter<any> = new EventEmitter();
+	@Output() updateNote: EventEmitter<any> = new EventEmitter();
 	@Output() selectingDateTime: EventEmitter<any> = new EventEmitter();
 
-	descMaxLength = 140;
-	time: NgbTimeStruct;
+	private time: NgbTimeStruct;
+	private descMaxLength = this.configService.descMaxLength;
+	// Needed for prevent calling updNote() twice on one event
+	private firedByUser: boolean = true; 
 
-	constructor() {
-		
+	constructor(private configService: ConfigService) {
 	}
 
 	ngOnInit() {
   	if(!this.note) this.note = {};
   }
 
-	deleteNote() {
-		this.deletedNote.emit();
+	delNote() {
+		this.deleteNote.emit();
 	}
 
-	updateNote($event?: any) {
+	updNote($event?: any) {
 		// Check length of note.discription
 		// and save the note if necessary (in case of blur or
 		// press ENTER events)
 		
-		// TODO: save note.notificationDate as Date
 		let keyCode: number;
 		
 		if($event && $event.clipboardData) {
@@ -64,8 +65,12 @@ export class NoteComponent implements OnInit {
 		// $event.which - for FireFox
 		if($event) keyCode = $event.which || $event.keyCode;
 		// Emit on blur or press Enter events
-		if(!$event || keyCode == 13) {
-			this.updatedNote.emit(this.note);
+		if((!$event || keyCode == 13) && this.firedByUser) {
+			// Prevent calling updNote() twice, when blur fired by
+			// browser after keydown, or vice versa (keydown after blur)
+			this.firedByUser = false;
+			setTimeout(() => { this.firedByUser = true }, 500);
+			this.updateNote.emit(this.note);
 		}
 	}
 
@@ -83,7 +88,7 @@ export class NoteComponent implements OnInit {
 		// at all buttons with Date and Time Pickers
 		this.selectingDateTime.emit();
 
-		this.updateNote();
+		this.updNote();
 	}
 
 
@@ -94,7 +99,7 @@ export class NoteComponent implements OnInit {
 
 	clearNotification() {
 		delete this.note.notificationDate;
-		this.updateNote();
+		this.updNote();
 	}
 
 	
@@ -110,7 +115,7 @@ export class NoteComponent implements OnInit {
 				date.getFullYear(),	date.getMonth(), date.getDate(),
 				this.time.hour, this.time.minute, 0, 0);
 
-			this.updateNote();
+			this.updNote();
 		}
 
 		// Toggle disabled property

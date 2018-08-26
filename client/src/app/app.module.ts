@@ -16,7 +16,15 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { NoteComponent } from './note/note.component';
 import { ContenteditableModelDirective } from './contenteditable-model.directive';
 import { FooterComponent } from './footer/footer.component';
+import { DeleteAccountModalComponent } from './delete-account-modal/delete-account-modal.component';
+import { DeleteAccConfirmService } from './delete-acc-confirm.service';
 
+// DeleteAccConfirmService are used for coomunication
+// between NotesComponent and DeleteAccountModalComponent only,
+// so in that cases I have to declare DeleteAccConfirmService
+// in parent's (NotesComponent) providers property of @Component
+// decorator, but this does not working in my case, I think because 
+// of DeleteAccountModalComponent - is a dynamic component.
 
 @NgModule({
   declarations: [
@@ -26,7 +34,8 @@ import { FooterComponent } from './footer/footer.component';
     AddUserComponent,
     NoteComponent,
     ContenteditableModelDirective,
-    FooterComponent
+    FooterComponent,
+    DeleteAccountModalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +47,10 @@ import { FooterComponent } from './footer/footer.component';
   providers: [
     ConfigService,
     UserService,
-    SlicePipe
+    SlicePipe,
+    DeleteAccConfirmService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DeleteAccountModalComponent]
 })
 export class AppModule { }

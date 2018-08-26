@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Router }  from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { User } from '../user';
 import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
+import { DeleteAccountModalComponent } from '../delete-account-modal/delete-account-modal.component';
+import { DeleteAccConfirmService } from '../delete-acc-confirm.service';
 
 @Component({
   selector: 'app-notes',
@@ -21,19 +23,26 @@ export class NotesComponent implements OnInit {
 
 	constructor(private userService: UserService,
   	private conf: ConfigService,
-  	private router: Router
+  	private router: Router,
+  	private modalService: NgbModal,
+  	private deleteAccConfirmService: DeleteAccConfirmService
   ) {	
   		this.user = new User;
+
+  		deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
+    		this.deleteAccount();
+    	});
+
   }
 
   ngOnInit() {
-  	this.getNotes();
+  	this.getNotes(true);
   	this.currentNotesNum = 0;
   	this.activeNote = {};
   }
 
 
-  onDeletedNote(noteType, index) {
+  onDeleteNote(noteType, index) {
   	let userToSend;
   	
   	this.user.notes[noteType].splice(index, 1);
@@ -55,7 +64,7 @@ export class NotesComponent implements OnInit {
   }
 
 
-  onUpdatedNote(noteType, index, note) {
+  onUpdateNote(noteType, index, note) {
   	let userToSend;
   	
   	this.user.notes[noteType][index] = note;
@@ -77,7 +86,7 @@ export class NotesComponent implements OnInit {
   }
 
 
-  private getNotes(): void {
+  private getNotes(isInint?: boolean): void {
   	this.userService.getNotes().subscribe(res => {
   		// Adding null elments to arrays while it length
   		// will reach 3, for displaying empty notes to user 
@@ -96,7 +105,13 @@ export class NotesComponent implements OnInit {
   		})
 
   		this.user = res;
-  	}, error => { this.notesError = this.errorMessage(error)	});
+  	}, error => { 
+  		// In case of first attempt to load notes status 403
+  		// obviosly mean that user not log in yet
+  		if(isInint && error === 403) this.router.navigateByUrl('login');
+  		
+  		this.notesError = this.errorMessage(error)
+  	});
   }
 
   selectControlClass(m: number): void {
@@ -140,12 +155,16 @@ export class NotesComponent implements OnInit {
 
   deleteAccount() {
   	this.userService.deleteAccount().subscribe(res => {
-  		console.log(res);
   		this.router.navigateByUrl('login');
   	},
   		error => { 
   			this.notesError = this.errorMessage(error)
   		});
+  }
+
+  openModal() {
+    const modalRef = this.modalService
+    	.open(DeleteAccountModalComponent, { centered: true });
   }
 
   errorMessage(error: number): string;
