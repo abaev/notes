@@ -13,6 +13,8 @@ client/node_modules
 #MongoDB data directory
 /data
 
+mlab.txt
+
 # IDEs and editors
 client/.idea
 .project

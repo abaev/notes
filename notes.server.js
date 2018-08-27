@@ -28,8 +28,8 @@ const app = express();
 // http://expressjs.com/ru/advanced/best-practice-security.html
 
 // Connecting to MongoDB via mongoose
-mongoose.connect(conf.mongodbUrl).then(() => {
-		console.log(`Succesfully connected to the MongoDB at URL: ${conf.mongodbUrl}`);
+mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
+		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 
 		// TODO: Delete this
 		// List of users		
