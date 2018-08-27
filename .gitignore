@@ -10,8 +10,6 @@ client/out-tsc
 client/node_modules
 /node_modules
 
-/notes.server.secret.js
-
 #MongoDB data directory
 /data
 
