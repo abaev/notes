@@ -41,7 +41,7 @@ mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
 		// }, err => { return console.error(err); });
 
 	}, err => { 
-		console.error(`Error connecting to the MongoDB at URL: ${conf.mongodbUrl}`);
+		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 	}
 );
 
