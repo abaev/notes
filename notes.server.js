@@ -220,6 +220,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(conf.listenPort, () => {
-	console.log(`Server listen to :${conf.listenPort}`);
+app.listen(process.env.PORT || conf.listenPort, () => {
+	console.log(`Server listen to :${process.env.PORT || conf.listenPort}`);
 });
