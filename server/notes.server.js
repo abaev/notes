@@ -28,8 +28,8 @@ const app = express();
 // http://expressjs.com/ru/advanced/best-practice-security.html
 
 // Connecting to MongoDB via mongoose
-mongoose.connect(conf.mongodbUrl).then(() => {
-		console.log(`Succesfully connected to the MongoDB at URL: ${conf.mongodbUrl}`);
+mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
+		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 
 		// TODO: Delete this
 		// List of users		
@@ -41,7 +41,7 @@ mongoose.connect(conf.mongodbUrl).then(() => {
 		// }, err => { return console.error(err); });
 
 	}, err => { 
-		console.error(`Error connecting to the MongoDB at URL: ${conf.mongodbUrl}`);
+		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 	}
 );
 
@@ -50,8 +50,11 @@ mongoose.connect(conf.mongodbUrl).then(() => {
 // TODO: Delete this, in production server
 // and client side will be the same origin
 app.use(function(req, res, next) {
+	// TODO: Set correct and safe Access-Control-Allow-Origin
+  // res.header('Access-Control-Allow-Origin', 
+  //   conf.notesUrl);
   res.header('Access-Control-Allow-Origin', 
-    conf.notesUrl);
+    '*');
   res.header('Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials',
@@ -130,6 +133,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
+console.log(`public folder ${path.join(__dirname, 'public')}`);
 app.use( express.static(path.join(__dirname, 'public')) );
 
 
@@ -220,6 +224,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(conf.listenPort, () => {
-	console.log(`Server listen to :${conf.listenPort}`);
+app.listen(process.env.PORT || conf.listenPort, () => {
+	console.log(`Server listen to :${process.env.PORT || conf.listenPort}`);
 });

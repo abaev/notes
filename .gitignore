@@ -9,6 +9,10 @@ client/out-tsc
 # dependencies
 client/node_modules
 /server/node_modules
+/server/public
+/server/.git
+/server/.gitignore
+/server/mlab.txt
 
 /server/notes.server.secret.js
 
