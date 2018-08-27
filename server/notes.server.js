@@ -17,6 +17,7 @@ const uuidv4 = require('uuid/v4');
 const conf = require('./notes.server.config.js');
 const User = require('./models/user.model.js');
 const userCtrl = require('./user.controller.js');
+const secret = require('./notes.server.secret.js');
 
 const app = express();
 
@@ -32,12 +33,12 @@ mongoose.connect(conf.mongodbUrl).then(() => {
 
 		// TODO: Delete this
 		// List of users		
-		User.find({}).exec().then(users => {
-			console.log(`List of users:\n`);
-			for (let i = 0; i < users.length; i++) {
-				console.log(`${users[i].username}\n`);
-			}
-		}, err => { return console.error(err); });
+		// User.find({}).exec().then(users => {
+		// 	console.log(`List of users:\n`);
+		// 	for (let i = 0; i < users.length; i++) {
+		// 		console.log(`${users[i].username}\n`);
+		// 	}
+		// }, err => { return console.error(err); });
 
 	}, err => { 
 		console.error(`Error connecting to the MongoDB at URL: ${conf.mongodbUrl}`);
@@ -139,9 +140,7 @@ app.use(session({
   //   return uuidv4(); // use UUIDs for session IDs
   // },
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
-  // TODO: Make secret secret 
-  // http://pmuellr.blogspot.com/2014/09/keeping-secrets-secret.html
-  secret: 'keyboard cat',
+  secret: secret,
   // TODO: Set cookie: {} in recomended values when use HTTPS
 	resave: false,
   saveUninitialized: true
