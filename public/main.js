@@ -362,7 +362,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var ConfigService = /** @class */ (function () {
     function ConfigService() {
-        this.serverUrl = 'http://localhost:3000/';
+        // serverUrl: string = 'http://localhost:3000/';
+        this.serverUrl = 'https://notes12.herokuapp.com/';
         this.descMaxLength = 140;
     }
     ConfigService = __decorate([
