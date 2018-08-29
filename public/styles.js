@@ -48,7 +48,7 @@ module.exports = "/*!\n * Bootstrap v4.1.1 (https://getbootstrap.com/)\n * Copyr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\n\n/*.app-h-100 {\n\theight: 100vh;\n}*/\n\n.app-h-wo-footer {\n\theight: calc(100vh - 52px);\n}\n\n@media screen and (max-width: 767px) and (orientation: landscape) {\n\t.app-h-wo-footer {\n\t\theight: calc(100% - 52px);\n\t\tmargin-bottom: 10px;\n\t}\n}\n\n.app-overflow-scroll {\n\ttouch-action: pan-y !important;\n\t/*overflow-y: scroll !important;\n\toverflow-x: hidden !important;*/\n\t/*-ms-touch-action: auto !important;\n\t    touch-action: auto !important;*/\n}\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n\n/*.app-h-100 {\n\theight: 100vh;\n}*/\n\n.app-h-wo-footer {\n\theight: calc(100vh - 52px);\n}\n\n@media screen and (max-width: 767px) and (orientation: landscape) {\n\t.app-h-wo-footer {\n\t\theight: calc(100% - 52px);\n\t\tmargin-bottom: 10px;\n\t}\n}\n"
 
 /***/ }),
 
