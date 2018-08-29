@@ -109,8 +109,10 @@
 	(a and span elements), but it's are not in the
 	HTML template of ng-bootstrap Carousel Conponent
 	(Angular Bootstrap generates these elements in a runtime) -->
-	<div class="d-block d-md-none app-h-wo-footer" *ngIf="!notesError">
-		<div id="carouselNotes" class="carousel slide" data-ride="carousel" data-interval="false"
+
+	<!-- .app-allow-v-scroll needs to allow horizontal swipe event and keep vertical scroll on mobiles (without it vertical scroll does not working) -->
+	<div class="d-block d-md-none app-h-wo-footer app-allow-v-scroll" *ngIf="!notesError">
+		<div id="carouselNotes" class="carousel slide app-allow-v-scroll" data-ride="carousel" data-interval="false"
 		(swipeleft)="onSwipe('carousel-control-next')"
     (swiperight)="onSwipe('carousel-control-prev')">
 		  <div class="carousel-inner">

@@ -105,3 +105,10 @@ button p {
 }
 /*- - - - - - -*/
 
+.app-allow-v-scroll {
+	touch-action: pan-y !important;
+	/*overflow-y: scroll !important;
+	overflow-x: hidden !important;*/
+	/*-ms-touch-action: auto !important;
+	    touch-action: auto !important;*/
+}
