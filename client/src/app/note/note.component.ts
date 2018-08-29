@@ -14,7 +14,7 @@ import { ConfigService } from '../config.service';
 export class NoteComponent implements OnInit {
 
 	@Input() note: Note;
-	@Input() noteClass: string;
+	@Input() noteClass: any;
 	@Input() noteSpec: any;
 	@Input() activeNote: any;
 	@Output() deleteNote: EventEmitter<any> = new EventEmitter();
@@ -22,7 +22,7 @@ export class NoteComponent implements OnInit {
 	@Output() selectingDateTime: EventEmitter<any> = new EventEmitter();
 
 	private time: NgbTimeStruct;
-	private descMaxLength = this.configService.descMaxLength;
+	descMaxLength = this.configService.descMaxLength;
 	// Needed for prevent calling updNote() twice on one event
 	private firedByUser: boolean = true; 
 
