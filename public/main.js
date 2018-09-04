@@ -743,24 +743,6 @@ var LoginComponent = /** @class */ (function () {
             }
         });
     };
-    LoginComponent.prototype.googleAuth = function () {
-        var _this = this;
-        this.userService.googleAuth().subscribe(function (res) {
-            _this.router.navigateByUrl('notes');
-        }, function (error) {
-            switch (error) {
-                case 500:
-                    _this.loginError = 'Sorry, server error. Try again later';
-                    break;
-                case 0:
-                    _this.loginError = 'Something bad happened, please try again later';
-                    break;
-                default:
-                    _this.loginError = error;
-                    break;
-            }
-        });
-    };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-login',
@@ -1252,10 +1234,6 @@ var UserService = /** @class */ (function () {
             withCredentials: true,
             responseType: 'text'
         })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
-    };
-    UserService.prototype.googleAuth = function () {
-        return this.http.get(this.conf.serverUrl + 'auth/google', { withCredentials: true })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
     UserService.prototype.getNotes = function () {
