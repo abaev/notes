@@ -1,7 +1,7 @@
 const conf = {
 	listenPort: 3000,
 	mongodbUrl: 'mongodb://localhost:27017',
-	notesUrl: 'http://localhost:4200',
+	notesUrl: 'https://notes12.herokuapp.com/',
 	saltRounds: 10,
 	// Max length of description property in User.notes object
 	descLength: 140,
