@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 const morgan = require('morgan');
 
@@ -84,6 +85,47 @@ passport.use(new LocalStrategy(
         return done(null, false, { message: 'Incorrect username/password' });
       }
             
+      return done(null, user);
+    }, err => {
+    	console.error('DB error');
+  		return done(err); 
+    });
+  }
+));
+
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: 'https://notes12.herokuapp.com/auth/google/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    //   return done(err, user);
+    // });
+
+    // Find or create user
+    User.findOne( { userId: profile.id} ).exec().then(user => {
+      if (!user) { // Create new user
+        let newUser = new User({
+				  userId: profile.id,
+				  username: '',
+				  hashedPassword: ''
+				});
+
+				newUser.save().then(createdUser => {
+					console.log(
+						`User created
+						profile = ${JSON.stringify(profile)}`)
+					return done(null, createdUser);
+				}, err => {
+					console.error('DB error');
+		  		return done(err);
+				});
+      }
+      
+      console.log(
+				`User found
+				profile = ${JSON.stringify(profile)}`)      
       return done(null, user);
     }, err => {
     	console.error('DB error');
@@ -195,6 +237,17 @@ app.delete('/deleteuser', userCtrl.deleteUser);
 app.get('/notes', userCtrl.get);
 
 app.put('/updatenotes', userCtrl.update);
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    console.log('You was successfuly logged in with Google')
+    res.redirect('/');
+  });
 
 // TODO: Delete this
 // app.get('/authrequired', (req, res) => {
