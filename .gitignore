@@ -13,6 +13,7 @@ client/node_modules
 /server/.git
 /server/.gitignore
 /server/mlab.txt
+/server/google.project.txt
 
 /server/notes.server.secret.js
 

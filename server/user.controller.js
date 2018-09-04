@@ -99,9 +99,6 @@ async function update (req, res, next) {
 
 	try {
 		await userServ.update(updatedUser);
-		// Send {} in response for Angular will not to
-		// fire ERROR 200 (lol). It's may be not a good practice,
-		// but I don't now how to make it in a right way so far.
 		return res.status(200).send();
 
 	
