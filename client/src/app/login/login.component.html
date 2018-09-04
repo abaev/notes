@@ -29,15 +29,22 @@
   			  	Please, type your username and password
   			  </p>
   			</small>
-
-			  <button type="submit" [disabled]="(usernameState.invalid
-			  	&& (usernameState.touched || passwordState.touched))
-			  	|| (passwordState.invalid && (usernameState.touched
-			  	|| passwordState.touched))"
-			  	class="btn btn-outline-primary" (click)="login();">
-			  	Log in
-			  </button>&nbsp;&nbsp;
-			  <a routerLink="/adduser" routerLinkActive="active" class="text-secondary">Sign up</a>
+				
+				<div>
+				  <button type="submit" [disabled]="(usernameState.invalid
+				  	&& (usernameState.touched || passwordState.touched))
+				  	|| (passwordState.invalid && (usernameState.touched
+				  	|| passwordState.touched))"
+				  	class="btn btn-outline-primary" (click)="login();">
+				  	Log in
+				  </button>&nbsp;&nbsp;
+				  <a routerLink="/adduser" routerLinkActive="active" class="text-secondary">Sign up</a>
+			 	</div>
+			  
+			  <button class="btn btn-outline-secondary app-margin-top">
+			  	<img src="../../assets/images/32px-Google_G_Logo.png" alt="">
+			  	Sign in with Google
+			  </button>
 			</form>
 		</div>
 	</div>
