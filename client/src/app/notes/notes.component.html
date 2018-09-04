@@ -110,114 +110,129 @@
 	HTML template of ng-bootstrap Carousel Conponent
 	(Angular Bootstrap generates these elements in a runtime) -->
 
-	<!-- .app-allow-v-scroll needs to allow horizontal swipe event and keep vertical scroll on mobiles (without it vertical scroll does not working) -->
-	<div class="d-block d-md-none app-h-wo-footer app-allow-v-scroll" *ngIf="!notesError">
-		<div id="carouselNotes" class="carousel slide app-allow-v-scroll" data-ride="carousel" data-interval="false"
+	<!-- .app-allow-v-scroll needs to allow horizontal swipe event and keep vertical scroll on mobiles (except iOS) - without it vertical scroll does not working -->
+	
+	<!-- TODO: Don't use swipe since issue with scroll in Safari for awhile
+	Delete this, problem were not solved.
+	If though decide returnswipe pay attention to .h-100, .app-h-wo-footer for footer being in the right place-->
+	
+	<!-- <div class="d-block d-md-none app-h-wo-footer app-allow-v-scroll"
+	[ngClass]="{'app-allow-v-scroll': !isIOS, 'app-allow-v-scroll-ios': isIOS}"
+	*ngIf="!notesError">
+		<div id="carouselNotes" class="carousel slide app-allow-v-scroll"
+		[ngClass]="{'app-allow-v-scroll': !isIOS, 'app-allow-v-scroll-ios': isIOS}"
+		data-ride="carousel" data-interval="false"
 		(swipeleft)="onSwipe('carousel-control-next')"
-    (swiperight)="onSwipe('carousel-control-prev')">
-		  <div class="carousel-inner">
-		    <div class="carousel-item active">
-		      <h2 class="text-center display-4 app-vi-header app-line-break">Very<br>important</h2>
-					<div class="row d-block w-100 no-gutters">
-						<app-note *ngFor="let note of user.notes.veryImportant;
-						index as i"
-						[note]="note"
-						[noteClass]="{ noteExist: 'app-vi-note',
-							noteEmpty: 'app-vi-note-empty' }"
-						[noteSpec]="{ type: 'veryImportant', index: i }"
-						[activeNote]="activeNote"
-						(selectingDateTime)="onDateTimeSelect($event)" 
-						(deleteNote)="onDeleteNote('veryImportant', i)"
-						(updateNote)="onUpdateNote('veryImportant', i, $event)"
-						class="col-md-4 d-block w-100"></app-note>
-					</div>
-		    </div>
-		    <div class="carousel-item">
-		      <h2 class="text-center display-4 app-ai-header">Also<br>important</h2>
-					<div class="row d-block w-100 no-gutters">
-						<app-note *ngFor="let note of user.notes.alsoImportant;
-						index as i"
-						[note]="note"
-						[noteClass]="{ noteExist: 'app-ai-note',
-							noteEmpty: 'app-ai-note-empty' }"
-						[noteSpec]="{ type: 'alsoImportant', index: i }"
-						[activeNote]="activeNote"
-						(selectingDateTime)="onDateTimeSelect($event)"
-						(deleteNote)="onDeleteNote('alsoImportant', i)"
-						(updateNote)="onUpdateNote('alsoImportant', i, $event)"
-						class="col-md-4 d-block w-100"></app-note>
-					</div>
-		    </div>
-		    <div class="carousel-item">
-		      <h2 class="text-center display-4 app-wal-header">Wait<br>a little</h2>
-					<div class="row d-block w-100 no-gutters">
-						<app-note *ngFor="let note of user.notes.waitALittle;
-						index as i"
-						[note]="note"
-						[noteClass]="{ noteExist: 'app-wal-note',
-							noteEmpty: 'app-wal-note-empty' }"
-						[noteSpec]="{ type: 'waitALittle', index: i }"
-						[activeNote]="activeNote"
-						(selectingDateTime)="onDateTimeSelect($event)"
-						(deleteNote)="onDeleteNote('waitALittle', i)"
-						(updateNote)="onUpdateNote('waitALittle', i, $event)"
-						class="col-md-4 d-block w-100"></app-note>
-					</div>
-		    </div>
-		    <div class="carousel-item">
-		    	<h2 class="text-center display-4 app-l-header">Later</h2>
-					<div class="row d-block w-100 no-gutters">
-						<app-note *ngFor="let note of user.notes.later;
-						index as i"
-						[note]="note"
-						[noteClass]="{ noteExist: 'app-l-note',
-							noteEmpty: 'app-l-note-empty' }"
-						[noteSpec]="{ type: 'later', index: i }"
-						[activeNote]="activeNote"
-						(selectingDateTime)="onDateTimeSelect($event)"
-						(deleteNote)="onDeleteNote('later', i)"
-						(updateNote)="onUpdateNote('later', i, $event)"
-						class="col-md-4 d-block w-100"></app-note>
-					</div>
-		    </div>
-		  </div>
-		  <a class="carousel-control-prev app-carousel-control" href="#carouselNotes" role="button" data-slide="prev"
-		  id="carousel-control-prev" (click)="selectControlClass(-1)">
-		    <span class="carousel-control-prev-icon display-4" aria-hidden="true"
-		    [ngClass]="'app-carousel-control-prev-' + currentNotesNum"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="carousel-control-next app-carousel-control" href="#carouselNotes" role="button" data-slide="next"
-		  id="carousel-control-next" (click)="selectControlClass(1)">
-		    <span class="carousel-control-next-icon" aria-hidden="true"
-		    [ngClass]="'app-carousel-control-next-' + currentNotesNum"></span>
-			   <span class="sr-only">Next</span>
-		  </a>
-		</div>
-		
-		<br> <!-- Delete account and exit buttons -->
-		<div class="row app-exit-del-button">
-			<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
-				<button class="btn btn-outline-primary w-100"
-				(click)="logout();">
-					<p>
-						<span class="app-button-text">Exit</span>
-						<span class="material-icons">exit_to_app</span>
-					</p>
-				</button>
+    (swiperight)="onSwipe('carousel-control-prev')"> -->
+	
+	<div class="d-block d-md-none"
+	*ngIf="!notesError">
+		<div class="app-h-wo-footer">
+			<div id="carouselNotes" class="carousel slide"
+			data-ride="carousel" data-interval="false">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <h2 class="text-center display-4 app-vi-header app-line-break">Very<br>important</h2>
+						<div class="row d-block w-100 no-gutters">
+							<app-note *ngFor="let note of user.notes.veryImportant;
+							index as i"
+							[note]="note"
+							[noteClass]="{ noteExist: 'app-vi-note',
+								noteEmpty: 'app-vi-note-empty' }"
+							[noteSpec]="{ type: 'veryImportant', index: i }"
+							[activeNote]="activeNote"
+							(selectingDateTime)="onDateTimeSelect($event)" 
+							(deleteNote)="onDeleteNote('veryImportant', i)"
+							(updateNote)="onUpdateNote('veryImportant', i, $event)"
+							class="col-md-4 d-block w-100"></app-note>
+						</div>
+			    </div>
+			    <div class="carousel-item">
+			      <h2 class="text-center display-4 app-ai-header">Also<br>important</h2>
+						<div class="row d-block w-100 no-gutters">
+							<app-note *ngFor="let note of user.notes.alsoImportant;
+							index as i"
+							[note]="note"
+							[noteClass]="{ noteExist: 'app-ai-note',
+								noteEmpty: 'app-ai-note-empty' }"
+							[noteSpec]="{ type: 'alsoImportant', index: i }"
+							[activeNote]="activeNote"
+							(selectingDateTime)="onDateTimeSelect($event)"
+							(deleteNote)="onDeleteNote('alsoImportant', i)"
+							(updateNote)="onUpdateNote('alsoImportant', i, $event)"
+							class="col-md-4 d-block w-100"></app-note>
+						</div>
+			    </div>
+			    <div class="carousel-item">
+			      <h2 class="text-center display-4 app-wal-header">Wait<br>a little</h2>
+						<div class="row d-block w-100 no-gutters">
+							<app-note *ngFor="let note of user.notes.waitALittle;
+							index as i"
+							[note]="note"
+							[noteClass]="{ noteExist: 'app-wal-note',
+								noteEmpty: 'app-wal-note-empty' }"
+							[noteSpec]="{ type: 'waitALittle', index: i }"
+							[activeNote]="activeNote"
+							(selectingDateTime)="onDateTimeSelect($event)"
+							(deleteNote)="onDeleteNote('waitALittle', i)"
+							(updateNote)="onUpdateNote('waitALittle', i, $event)"
+							class="col-md-4 d-block w-100"></app-note>
+						</div>
+			    </div>
+			    <div class="carousel-item">
+			    	<h2 class="text-center display-4 app-l-header">Later</h2>
+						<div class="row d-block w-100 no-gutters">
+							<app-note *ngFor="let note of user.notes.later;
+							index as i"
+							[note]="note"
+							[noteClass]="{ noteExist: 'app-l-note',
+								noteEmpty: 'app-l-note-empty' }"
+							[noteSpec]="{ type: 'later', index: i }"
+							[activeNote]="activeNote"
+							(selectingDateTime)="onDateTimeSelect($event)"
+							(deleteNote)="onDeleteNote('later', i)"
+							(updateNote)="onUpdateNote('later', i, $event)"
+							class="col-md-4 d-block w-100"></app-note>
+						</div>
+			    </div>
+			  </div>
+			  <a class="carousel-control-prev app-carousel-control" href="#carouselNotes" role="button" data-slide="prev"
+			  id="carousel-control-prev" (click)="selectControlClass(-1)">
+			    <span class="carousel-control-prev-icon display-4" aria-hidden="true"
+			    [ngClass]="'app-carousel-control-prev-' + currentNotesNum"></span>
+			    <span class="sr-only">Previous</span>
+			  </a>
+			  <a class="carousel-control-next app-carousel-control" href="#carouselNotes" role="button" data-slide="next"
+			  id="carousel-control-next" (click)="selectControlClass(1)">
+			    <span class="carousel-control-next-icon" aria-hidden="true"
+			    [ngClass]="'app-carousel-control-next-' + currentNotesNum"></span>
+				   <span class="sr-only">Next</span>
+			  </a>
 			</div>
+			
+			<br> <!-- Delete account and exit buttons -->
+			<div class="row app-exit-del-button">
+				<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
+					<button class="btn btn-outline-primary w-100"
+					(click)="logout();">
+						<p>
+							<span class="app-button-text">Exit</span>
+							<span class="material-icons">exit_to_app</span>
+						</p>
+					</button>
+				</div>
 
-			<div class="col-xs-12 col-sm-6 col-lg-2">
-				<button class="btn btn-outline-danger w-100 app-button-delete"
-				(click)="openModal();">
-					<p>
-						<span class="app-button-text">Delete account</span>
-						<span class="material-icons">delete</span>
-					</p>
-				</button>
+				<div class="col-xs-12 col-sm-6 col-lg-2">
+					<button class="btn btn-outline-danger w-100 app-button-delete"
+					(click)="openModal();">
+						<p>
+							<span class="app-button-text">Delete account</span>
+							<span class="material-icons">delete</span>
+						</p>
+					</button>
+				</div>
 			</div>
 		</div>
-		
 		<br>
 		<app-footer></app-footer>
 	</div>

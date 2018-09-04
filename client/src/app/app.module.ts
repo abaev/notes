@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SlicePipe } from '@angular/common';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 import { AppComponent } from './app.component';
 import { NotesComponent } from './notes/notes.component';
@@ -42,7 +43,8 @@ import { DeleteAccConfirmService } from './delete-acc-confirm.service';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     ConfigService,

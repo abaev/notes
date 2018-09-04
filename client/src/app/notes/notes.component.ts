@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router }  from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { User } from '../user';
 import { ConfigService } from '../config.service';
@@ -20,22 +21,27 @@ export class NotesComponent implements OnInit {
 	notesError: string;
 	currentNotesNum: number;
 	activeNote: any;
+	isIOS: boolean; 
 
 	constructor(private userService: UserService,
   	private conf: ConfigService,
   	private router: Router,
   	private modalService: NgbModal,
-  	private deleteAccConfirmService: DeleteAccConfirmService
+  	private deleteAccConfirmService: DeleteAccConfirmService,
+  	private deviceService: DeviceDetectorService
   ) {	
   		this.user = new User;
 
   		deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
     		this.deleteAccount();
-    	});
+  	});
 
   }
 
   ngOnInit() {
+  	// For allow vertical scroll on iOS devices
+  	// (but we lose swipe this way)
+  	this.isIOS = /ipad|iphone|ipod/i.test(this.deviceService.device);
   	this.getNotes(true);
   	this.currentNotesNum = 0;
   	this.activeNote = {};
@@ -124,6 +130,7 @@ export class NotesComponent implements OnInit {
   	this.currentNotesNum = t % 4;
   }
 
+  // TODO: Delete this
   onSwipe(id: string): void {
   	document.getElementById(id).click();
   }

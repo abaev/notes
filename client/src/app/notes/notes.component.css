@@ -106,9 +106,13 @@ button p {
 /*- - - - - - -*/
 
 .app-allow-v-scroll {
+	/*Allow vertical scroll and swipe left-right except iOS
+	(iOS supported only touch-action: auto; or
+	touch-action: manipulation;)*/
 	touch-action: pan-y !important;
-	/*overflow-y: scroll !important;
-	overflow-x: hidden !important;*/
-	/*-ms-touch-action: auto !important;
-	    touch-action: auto !important;*/
+}
+
+.app-allow-v-scroll-ios {
+	/*Allow vertical scroll on iOS devices, but bloks swipe*/
+	touch-action: auto !important;
 }
