@@ -76,12 +76,16 @@ passport.use(new LocalStrategy(
   // { usernameField: 'email',
   //   passwordField: 'passwd', },
   (username, password, done) => {
-    console.log('Inside local strategy callback');
-        
+    // Prevent possible vulnerability by using username == null
+    // and password == null (I setting null to username and password
+    // in case of Google OAuth)
+    if(username === null && password === null){
+    	done(null, false, { message: 'Incorrect username/password' });
+    }
+
     User.findOne( { username: username} ).exec().then(user => {
       // Or should I use asynchronous version bcrypt.compare??
       if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
-        console.log('Incorrect username/password');
         return done(null, false, { message: 'Incorrect username/password' });
       }
             
@@ -99,23 +103,16 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://notes12.herokuapp.com/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return done(err, user);
-    // });
-
     // Find or create user
     User.findOne( { userId: profile.id} ).exec().then(user => {
       if (!user) { // Create new user
         let newUser = new User({
 				  userId: profile.id,
-				  username: '',
-				  hashedPassword: ''
+				  username: null,
+				  hashedPassword: null
 				});
 
 				newUser.save().then(createdUser => {
-					console.log(
-						`User created
-						profile = ${JSON.stringify(profile)}`)
 					return done(null, createdUser);
 				}, err => {
 					console.error('DB error');
@@ -123,9 +120,6 @@ passport.use(new GoogleStrategy({
 				});
       }
       
-      console.log(
-				`User found
-				profile = ${JSON.stringify(profile)}`)      
       return done(null, user);
     }, err => {
     	console.error('DB error');
@@ -137,7 +131,6 @@ passport.use(new GoogleStrategy({
 
 // Tell passport how to serialize/deserialize the user
 passport.serializeUser((user, done) => {
-  console.log('Inside serializeUser callback. User id is save to the session file store here')
   if(user) {
   	done(null, user.userId);
   } else {
@@ -147,12 +140,8 @@ passport.serializeUser((user, done) => {
 
 
 passport.deserializeUser((id, done) => {
-  console.log('Inside deserializeUser callback');
-  console.log(`The user id passport saved in the session file store is: ${id}`);
-  
   User.findOne( { userId: id} ).exec().then(user => {
   	if (!user) {
-    	console.log(`There are no user with userId = ${id}`);
       return done(null, false, { message: `There are no such user` });
     }
     
@@ -175,7 +164,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-console.log(`public folder ${path.join(__dirname, 'public')}`);
 app.use( express.static(path.join(__dirname, 'public')) );
 
 
@@ -198,23 +186,13 @@ app.use(passport.session());
 
 
 app.post('/login', (req, res, next) => {
-  console.log('Inside POST /login callback')
-  console.log(`req.body = ${JSON.stringify(req.body)}`);
-  console.log(`req.body.username = ${req.body.username}`);
-  console.log(`req.body.password = ${req.body.password}`);
   passport.authenticate('local', (err, user, info) => {
-    console.log('Inside passport.authenticate() callback');
-    console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
-    console.log(`req.user: ${JSON.stringify(req.user)}`);
 
     if(err) return next(err);
     if(!user) return next( { statusCode: 403, message: info.message } );
     
     req.login(user, err => {
     	if(err) return next(err);
-      console.log('Inside req.login() callback');
-      console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`);
-      console.log(`req.user: ${JSON.stringify(req.user)}`);
     
       return res.status(200).send();
     })
@@ -245,7 +223,6 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    console.log('You was successfuly logged in with Google')
     res.redirect('/');
   });
 
