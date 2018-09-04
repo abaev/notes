@@ -745,6 +745,7 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.googleAuth = function () {
         var _this = this;
+        console.log('LoginComponent - OK');
         this.userService.googleAuth().subscribe(function (res) {
             _this.router.navigateByUrl('notes');
         }, function (error) {
@@ -1255,6 +1256,7 @@ var UserService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
     UserService.prototype.googleAuth = function () {
+        console.log('UserService - OK');
         return this.http.get(this.conf.serverUrl + 'auth/google', { withCredentials: true })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
