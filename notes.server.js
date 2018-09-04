@@ -52,10 +52,10 @@ mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
 // and client side will be the same origin
 app.use(function(req, res, next) {
 	// TODO: Set correct and safe Access-Control-Allow-Origin
-  // res.header('Access-Control-Allow-Origin', 
-  //   conf.notesUrl);
   res.header('Access-Control-Allow-Origin', 
-    '*');
+    conf.notesUrl);
+  // res.header('Access-Control-Allow-Origin', 
+  //   '*');
   res.header('Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials',
