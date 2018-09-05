@@ -199,23 +199,6 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-
-app.get('/logout', (req, res) => {
-  if(req.isAuthenticated()) {
-		req.logout();
-	  res.send();
-	} else res.status(400).send('Bag request');
-});
-
-
-app.post('/adduser', userCtrl.add);
-
-app.delete('/deleteuser', userCtrl.deleteUser);
-
-app.get('/notes', userCtrl.get);
-
-app.put('/updatenotes', userCtrl.update);
-
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
 
@@ -226,19 +209,22 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
-// TODO: Delete this
-// app.get('/authrequired', (req, res) => {
-//   console.log('Inside GET /authrequired callback')
-//   console.log(`User authenticated? ${req.isAuthenticated()}`)
-//   console.log(`req.sessionID = ${req.sessionID}`)
-//   console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-//   console.log(`req.user: ${JSON.stringify(req.user)}`)
-//   if(req.isAuthenticated()) {
-//     res.send('you hit the authentication endpoint\n')
-//   } else {
-//     res.redirect('/')
-//   }
-// })
+
+app.get('/logout', (req, res) => {
+  if(req.isAuthenticated()) {
+		req.logout();
+	  res.send();
+	} else res.status(400).send('Bad request');
+});
+
+
+app.post('/adduser', userCtrl.add);
+
+app.delete('/deleteuser', userCtrl.deleteUser);
+
+app.get('/notes', userCtrl.get);
+
+app.put('/updatenotes', userCtrl.update);
 
 
 // Error handling middleware
