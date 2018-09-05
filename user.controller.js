@@ -169,8 +169,8 @@ async function deleteUser (req, res, next) {
 	}
 
 	try {
-		await userServ.deleteUser(req.user.userId);
 		req.logout();
+		await userServ.deleteUser(req.user.userId);
 		res.send('User was deleted');
 	
 	} catch(err) {

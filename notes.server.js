@@ -80,7 +80,6 @@ passport.use(new LocalStrategy(
     // and password == null (I setting null to username and password
     // in case of Google OAuth)
     if(username === null && password === null){
-    	console.log(`<< I' V E  G O T C H A !! >>`);
     	done(null, false, { message: 'Incorrect username/password' });
     }
 
