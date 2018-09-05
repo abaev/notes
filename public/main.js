@@ -657,7 +657,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".app-padding-t-b {\r\n\tpadding: 15px !important;\r\n}\r\n\r\n.app-border {\r\n\tborder: 1px #ccc solid;\r\n\tborder-radius: 5px;\r\n}\r\n\r\n.app-margin-l-r {\r\n\tmargin-left: 15px;\r\n\tmargin-right: 15px;\r\n}\r\n\r\n.ng-dirty.ng-touched.ng-invalid, .ng-pristine.ng-invalid.ng-touched {\r\n\tborder-color: #dc3545!important;\r\n}\r\n\r\nbutton img {\r\n\tmargin-top: -3px;\r\n\twidth: 20px;\r\n\theight: 20px;\r\n}\r\n\r\n.app-margin-top {\r\n\tmargin-top: 15px;\r\n}"
+module.exports = ".app-padding-t-b {\r\n\tpadding: 15px !important;\r\n}\r\n\r\n.app-border {\r\n\tborder: 1px #ccc solid;\r\n\tborder-radius: 5px;\r\n}\r\n\r\n.app-margin-l-r {\r\n\tmargin-left: 15px;\r\n\tmargin-right: 15px;\r\n}\r\n\r\n.ng-dirty.ng-touched.ng-invalid, .ng-pristine.ng-invalid.ng-touched {\r\n\tborder-color: #dc3545!important;\r\n}\r\n\r\na img {\r\n\tmargin-top: -3px;\r\n\twidth: 20px;\r\n\theight: 20px;\r\n}\r\n\r\n.app-margin-top {\r\n\tmargin-top: 15px;\r\n}"
 
 /***/ }),
 
