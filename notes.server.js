@@ -120,29 +120,29 @@ passport.use(new GoogleStrategy({
 
 
 // Tell passport how to serialize/deserialize the user
-// passport.serializeUser((user, done) => {
-//   if(user) {
-//   	done(null, user.userId);
-//   } else {
-//   	done(null, false);
-//   }
-// });
+passport.serializeUser((user, done) => {
+  if(user) {
+  	done(null, user.userId);
+  } else {
+  	done(null, false);
+  }
+});
 
 
-// passport.deserializeUser((id, done) => {
-//   User.findOne( { userId: id} ).exec().then(user => {
-//   	if (!user) {
-//       return done(null, false, { message: `There are no such user` });
-//     }
+passport.deserializeUser((id, done) => {
+  User.findOne( { userId: id} ).exec().then(user => {
+  	if (!user) {
+      return done(null, false, { message: `There are no such user` });
+    }
     
-//     return done(null, user);
-//   }, err => {
-//   	console.error('DB error');
-//   	// May be return next(err) will be better way,
-//   	// than we respond to client that error ocured 
-// 		return done(err);
-//   });
-// });
+    return done(null, user);
+  }, err => {
+  	console.error('DB error');
+  	// May be return next(err) will be better way,
+  	// than we respond to client that error ocured 
+		return done(err);
+  });
+});
 
 
 // For Content-Type: application/x-www-form-urlencoded
