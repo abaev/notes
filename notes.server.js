@@ -203,7 +203,7 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
-app.get('/error', () => {
+app.get('/error', (req, res) => {
 	console.log('\n failureRedirect \n');
 	res.send('failureRedirect');
 })
