@@ -199,7 +199,8 @@ app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/error' }), /*/login*/
   function(req, res) {
     // Successful authentication, redirect home.
-    console.log(`res = ${JSON.stringify(res)}`);
+    console.log('Succsess redirect to /');
+    console.log(`res.headers = ${res.headers}`);
     res.redirect('/');
   });
 
