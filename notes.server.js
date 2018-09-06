@@ -31,16 +31,6 @@ const app = express();
 // Connecting to MongoDB via mongoose
 mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
 		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
-
-		// TODO: Delete this
-		// List of users		
-		// User.find({}).exec().then(users => {
-		// 	console.log(`List of users:\n`);
-		// 	for (let i = 0; i < users.length; i++) {
-		// 		console.log(`${users[i].username}\n`);
-		// 	}
-		// }, err => { return console.error(err); });
-
 	}, err => { 
 		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 	}
@@ -71,31 +61,31 @@ app.options('/*', (req, res, next) => {
 
 
 // Configure passport.js to use the local strategy
-passport.use(new LocalStrategy(
-  // Optional, defaults to 'username' and 'password'
-  // { usernameField: 'email',
-  //   passwordField: 'passwd', },
-  (username, password, done) => {
-    // Prevent possible vulnerability by using username == null
-    // and password == null (I setting null to username and password
-    // in case of Google OAuth)
-    if(username === null && password === null){
-    	done(null, false, { message: 'Incorrect username/password' });
-    }
+// passport.use(new LocalStrategy(
+//   // Optional, defaults to 'username' and 'password'
+//   // { usernameField: 'email',
+//   //   passwordField: 'passwd', },
+//   (username, password, done) => {
+//     // Prevent possible vulnerability by using username == null
+//     // and password == null (I setting null to username and password
+//     // in case of Google OAuth)
+//     if(username === null && password === null){
+//     	done(null, false, { message: 'Incorrect username/password' });
+//     }
 
-    User.findOne( { username: username} ).exec().then(user => {
-      // Or should I use asynchronous version bcrypt.compare??
-      if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
-        return done(null, false, { message: 'Incorrect username/password' });
-      }
+//     User.findOne( { username: username} ).exec().then(user => {
+//       // Or should I use asynchronous version bcrypt.compare??
+//       if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+//         return done(null, false, { message: 'Incorrect username/password' });
+//       }
             
-      return done(null, user);
-    }, err => {
-    	console.error('DB error');
-  		return done(err); 
-    });
-  }
-));
+//       return done(null, user);
+//     }, err => {
+//     	console.error('DB error');
+//   		return done(err); 
+//     });
+//   }
+// ));
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -130,29 +120,29 @@ passport.use(new GoogleStrategy({
 
 
 // Tell passport how to serialize/deserialize the user
-passport.serializeUser((user, done) => {
-  if(user) {
-  	done(null, user.userId);
-  } else {
-  	done(null, false);
-  }
-});
+// passport.serializeUser((user, done) => {
+//   if(user) {
+//   	done(null, user.userId);
+//   } else {
+//   	done(null, false);
+//   }
+// });
 
 
-passport.deserializeUser((id, done) => {
-  User.findOne( { userId: id} ).exec().then(user => {
-  	if (!user) {
-      return done(null, false, { message: `There are no such user` });
-    }
+// passport.deserializeUser((id, done) => {
+//   User.findOne( { userId: id} ).exec().then(user => {
+//   	if (!user) {
+//       return done(null, false, { message: `There are no such user` });
+//     }
     
-    return done(null, user);
-  }, err => {
-  	console.error('DB error');
-  	// May be return next(err) will be better way,
-  	// than we respond to client that error ocured 
-		return done(err);
-  });
-});
+//     return done(null, user);
+//   }, err => {
+//   	console.error('DB error');
+//   	// May be return next(err) will be better way,
+//   	// than we respond to client that error ocured 
+// 		return done(err);
+//   });
+// });
 
 
 // For Content-Type: application/x-www-form-urlencoded
@@ -185,19 +175,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
+// app.post('/login', (req, res, next) => {
+//   passport.authenticate('local', (err, user, info) => {
 
-    if(err) return next(err);
-    if(!user) return next( { statusCode: 403, message: info.message } );
+//     if(err) return next(err);
+//     if(!user) return next( { statusCode: 403, message: info.message } );
     
-    req.login(user, err => {
-    	if(err) return next(err);
+//     req.login(user, err => {
+//     	if(err) return next(err);
     
-      return res.status(200).send();
-    })
-  })(req, res, next);
-});
+//       return res.status(200).send();
+//     })
+//   })(req, res, next);
+// });
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
