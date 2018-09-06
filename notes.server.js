@@ -61,31 +61,31 @@ app.options('/*', (req, res, next) => {
 
 
 // Configure passport.js to use the local strategy
-// passport.use(new LocalStrategy(
-//   // Optional, defaults to 'username' and 'password'
-//   // { usernameField: 'email',
-//   //   passwordField: 'passwd', },
-//   (username, password, done) => {
-//     // Prevent possible vulnerability by using username == null
-//     // and password == null (I setting null to username and password
-//     // in case of Google OAuth)
-//     if(username === null && password === null){
-//     	done(null, false, { message: 'Incorrect username/password' });
-//     }
+passport.use(new LocalStrategy(
+  // Optional, defaults to 'username' and 'password'
+  // { usernameField: 'email',
+  //   passwordField: 'passwd', },
+  (username, password, done) => {
+    // Prevent possible vulnerability by using username == null
+    // and password == null (I setting null to username and password
+    // in case of Google OAuth)
+    if(username === null && password === null){
+    	done(null, false, { message: 'Incorrect username/password' });
+    }
 
-//     User.findOne( { username: username} ).exec().then(user => {
-//       // Or should I use asynchronous version bcrypt.compare??
-//       if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
-//         return done(null, false, { message: 'Incorrect username/password' });
-//       }
+    User.findOne( { username: username} ).exec().then(user => {
+      // Or should I use asynchronous version bcrypt.compare??
+      if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+        return done(null, false, { message: 'Incorrect username/password' });
+      }
             
-//       return done(null, user);
-//     }, err => {
-//     	console.error('DB error');
-//   		return done(err); 
-//     });
-//   }
-// ));
+      return done(null, user);
+    }, err => {
+    	console.error('DB error');
+  		return done(err); 
+    });
+  }
+));
 
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -132,11 +132,14 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   User.findOne( { userId: id} ).exec().then(user => {
   	if (!user) {
+  		console.log('\n passport.deserializeUser Error: There are no such user\n');
       return done(null, false, { message: `There are no such user` });
     }
     
+    console.log('\n passport.deserializeUser Error: OK. User Found\n');
     return done(null, user);
   }, err => {
+  	console.log('\n passport.deserializeUser Error: DB error\n');
   	console.error('DB error');
   	// May be return next(err) will be better way,
   	// than we respond to client that error ocured 
@@ -175,19 +178,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// app.post('/login', (req, res, next) => {
-//   passport.authenticate('local', (err, user, info) => {
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
 
-//     if(err) return next(err);
-//     if(!user) return next( { statusCode: 403, message: info.message } );
+    if(err) return next(err);
+    if(!user) return next( { statusCode: 403, message: info.message } );
     
-//     req.login(user, err => {
-//     	if(err) return next(err);
+    req.login(user, err => {
+    	if(err) return next(err);
     
-//       return res.status(200).send();
-//     })
-//   })(req, res, next);
-// });
+      return res.status(200).send();
+    })
+  })(req, res, next);
+});
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
