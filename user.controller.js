@@ -134,7 +134,7 @@ async function add (req, res, next) {
 		// the same username yet, create and log in
 		if (user) {
     	return next( { statusCode: 403,
-      	message: 'This username already exsists, please choose other one'} );
+      	message: 'This username already exsists, please choose other'} );
     }
 
     // Everything OK, creating and log in new user
