@@ -202,6 +202,10 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
+app.get('/error', () => {
+	console.log('\n failureRedirect \n');
+})
+
 
 app.get('/logout', (req, res) => {
   if(req.isAuthenticated()) {
