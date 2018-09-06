@@ -136,7 +136,7 @@ passport.deserializeUser((id, done) => {
       return done(null, false, { message: `There are no such user` });
     }
     
-    console.log('\n passport.deserializeUser Error: OK. User Found\n');
+    console.log('\n passport.deserializeUser: OK. User Found\n');
     return done(null, user);
   }, err => {
   	console.log('\n passport.deserializeUser Error: DB error\n');
