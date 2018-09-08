@@ -93,7 +93,6 @@ passport.use(new GoogleStrategy({
     callbackURL: 'https://notes12.herokuapp.com/auth/google/callback'
   },
   function(accessToken, refreshToken, profile, done) {
-  	console.log(profile);
     // Find or create user
     User.findOne( { userId: profile.id} ).exec().then(user => {
       if (!user) { // Create new user
