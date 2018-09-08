@@ -135,14 +135,11 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   User.findOne( { userId: id} ).exec().then(user => {
   	if (!user) {
-  		console.log('\n passport.deserializeUser Error: There are no such user\n');
       return done(null, false, { message: `There are no such user` });
     }
     
-    console.log('\n passport.deserializeUser: OK. User Found\n');
     return done(null, user);
   }, err => {
-  	console.log('\n passport.deserializeUser Error: DB error\n');
   	console.error('DB error');
   	// May be return next(err) will be better way,
   	// than we respond to client that error ocured 
@@ -199,18 +196,11 @@ app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
 
 app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/error' }), /*/login*/
+  passport.authenticate('google', { failureRedirect: '/login' }), /*/login*/
   function(req, res) {
     // Successful authentication, redirect home.
-    console.log('Succsess redirect to /');
-    console.log(`res.headers = ${res.headers}`);
     res.redirect('/');
   });
-
-app.get('/error', (req, res) => {
-	console.log('\n failureRedirect \n');
-	res.send('failureRedirect');
-})
 
 
 app.get('/logout', (req, res) => {
