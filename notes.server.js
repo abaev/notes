@@ -103,7 +103,6 @@ passport.use(new GoogleStrategy({
 				});
 
 				newUser.save().then(createdUser => {
-					console.log(createdUser);
 					return done(null, createdUser);
 				}, err => {
 					console.error('DB error');
