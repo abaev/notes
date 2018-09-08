@@ -109,9 +109,11 @@ passport.use(new GoogleStrategy({
 					console.error('DB error');
 		  		return done(err);
 				});
+      } else {
+      	return done(null, user);
       }
       
-      return done(null, user);
+      
     }, err => {
     	console.error('DB error');
   		return done(err); 
