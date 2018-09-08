@@ -31,16 +31,6 @@ const app = express();
 // Connecting to MongoDB via mongoose
 mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
 		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
-
-		// TODO: Delete this
-		// List of users		
-		// User.find({}).exec().then(users => {
-		// 	console.log(`List of users:\n`);
-		// 	for (let i = 0; i < users.length; i++) {
-		// 		console.log(`${users[i].username}\n`);
-		// 	}
-		// }, err => { return console.error(err); });
-
 	}, err => { 
 		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
 	}
@@ -118,9 +108,11 @@ passport.use(new GoogleStrategy({
 					console.error('DB error');
 		  		return done(err);
 				});
+      } else {
+      	return done(null, user);
       }
       
-      return done(null, user);
+      
     }, err => {
     	console.error('DB error');
   		return done(err); 
@@ -199,12 +191,22 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
+
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }), /*/login*/
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
 
 app.get('/logout', (req, res) => {
   if(req.isAuthenticated()) {
 		req.logout();
 	  res.send();
-	} else res.status(400).send('Bag request');
+	} else res.status(400).send('Bad request');
 });
 
 
@@ -215,30 +217,6 @@ app.delete('/deleteuser', userCtrl.deleteUser);
 app.get('/notes', userCtrl.get);
 
 app.put('/updatenotes', userCtrl.update);
-
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile'] }));
-
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
-
-// TODO: Delete this
-// app.get('/authrequired', (req, res) => {
-//   console.log('Inside GET /authrequired callback')
-//   console.log(`User authenticated? ${req.isAuthenticated()}`)
-//   console.log(`req.sessionID = ${req.sessionID}`)
-//   console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}`)
-//   console.log(`req.user: ${JSON.stringify(req.user)}`)
-//   if(req.isAuthenticated()) {
-//     res.send('you hit the authentication endpoint\n')
-//   } else {
-//     res.redirect('/')
-//   }
-// })
 
 
 // Error handling middleware
