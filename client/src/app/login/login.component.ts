@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 	errorClasses: ErrorClasses; 
 
 	constructor(private userService: UserService,
-  	private conf: ConfigService,
+  	public conf: ConfigService,
   	private router: Router
   ) {
 			this.errorClasses = new ErrorClasses();

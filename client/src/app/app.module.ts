@@ -19,6 +19,8 @@ import { ContenteditableModelDirective } from './contenteditable-model.directive
 import { FooterComponent } from './footer/footer.component';
 import { DeleteAccountModalComponent } from './delete-account-modal/delete-account-modal.component';
 import { DeleteAccConfirmService } from './delete-acc-confirm.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 // DeleteAccConfirmService are used for coomunication
 // between NotesComponent and DeleteAccountModalComponent only,
@@ -44,7 +46,8 @@ import { DeleteAccConfirmService } from './delete-acc-confirm.service';
     FormsModule,
     HttpClientModule,
     NgbModule.forRoot(),
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     ConfigService,
