@@ -21,6 +21,8 @@ import { DeleteAccountModalComponent } from './delete-account-modal/delete-accou
 import { DeleteAccConfirmService } from './delete-acc-confirm.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { UiSwitchModule } from 'ngx-toggle-switch';
+import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
 
 // DeleteAccConfirmService are used for coomunication
 // between NotesComponent and DeleteAccountModalComponent only,
@@ -38,7 +40,8 @@ import { environment } from '../environments/environment';
     NoteComponent,
     ContenteditableModelDirective,
     FooterComponent,
-    DeleteAccountModalComponent
+    DeleteAccountModalComponent,
+    PushNotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     NgbModule.forRoot(),
     DeviceDetectorModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    UiSwitchModule
   ],
   providers: [
     ConfigService,

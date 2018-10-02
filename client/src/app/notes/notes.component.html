@@ -76,10 +76,16 @@
 			class="col-sm-4"></app-note>
 		</div>
 		
-		<br> <!-- Delete account and exit buttons -->
-		<div class="row app-exit-del-button">
-			<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
-				<button class="btn btn-outline-primary w-100"
+		<br> 
+		<!-- Delete account, exit buttons and
+		push notifications toggle switch -->
+		<div class="row app-exit-del-push">
+			<div class="col-xs-12 col-sm-4 col-lg-3 offset-lg-5">
+				<app-push-notifications class="float-right"></app-push-notifications>
+			</div>
+
+			<div class="col-xs-12 col-sm-4 col-lg-2">
+				<button class="btn btn-outline-primary w-100 app-button"
 				(click)="logout();">
 					<p>
 						<span class="app-button-text">Exit</span>
@@ -88,8 +94,8 @@
 				</button>
 			</div>
 
-			<div class="col-xs-12 col-sm-6 col-lg-2">
-				<button class="btn btn-outline-danger w-100 app-button-delete"
+			<div class="col-xs-12 col-sm-4 col-lg-2">
+				<button class="btn btn-outline-danger w-100 app-button"
 				(click)="openModal();">
 					<p>
 						<span class="app-button-text">Delete account</span>
@@ -114,7 +120,7 @@
 	
 	<!-- TODO: Don't use swipe since issue with scroll in Safari for awhile
 	Delete this, problem were not solved.
-	If though decide returnswipe pay attention to .h-100, .app-h-wo-footer for footer being in the right place-->
+	If though decide return swipe pay attention to .h-100, .app-h-wo-footer for footer being in the right place-->
 	
 	<!-- <div class="d-block d-md-none app-h-wo-footer app-allow-v-scroll"
 	[ngClass]="{'app-allow-v-scroll': !isIOS, 'app-allow-v-scroll-ios': isIOS}"
@@ -210,10 +216,16 @@
 			  </a>
 			</div>
 			
-			<br> <!-- Delete account and exit buttons -->
-			<div class="row app-exit-del-button">
-				<div class="col-xs-12 col-sm-6 col-lg-2 offset-lg-8">
-					<button class="btn btn-outline-primary w-100"
+			<br> 
+			<!-- Delete account, exit buttons and
+			push notifications toggle switch -->
+			<div class="row app-exit-del-push">
+				<div class="col-xs-12 col-sm-4 col-lg-3 offset-lg-5">
+					<app-push-notifications class="float-right"></app-push-notifications>
+				</div>
+
+				<div class="col-xs-12 col-sm-4 col-lg-2">
+					<button class="btn btn-outline-primary w-100 app-button"
 					(click)="logout();">
 						<p>
 							<span class="app-button-text">Exit</span>
@@ -222,8 +234,8 @@
 					</button>
 				</div>
 
-				<div class="col-xs-12 col-sm-6 col-lg-2">
-					<button class="btn btn-outline-danger w-100 app-button-delete"
+				<div class="col-xs-12 col-sm-4 col-lg-2">
+					<button class="btn btn-outline-danger w-100 app-button"
 					(click)="openModal();">
 						<p>
 							<span class="app-button-text">Delete account</span>

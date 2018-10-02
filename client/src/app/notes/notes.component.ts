@@ -130,7 +130,7 @@ export class NotesComponent implements OnInit {
   	this.currentNotesNum = t % 4;
   }
 
-  // TODO: Delete this
+  // TODO: Delete this??
   onSwipe(id: string): void {
   	document.getElementById(id).click();
   }
