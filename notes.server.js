@@ -20,6 +20,8 @@ const User = require('./models/user.model.js');
 const userCtrl = require('./user.controller.js');
 const secret = require('./notes.server.secret.js');
 
+// vapidPrivateKey = VAPID_PRIVATE_KEY
+
 const app = express();
 
 // NOTE: app.get('env') === 'development' (=== 'production' )
