@@ -1,19 +1,5 @@
-:host {
+div {
 	margin-top: 10px;
 	display: flex;
 	align-content: center;
 }
-
-/*button {
-	display: flex;
-	flex-direction: row;
-	align-content: center;
-	overflow: hidden;
-}
-
-button p {
-	display: flex;
-	align-content: center;
-	margin-bottom: 0px !important;
-	margin: auto auto;
-}*/

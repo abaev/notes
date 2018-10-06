@@ -20,6 +20,8 @@ const User = require('./models/user.model.js');
 const userCtrl = require('./user.controller.js');
 const secret = require('./notes.server.secret.js');
 
+// vapidPrivateKey = VAPID_PRIVATE_KEY
+
 const app = express();
 
 // NOTE: app.get('env') === 'development' (=== 'production' )
@@ -217,6 +219,8 @@ app.delete('/deleteuser', userCtrl.deleteUser);
 app.get('/notes', userCtrl.get);
 
 app.put('/updatenotes', userCtrl.update);
+
+app.post('/savesubscription', userCtrl.saveSubscription);
 
 
 // Error handling middleware

@@ -174,9 +174,15 @@ export class NotesComponent implements OnInit {
     	.open(DeleteAccountModalComponent, { centered: true });
   }
 
+  onSubscriptionError($event) {
+  	this.notesError = this.errorMessage($event);
+  }
+
+
   errorMessage(error: number): string;
   errorMessage(error: number): number;
-  errorMessage(error: number): any {
+  errorMessage(error: string): string;
+  errorMessage(error: any): any {
   	switch (error) {
 			case 500:
 				return 'Sorry, server error. Try again later';

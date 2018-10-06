@@ -82,6 +82,19 @@ export class UserService {
   }
 
 
+  sendSubscription(pushSubscription: any): Observable<any> {
+  	return this.http.post(this.conf.serverUrl + 'savesubscription',
+  		{ subscription: pushSubscription },
+  		{
+  			withCredentials: true,
+  			responseType: 'text'
+  			// ,
+  			// headers: new HttpHeaders({ 'Content-Type': 'application/json, text/plain, */*' })
+  		})
+  		.pipe(catchError(this.handleError));
+  }
+
+
   private handleError(error: HttpErrorResponse) {
   	let message: string | number;
 	  

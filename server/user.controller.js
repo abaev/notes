@@ -16,6 +16,7 @@ module.exports.get = get;
 module.exports.update = update;
 module.exports.add = add;
 module.exports.deleteUser = deleteUser;
+module.exports.saveSubscription = saveSubscription;
 
 
 async function get(req, res, next) {
@@ -100,7 +101,6 @@ async function update (req, res, next) {
 	try {
 		await userServ.update(updatedUser);
 		return res.status(200).send();
-
 	
 	} catch(err) {
 		return next(err);
@@ -173,6 +173,36 @@ async function deleteUser (req, res, next) {
 		req.logout();
 		res.send('User was deleted');
 	
+	} catch(err) {
+		return next(err);
+	}
+}
+
+
+async function saveSubscription(req, res, next) {
+	const validSubscription = Joi.object({
+		endpoint: Joi.string(),
+		keys: Joi.object({
+			p256dh: Joi.string(),
+			auth: Joi.string()
+		})
+	});
+
+	if(!req.isAuthenticated()) {
+		return next({ statusCode: 403, message: 'Forbidden' });
+	}
+
+	// Do validation
+	if(validSubscription.validate(req.body.subscription,
+			{ allowUnknown: true } ).error) {
+				console.error(`req.body.subscription = ${JSON.stringify(req.body.subscription)}`);
+				return next({ statusCode: 400, message: 'Bad request'});
+	}
+
+	try {
+		await userServ.saveSubscription(req.user.userId, req.body.subscription);
+		return res.status(200).send();
+
 	} catch(err) {
 		return next(err);
 	}
