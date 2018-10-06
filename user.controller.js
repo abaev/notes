@@ -109,13 +109,13 @@ async function update (req, res, next) {
 
 
 async function saveSubscription(req, res, next) {
-	const validSubscription = Joi.array().items(Joi.object({
+	const validSubscription = Joi.object({
 		endpoint: Joi.string(),
 		keys: Joi.object({
 			p256dh: Joi.string(),
 			auth: Joi.string()
 		})
-	}));
+	});
 
 	if(!req.isAuthenticated()) {
 		return next({ statusCode: 403, message: 'Forbidden' });
