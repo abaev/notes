@@ -6,6 +6,7 @@ module.exports.get = get;
 module.exports.update = update;
 module.exports.add = add;
 module.exports.deleteUser = deleteUser;
+module.exports.saveSubscription = saveSubscription;
 
 
 async function get(conditions){
