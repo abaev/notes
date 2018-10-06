@@ -100,8 +100,35 @@ async function update (req, res, next) {
 	try {
 		await userServ.update(updatedUser);
 		return res.status(200).send();
-
 	
+	} catch(err) {
+		return next(err);
+	}
+}
+
+
+async function saveSubscription(req, res, next) {
+	const validSubscription = Joi.array().items(Joi.object({
+		endpoint: Joi.string(),
+		keys: Joi.object({
+			p256dh: Joi.string(),
+			auth: Joi.string()
+		})
+	}));
+
+	if(!req.isAuthenticated()) {
+		return next({ statusCode: 403, message: 'Forbidden' });
+	}
+
+	// Do validation
+	if(validSubscription.validate(req.body.subscription).error) {
+		return next({ statusCode: 400, message: 'Bad request'});
+	}
+
+	try {
+		await userServ.saveSubscription(req.user.userId, req.body.subscription);
+		return res.status(200).send();
+
 	} catch(err) {
 		return next(err);
 	}

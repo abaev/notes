@@ -62,3 +62,16 @@ function _deleteProperty(obj, key) {
 		} else if(typeof obj[k] === 'object') _deleteProperty(obj[k], key);
 	}
 }
+
+
+async function saveSubscription(userId, subscription) {
+	let user;
+
+	try {
+		user = await User.findOne({ userId: userId}).exec();
+		user.subscriptions.push(subscription);
+		await user.save();
+	} catch(err) {
+		throw new Error('Error occured while saving subscription');
+	}
+}

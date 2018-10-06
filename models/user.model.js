@@ -24,7 +24,14 @@ var userSchema = mongoose.Schema({
   		description: String,
   		notificationDate: Date
   	}]
-  }
+  },
+  subscriptions: [{
+    endpoint: String,
+    keys: {
+      p256dh: String,
+      auth: String
+    }
+  }]
 });
 
 var User = mongoose.model('User', userSchema);

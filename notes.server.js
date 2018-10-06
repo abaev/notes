@@ -220,6 +220,8 @@ app.get('/notes', userCtrl.get);
 
 app.put('/updatenotes', userCtrl.update);
 
+app.post('/savesubscription', userCtrl.saveSubscription);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
