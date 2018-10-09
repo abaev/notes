@@ -154,7 +154,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 // For Content-Type: application/json
-// TODO: Delete this in production
 app.use(bodyParser.json());
 
 
@@ -221,6 +220,8 @@ app.get('/notes', userCtrl.get);
 app.put('/updatenotes', userCtrl.update);
 
 app.post('/savesubscription', userCtrl.saveSubscription);
+
+app.put('/deletesubscription', userCtrl.deleteSubscription);
 
 
 // Error handling middleware
