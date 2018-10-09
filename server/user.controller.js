@@ -8,7 +8,6 @@ const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
 
 const userServ = require('./user.service.js');
-// const deepCopy = require('deepcopy');
 
 const conf = require('./notes.server.config.js');
 
@@ -17,6 +16,7 @@ module.exports.update = update;
 module.exports.add = add;
 module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
+module.exports.deleteSubscription = deleteSubscription;
 
 
 async function get(req, res, next) {
@@ -60,28 +60,6 @@ async function update (req, res, next) {
 			notificationDate: Joi.date()
 		})).max(3)
 	});
-
-	// const validNotes = Joi.object({
-	// 	veryImportant: Joi.array().items(Joi.object({
-	// 		description: Joi.string().max(conf.descLength),
-	// 		notificationDate: Joi.date()
-	// 	}).with('notificationDate', 'description')).max(3),
-
-	// 	alsoImportant: Joi.array().items(Joi.object({
-	// 		description: Joi.string().max(conf.descLength),
-	// 		notificationDate: Joi.date()
-	// 	}).with('notificationDate', 'description')).max(3),
-
-	// 	waitALittle: Joi.array().items(Joi.object({
-	// 		description: Joi.string().max(conf.descLength),
-	// 		notificationDate: Joi.date()
-	// 	}).with('notificationDate', 'description')).max(3),
-
-	// 	later: Joi.array().items(Joi.object({
-	// 		description: Joi.string().max(conf.descLength),
-	// 		notificationDate: Joi.date()
-	// 	}).with('notificationDate', 'description')).max(3)
-	// });
 
 	if(!req.isAuthenticated()) {
 		return next({ statusCode: 403, message: 'Forbidden' });
@@ -201,6 +179,25 @@ async function saveSubscription(req, res, next) {
 
 	try {
 		await userServ.saveSubscription(req.user.userId, req.body.subscription);
+		return res.status(200).send();
+
+	} catch(err) {
+		return next(err);
+	}
+}
+
+
+async function deleteSubscription (req, res, next) {
+	if(!req.isAuthenticated()) {
+		return next({ statusCode: 403, message: 'Forbidden' });
+	}
+
+	if(typeof req.body.subscriptionEndpoint != 'string') {
+		return next({ statusCode: 400, message: 'Bad request'});
+	}
+
+	try {
+		await userServ.deleteSubscription(req.user.userId, req.body.subscriptionEndpoint);
 		return res.status(200).send();
 
 	} catch(err) {

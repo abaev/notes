@@ -7,6 +7,7 @@ module.exports.update = update;
 module.exports.add = add;
 module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
+module.exports.deleteSubscription = deleteSubscription;
 
 
 async function get(conditions){
@@ -56,14 +57,6 @@ async function deleteUser(userId) {
 	}
 }
 
-function _deleteProperty(obj, key) {
-	for(let k in obj) {
-		if(k === key) {
-			delete obj[k];
-		} else if(typeof obj[k] === 'object') _deleteProperty(obj[k], key);
-	}
-}
-
 
 async function saveSubscription(userId, subscription) {
 	let user;
@@ -74,5 +67,29 @@ async function saveSubscription(userId, subscription) {
 		await user.save();
 	} catch(err) {
 		throw new Error('Error occured while saving subscription');
+	}
+}
+
+async function deleteSubscription(userId, subscriptionEndpoint) {
+	let user;
+
+	try {
+		user = await User.findOne({ userId: userId}).exec();
+		user.subscriptions = user.subscriptions.filter(e => {
+			return e.endpoint != subscriptionEndpoint;
+		});
+
+		await user.save();
+	} catch(err) {
+		throw new Error('Error occured while deleting subscription');
+	}
+}
+
+
+function _deleteProperty(obj, key) {
+	for(let k in obj) {
+		if(k === key) {
+			delete obj[k];
+		} else if(typeof obj[k] === 'object') _deleteProperty(obj[k], key);
 	}
 }

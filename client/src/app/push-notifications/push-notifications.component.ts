@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
 import { Observable } from 'rxjs';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
@@ -14,29 +15,30 @@ export class PushNotificationsComponent implements OnInit {
 
   constructor(private swPush: SwPush,
   	private conf: ConfigService,
-  	private userService: UserService) { }
+  	private userService: UserService,
+  	private deviceService: DeviceDetectorService) { }
   
   pushIsEnabled: boolean;
   isPushSubscription: boolean;
+  isSafari: boolean;
   @Output() subscriptionError: EventEmitter<any> = new EventEmitter();
 
   ngOnInit() {
-  	this.pushIsEnabled = this.swPush.isEnabled;
+  	this.isSafari = /safari/i.test(this.deviceService.browser);
+  	this.pushIsEnabled = this.swPush.isEnabled && !this.isSafari;
+
   	this.isPushSubscription = false;
   	
   	this.swPush.subscription.subscribe(pushSubscription => {
 			this.isPushSubscription = !!pushSubscription;
-			console.log(`pushSubscription = ${JSON.stringify(pushSubscription)}`);
 		});
   }
 
   
   onChange($event: any): void {
-  	console.log(`$event = ${JSON.stringify($event)}`);
-  	console.log(`this.isPushSubscription = ${this.isPushSubscription}`);
   	if($event) {
   		this.subscribeToPush();
-  	}
+  	} else this.unsubscribeFromPush();
   }
 
 
@@ -55,5 +57,28 @@ export class PushNotificationsComponent implements OnInit {
       .catch(err => {
 	  		this.subscriptionError.emit('Error occured while subscribing to push notifications');
       });
+  }
+
+
+  unsubscribeFromPush() {
+  	this.swPush.subscription
+  		.subscribe(pushSubscription => {
+  			this.userService.deleteSubscription(pushSubscription.endpoint)
+  				.subscribe(() => {
+  					pushSubscription.unsubscribe()
+              .then(() => {
+                this.isPushSubscription = false;
+              })
+              .catch(err => {
+                this.subscriptionError
+                	this.isPushSubscription = true;
+                	this.subscriptionError.emit('Error occured while unsubscribing from push notification');
+              });
+  				},
+  				error => { 
+  					this.isPushSubscription = true;
+			  		this.subscriptionError.emit('Error occured while subscribing to push notifications');
+			  	});
+  		});
   }
 }
