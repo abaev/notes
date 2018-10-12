@@ -232,7 +232,8 @@ async function sendNotification(subscription, data) {
 
   data = {
   	notification: {
-  		title: 'First true push'
+  		title: 'First true push',
+  		text: 'Hello, world'
   	}
   }
 
