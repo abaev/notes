@@ -1,15 +1,28 @@
-// This module make CRUD operations, accordind with
-// user permissions and app own logic
+// This module make CRUD operations (accordind with
+// user permissions and app own logic) and 
+// sending push notifications
 
 const User = require('./models/user.model.js');
 const Joi = require('joi');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+const webpush = require('web-push');
 
 const userServ = require('./user.service.js');
 
 const conf = require('./notes.server.config.js');
+
+const vapidKeys = {
+  publicKey: conf.publicKey,
+  privateKey: process.env.VAPID_PRIVATE_KEY
+};
+
+webpush.setVapidDetails(
+  conf.appMailto,
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 
 module.exports.get = get;
 module.exports.update = update;
@@ -17,6 +30,7 @@ module.exports.add = add;
 module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
 module.exports.deleteSubscription = deleteSubscription;
+module.exports.sendNotification = sendNotification;
 
 
 async function get(req, res, next) {
@@ -172,7 +186,7 @@ async function saveSubscription(req, res, next) {
 
 	// Do validation
 	if(validSubscription.validate(req.body.subscription,
-			{ allowUnknown: true } ).error) {
+			{ allowUnknown: true }).error) {
 				console.error(`req.body.subscription = ${JSON.stringify(req.body.subscription)}`);
 				return next({ statusCode: 400, message: 'Bad request'});
 	}
@@ -203,4 +217,28 @@ async function deleteSubscription (req, res, next) {
 	} catch(err) {
 		return next(err);
 	}
+}
+
+
+async function sendNotification(subscription, data) {
+	// TODO: Delete this
+	subscription = {
+	  keys: {
+	      p256dh: 'BL_DatsWaKKCON-8lRfcUGMisFp2Yk04EFnALsnRedfq1KX_4gB8pRmW7psugQkMFKoyrSRt6P-uEo0Nn9Oqbr8',
+	      auth: '8L5SWgIiSWpv3CqGME-VPA'
+	  },
+	  endpoint: 'https://fcm.googleapis.com/fcm/send/f1mkym2Kg-Y:APA91bEduEjTjthogYy8J8IfELuf4t3Z4gQfBAiU3GxGt-RF1F9O3JMbdpBUStW941j7b9UzNAoj-be03e5L1XTJmf6Xxon-wlMz_zfbzy-xrJdM1BHDDWV6QovIjtMioeQukBv4sadI'
+  }
+
+  data = {
+  	notification: {
+  		title: 'First true push'
+  	}
+  }
+
+	try {
+	 	await webpush.sendNotification(subscription, data);
+	 } catch(err) {
+	 	console.error(err);
+	 } 
 }

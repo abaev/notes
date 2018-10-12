@@ -223,6 +223,11 @@ app.post('/savesubscription', userCtrl.saveSubscription);
 
 app.put('/deletesubscription', userCtrl.deleteSubscription);
 
+app.get('/sendpush', function(req, res, next) {
+	userCtrl.sendNotification();
+	return res.status(200).send();
+});
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

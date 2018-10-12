@@ -5,7 +5,9 @@ const conf = {
 	saltRounds: 10,
 	// Max length of description property in User.notes object
 	descLength: 140,
-	userFields: 'userId username notes veryImportant alsoImportant waitALittle later'
+	userFields: 'userId username notes veryImportant alsoImportant waitALittle later',
+	publicKey: 'BLKiaMyZkLt3pPP5Oxn5j8Eyx-K-CWwDujfhRGHtmPUpEjgsAprxKYCCublRZLKQAZz-PkFYlfFu67Hgv-Qjhwo',
+	appMailto: 'mailto:lowrydertrue@gmail.com'
 }
 
 module.exports = conf;
