@@ -234,9 +234,13 @@ async function sendNotification(subscription, data) {
   	notification: {
   		title: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push',
   		body: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push end',
-  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
+  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png',
+  		click_action: 'https://notes12.herokuapp.com'
   	}
   }
+
+  // title > 60 symbols
+  // body > 135 symbols
 
 	try {
 	 	await webpush.sendNotification(subscription, JSON.stringify(data));
