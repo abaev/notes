@@ -233,7 +233,7 @@ async function sendNotification(subscription, data) {
   data = {
   	notification: {
   		title: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push',
-  		body: 'Hello, world',
+  		body: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push end',
   		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
   	}
   }
