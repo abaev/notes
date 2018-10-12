@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	
-	<div *ngIf="notesError" class="">
+	<div *ngIf="notesError && !isLoading" class="">
 	  <div class="app-h-wo-footer">
 		  <ngb-alert [dismissible]="false">
 		  	<strong>{{notesError}}</strong>
@@ -14,8 +14,17 @@
 	  <app-footer></app-footer>
 	</div>
 
+	<!-- Loading icon -->
+	<div *ngIf="isLoading && !notesError" class="app-loading-icon"> 
+		<div class="app-h-wo-footer d-flex align-items-center">
+			<img src="../../assets/icons/icon-384x384.png" alt=""
+			class="ld ld-fade">
+		</div>
+		<app-footer></app-footer>
+	</div>
+
 	<!-- Visible only larger than sm -->
-	<div class="d-none d-md-block h-100" *ngIf="!notesError">
+	<div class="d-none d-md-block h-100" *ngIf="!notesError && !isLoading">
 		<h2 class="text-center display-4 app-vi-header">Very important</h2>
 		<div class="row">
 			<app-note *ngFor="let note of user.notes.veryImportant;
@@ -133,8 +142,7 @@
 		(swipeleft)="onSwipe('carousel-control-next')"
     (swiperight)="onSwipe('carousel-control-prev')"> -->
 	
-	<div class="d-block d-md-none"
-	*ngIf="!notesError">
+	<div class="d-block d-md-none" *ngIf="!notesError && !isLoading">
 		<div class="app-h-wo-footer">
 			<div id="carouselNotes" class="carousel slide"
 			data-ride="carousel" data-interval="false">

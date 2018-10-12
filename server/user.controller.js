@@ -172,7 +172,7 @@ async function saveSubscription(req, res, next) {
 
 	// Do validation
 	if(validSubscription.validate(req.body.subscription,
-			{ allowUnknown: true } ).error) {
+			{ allowUnknown: true }).error) {
 				console.error(`req.body.subscription = ${JSON.stringify(req.body.subscription)}`);
 				return next({ statusCode: 400, message: 'Bad request'});
 	}

@@ -113,3 +113,11 @@ button p {
 	/*Allow vertical scroll on iOS devices, but bloks swipe*/
 	touch-action: auto !important;
 }
+
+.app-loading-icon img {
+	width: 20%;
+	margin-left: 40%;
+}
+
+
+

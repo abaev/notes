@@ -22,6 +22,7 @@ export class NotesComponent implements OnInit {
 	currentNotesNum: number;
 	activeNote: any;
 	isIOS: boolean; 
+	isLoading: boolean;
 
 	constructor(private userService: UserService,
   	private conf: ConfigService,
@@ -63,10 +64,14 @@ export class NotesComponent implements OnInit {
 				}
 			}
   	}
-
+  	
+  	this.isLoading = true;
   	this.userService.updateUser(userToSend).subscribe(res => {
   		this.getNotes();
-  	}, error => { this.notesError = this.errorMessage(error)	});
+  	}, error => { 
+  			this.isLoading = false;
+  			this.notesError = this.errorMessage(error)
+  		});
   }
 
 
@@ -86,14 +91,21 @@ export class NotesComponent implements OnInit {
 			}
   	}
   	
+  	this.isLoading = true;
   	this.userService.updateUser(userToSend).subscribe(res => {
   		this.getNotes();
-  	}, error => { this.notesError = this.errorMessage(error)	});
+  	}, error => { 
+	  		this.isLoading = false;
+	  		this.notesError = this.errorMessage(error)
+	  	});
   }
 
 
   private getNotes(isInint?: boolean): void {
+  	this.isLoading = true;
   	this.userService.getNotes().subscribe(res => {
+  		this.isLoading = false;
+  		
   		// Adding null elments to arrays while it length
   		// will reach 3, for displaying empty notes to user 
   		Object.keys((new User()).notes).forEach((k) => {
@@ -116,6 +128,7 @@ export class NotesComponent implements OnInit {
   		// obviosly mean that user not log in yet
   		if(isInint && error === 403) this.router.navigateByUrl('login');
   		
+  		this.isLoading = false;
   		this.notesError = this.errorMessage(error)
   	});
   }
