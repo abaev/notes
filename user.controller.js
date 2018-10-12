@@ -237,7 +237,7 @@ async function sendNotification(subscription, data) {
   }
 
 	try {
-	 	await webpush.sendNotification(subscription, data);
+	 	await webpush.sendNotification(subscription, JSON.stringify(data));
 	 } catch(err) {
 	 	console.error(err);
 	 } 
