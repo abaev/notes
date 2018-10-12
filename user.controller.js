@@ -234,7 +234,7 @@ async function sendNotification(subscription, data) {
   	notification: {
   		title: 'First true push',
   		body: 'Hello, world',
-  		icon: 'https://notes12.herokuapp.com/public/assets/icons/icon-128x128.png'
+  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
   	}
   }
 
