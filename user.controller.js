@@ -244,6 +244,10 @@ async function sendNotification(subscription, data) {
 	try {
 	 	await webpush.sendNotification(subscription, JSON.stringify(data));
 	 } catch(err) {
-	 	console.error(err);
+	 		// TODO: Check the Status Code, if 404 or 410
+	 		// the subscription should be removed from application server.
+	 		// Client should to resubscribe the user
+	 		// https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol
+	 		console.error(err);
 	 } 
 }
