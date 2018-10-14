@@ -246,5 +246,5 @@ app.use((err, req, res, next) => {
 app.listen(process.env.PORT || conf.listenPort, () => {
 	console.log(`Server listen to: ${process.env.PORT || conf.listenPort}`);
 	// TODO: Delete this
-	console.log(`Server time: ${JSON.stringify(new Date(Date.now())}`);
+	console.log(`Server time: ${JSON.stringify(new Date(Date.now()))}`);
 });
