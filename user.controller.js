@@ -75,19 +75,23 @@ async function update (req, res, next) {
 		})).max(3)
 	});
 
+	const validTimezone = Joi.string();
+
 	if(!req.isAuthenticated()) {
 		return next({ statusCode: 403, message: 'Forbidden' });
 	}
 
 	// Do validation
-	if(validNotes.validate(req.body.notes).error) {
-		return next({ statusCode: 400, message: 'Bad request'});
+	if(validNotes.validate(req.body.notes).error
+		&& validTimezone.validate(req.body.timezone).error) {
+			return next({ statusCode: 400, message: 'Bad request'});
 	}
 
 	// Updating user
 	updatedUser = {
 		userId: req.user.userId,
-		notes: req.body.notes
+		notes: req.body.notes,
+		timezone: req.body.timezone
 	};
 
 	try {
