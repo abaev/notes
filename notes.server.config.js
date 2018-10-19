@@ -7,7 +7,8 @@ const conf = {
 	descLength: 140,
 	userFields: 'userId username notes veryImportant alsoImportant waitALittle later timezone',
 	publicKey: 'BLKiaMyZkLt3pPP5Oxn5j8Eyx-K-CWwDujfhRGHtmPUpEjgsAprxKYCCublRZLKQAZz-PkFYlfFu67Hgv-Qjhwo',
-	appMailto: 'mailto:lowrydertrue@gmail.com'
+	appMailto: 'mailto:lowrydertrue@gmail.com',
+	iconForPush: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
 }
 
 module.exports = conf;

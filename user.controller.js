@@ -228,21 +228,21 @@ async function deleteSubscription (req, res, next) {
 
 async function sendNotification(subscription, data) {
 	// TODO: Delete this
-	subscription = {
-	  keys: {
-	      p256dh: 'BBrDNSwKgGa8TtELhnLuSBkcJMrhbBMgd2sRtZhtEL_7IGgcm_U2w_RCe5WMev01-B0BIXjob8KN-6YlVru2vh0',
-	      auth: 'aQtHAXiBtmte7k6eaX_EBQ'
-	  },
-	  endpoint: 'https://fcm.googleapis.com/fcm/send/e5wt3WixQdc:APA91bH6ehdubZAyzeFuCxjfXtr9CdOfDenYiz0WsYojJW2q5Llq4P4sYNTRClEaUc5axoYdA_VD5Aoq4rnwUPke7qNu4auHw7C1VVOoT7TpujCtSCdaB0ht9WF4V66ID91c6YwZxxba'
-  }
+	// subscription = {
+	//   keys: {
+	//       p256dh: 'BBrDNSwKgGa8TtELhnLuSBkcJMrhbBMgd2sRtZhtEL_7IGgcm_U2w_RCe5WMev01-B0BIXjob8KN-6YlVru2vh0',
+	//       auth: 'aQtHAXiBtmte7k6eaX_EBQ'
+	//   },
+	//   endpoint: 'https://fcm.googleapis.com/fcm/send/e5wt3WixQdc:APA91bH6ehdubZAyzeFuCxjfXtr9CdOfDenYiz0WsYojJW2q5Llq4P4sYNTRClEaUc5axoYdA_VD5Aoq4rnwUPke7qNu4auHw7C1VVOoT7TpujCtSCdaB0ht9WF4V66ID91c6YwZxxba'
+ //  }
 
-  data = {
-  	notification: {
-  		title: 'First automatically push',
-  		body: 'Yoohoo!!',
-  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
-  	}
-  }
+ //  data = {
+ //  	notification: {
+ //  		title: 'First automatically push',
+ //  		body: 'Yoohoo!!',
+ //  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
+ //  	}
+ //  }
 
   // title > 60 symbols
   // body > 135 symbols
@@ -259,7 +259,7 @@ async function sendNotification(subscription, data) {
 }
 
 function findAndSendIterator () {
-	let delayBeforeStart, now, users, notificationDate;
+	let delayBeforeStart, now, users, notificationDate, data;
 	
 	// Define time to start (to start at 00 seconds)
 	delayBeforeStart = 60 - Math.floor(Date.now() / 1000) % 60;
@@ -283,17 +283,22 @@ function findAndSendIterator () {
 
 							if(notificationDate) {
 								notificationDate = 
-								moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
+									moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
 							
 								if(now.isSame(notificationDate, 'minute')) {
-									sendNotification();
+									data = {
+								  	notification: {
+								  		title: `Notes - ${noteType}`,
+								  		body: user.notes[noteType][i].description,
+								  		icon: iconForPush
+								  	}
+								  }
+									
+									user.subscriptions.forEach( subscription =>  {
+										sendNotification(subscription, data);
+									});
 								}
-								// console.log(noteType);
-								// console.log(i);
-								// console.log(user.notes[noteType][i]);
-								// console.log('------------');
 							}
-							
 						}
 					}
 
