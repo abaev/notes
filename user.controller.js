@@ -278,7 +278,7 @@ function findAndSendIterator () {
 				users.forEach(user => {
 					
 					for(noteType in user.notes) {
-						for(i = 0; i < user.notes[noteType]length; i++) {
+						for(i = 0; i < user.notes[noteType].length; i++) {
 							notificationDate = 
 								moment.tz(user.notes.[noteType][i].notificationDate, user.timezone);
 							
