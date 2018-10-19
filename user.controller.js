@@ -273,23 +273,27 @@ function findAndSendIterator () {
 			now = moment(new Date(Date.now()));
 
 			try {
-				// users = await User.find().exec();
 				users = await userServ.getAll();
 				
 				users.forEach(user => {
 					
 					for(noteType in user.notes) {
 						for(i = 0; i < user.notes[noteType].length; i++) {
-							// notificationDate = 
-							// 	moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
+							notificationDate = user.notes[noteType][i].notificationDate;
+
+							if(notificationDate) {
+								notificationDate = 
+								moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
 							
-							// if(now.isSame(notificationDate, 'minute')) {
-							// 	sendNotification();
-							// }
-							console.log(noteType);
-							console.log(i);
-							console.log(user.notes[noteType][i]);
-							console.log('------------');
+								if(now.isSame(notificationDate, 'minute')) {
+									sendNotification();
+								}
+								// console.log(noteType);
+								// console.log(i);
+								// console.log(user.notes[noteType][i]);
+								// console.log('------------');
+							}
+							
 						}
 					}
 
