@@ -258,7 +258,7 @@ async function sendNotification(subscription, data) {
 	 } 
 }
 
-async function findAndSendIterator () {
+function findAndSendIterator () {
 	let delayBeforeStart, now, users, notificationDate;
 	
 	// Define time to start (to start at 00 seconds)
@@ -266,7 +266,7 @@ async function findAndSendIterator () {
 	
 	setTimeout(() => {
 		
-		setInterval(() => {
+		setInterval(async function() {
 			// TODO: Delete this
 			console.log(`Iteration started at: ${JSON.stringify(new Date(Date.now()))}`);
 			
