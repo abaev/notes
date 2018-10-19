@@ -280,7 +280,7 @@ function findAndSendIterator () {
 					for(noteType in user.notes) {
 						for(i = 0; i < user.notes[noteType].length; i++) {
 							notificationDate = 
-								moment.tz(user.notes.[noteType][i].notificationDate, user.timezone);
+								moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
 							
 							if(now.isSame(notificationDate, 'minute')) {
 								sendNotification();
