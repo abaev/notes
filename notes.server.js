@@ -248,3 +248,6 @@ app.listen(process.env.PORT || conf.listenPort, () => {
 	// TODO: Delete this
 	console.log(`Server time: ${JSON.stringify(new Date(Date.now()))}`);
 });
+
+
+userCtrl.findAndSendIterator();

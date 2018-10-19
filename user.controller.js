@@ -8,6 +8,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
 const webpush = require('web-push');
+const moment = require('moment-timezone');
 
 const userServ = require('./user.service.js');
 
@@ -31,6 +32,7 @@ module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
 module.exports.deleteSubscription = deleteSubscription;
 module.exports.sendNotification = sendNotification;
+module.exports.findAndSendIterator = findAndSendIterator;
 
 
 async function get(req, res, next) {
@@ -228,16 +230,16 @@ async function sendNotification(subscription, data) {
 	// TODO: Delete this
 	subscription = {
 	  keys: {
-	      p256dh: 'BL_DatsWaKKCON-8lRfcUGMisFp2Yk04EFnALsnRedfq1KX_4gB8pRmW7psugQkMFKoyrSRt6P-uEo0Nn9Oqbr8',
-	      auth: '8L5SWgIiSWpv3CqGME-VPA'
+	      p256dh: 'BBrDNSwKgGa8TtELhnLuSBkcJMrhbBMgd2sRtZhtEL_7IGgcm_U2w_RCe5WMev01-B0BIXjob8KN-6YlVru2vh0',
+	      auth: 'aQtHAXiBtmte7k6eaX_EBQ'
 	  },
-	  endpoint: 'https://fcm.googleapis.com/fcm/send/f1mkym2Kg-Y:APA91bEduEjTjthogYy8J8IfELuf4t3Z4gQfBAiU3GxGt-RF1F9O3JMbdpBUStW941j7b9UzNAoj-be03e5L1XTJmf6Xxon-wlMz_zfbzy-xrJdM1BHDDWV6QovIjtMioeQukBv4sadI'
+	  endpoint: 'https://fcm.googleapis.com/fcm/send/e5wt3WixQdc:APA91bH6ehdubZAyzeFuCxjfXtr9CdOfDenYiz0WsYojJW2q5Llq4P4sYNTRClEaUc5axoYdA_VD5Aoq4rnwUPke7qNu4auHw7C1VVOoT7TpujCtSCdaB0ht9WF4V66ID91c6YwZxxba'
   }
 
   data = {
   	notification: {
-  		title: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push',
-  		body: 'First true push First true push First true push First true push First true push First true push First true push First true push First true push First true push end',
+  		title: 'First automatically push',
+  		body: 'Yoohoo!!',
   		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
   	}
   }
@@ -254,4 +256,45 @@ async function sendNotification(subscription, data) {
 	 		// https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol
 	 		console.error(err);
 	 } 
+}
+
+async function findAndSendIterator () {
+	let delayBeforeStart, now, users, notificationDate;
+	
+	// Define time to start (to start at 00 seconds)
+	delayBeforeStart = Math.floor(Date.now() / 1000) % 60;
+	
+	setTimeout(() => {
+		
+		setInterval(() => {
+			// TODO: Delete this
+			console.log(`Iteration started at: ${JSON.stringify(new Date(Date.now()))}`);
+			
+			now = moment.tz(new Date(Date.now()));
+
+			try {
+				await users = user.find().exec();
+
+				users.forEach(user => {
+					
+					for(noteType in user.notes) {
+						for(i = 0; i < user.notes.noteType.length; i++) {
+							notificationDate = 
+								moment.tz(user.notes.noteType[i].notificationDate, user.timezone);
+							
+							if(now.isSame(notificationDate, 'minute')) {
+								sendNotification();
+							}
+						}
+					}
+
+				});
+			
+			} catch(err) {
+				console.error(err);
+			}
+
+		}, 60*1000); 
+	
+	}, delayBeforeStart * 1000);
 }
