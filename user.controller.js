@@ -279,12 +279,13 @@ function findAndSendIterator () {
 					
 					for(noteType in user.notes) {
 						for(i = 0; i < user.notes[noteType].length; i++) {
-							notificationDate = 
-								moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
+							// notificationDate = 
+							// 	moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
 							
-							if(now.isSame(notificationDate, 'minute')) {
-								sendNotification();
-							}
+							// if(now.isSame(notificationDate, 'minute')) {
+							// 	sendNotification();
+							// }
+							console.log(user.notes[noteType][i]);
 						}
 					}
 
