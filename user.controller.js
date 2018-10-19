@@ -306,7 +306,7 @@ function findAndSendIterator () {
 									
 									data = {
 								  	notification: {
-								  		title: `Notes - ${noteType}`,
+								  		title: 'Notes - '+ title,
 								  		body: user.notes[noteType][i].description,
 								  		icon: conf.iconForPush
 								  	}
