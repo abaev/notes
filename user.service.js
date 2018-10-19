@@ -21,6 +21,7 @@ async function get(conditions){
 			// like _id, and __v and others
 			.select('-_id') 
 			.select(conf.userFields).lean().exec();
+		
 		// Delete ALL '_id' fields from doc
 		user = _deleteProperty(user, '_id');
 		return user;
@@ -39,7 +40,8 @@ async function getAll(){
 			// without mongooose (or MongoDB?) service fields,
 			// like _id, and __v and others
 			.select('-_id') 
-			.select(conf.userFields).lean().exec();
+			.select(conf.userFieldsAll).lean().exec();
+		
 		// Delete ALL '_id' fields from doc
 		users = users.map( user => _deleteProperty(user, '_id'));
 		
