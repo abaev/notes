@@ -47,7 +47,7 @@ async function getAll(){
 		
 		return users;
 	} catch(err) {
-		throw new Error('Error occured while getting user');
+		throw new Error('Error occured while getting users');
 	}
 }
 

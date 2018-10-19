@@ -259,7 +259,7 @@ async function sendNotification(subscription, data) {
 }
 
 function findAndSendIterator () {
-	let delayBeforeStart, now, users, notificationDate, data;
+	let delayBeforeStart, now, users, notificationDate, data, title;
 	
 	// Define time to start (to start at 00 seconds)
 	delayBeforeStart = 60 - Math.floor(Date.now() / 1000) % 60;
@@ -286,6 +286,24 @@ function findAndSendIterator () {
 									moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
 							
 								if(now.isSame(notificationDate, 'minute')) {
+									switch (noteType) {
+										case 'veryImportant':
+											title = 'Very important';
+											break;
+										
+										case 'alsoImportant':
+											title = 'Also important';
+											break;
+										
+										case 'waitALittle':
+											title = 'Wait a little';
+											break;
+										
+										case 'later':
+											title = 'Later';
+											break;
+									}
+									
 									data = {
 								  	notification: {
 								  		title: `Notes - ${noteType}`,
