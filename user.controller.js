@@ -262,7 +262,7 @@ function findAndSendIterator () {
 	let delayBeforeStart, now, users, notificationDate;
 	
 	// Define time to start (to start at 00 seconds)
-	delayBeforeStart = Math.floor(Date.now() / 1000) % 60;
+	delayBeforeStart = 60 - Math.floor(Date.now() / 1000) % 60;
 	
 	setTimeout(() => {
 		
@@ -273,7 +273,7 @@ function findAndSendIterator () {
 			now = moment(new Date(Date.now()));
 
 			try {
-				users = await user.find().exec();
+				users = await User.find().exec();
 
 				users.forEach(user => {
 					
