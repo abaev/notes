@@ -273,8 +273,9 @@ function findAndSendIterator () {
 			now = moment(new Date(Date.now()));
 
 			try {
-				users = await User.find().exec();
-
+				// users = await User.find().exec();
+				users = await userServ.getAll();
+				
 				users.forEach(user => {
 					
 					for(noteType in user.notes) {
