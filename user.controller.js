@@ -273,7 +273,7 @@ function findAndSendIterator () {
 			now = moment.tz(new Date(Date.now()));
 
 			try {
-				await users = user.find().exec();
+				users = await user.find().exec();
 
 				users.forEach(user => {
 					
