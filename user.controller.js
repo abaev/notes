@@ -270,7 +270,7 @@ function findAndSendIterator () {
 			// TODO: Delete this
 			console.log(`Iteration started at: ${JSON.stringify(new Date(Date.now()))}`);
 			
-			now = moment.(new Date(Date.now()));
+			now = moment(new Date(Date.now()));
 
 			try {
 				users = await user.find().exec();
