@@ -285,7 +285,10 @@ function findAndSendIterator () {
 							// if(now.isSame(notificationDate, 'minute')) {
 							// 	sendNotification();
 							// }
+							console.log(noteType);
+							console.log(i);
 							console.log(user.notes[noteType][i]);
+							console.log('------------');
 						}
 					}
 
