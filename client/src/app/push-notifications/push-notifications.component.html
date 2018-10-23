@@ -1,6 +1,6 @@
 <div *ngIf="pushIsEnabled">
 	<b>Push notifications</b>&nbsp;
 	<ui-switch defaultBgColor="#dc3545" size="small"
-	[(ngModel)]="isPushSubscription"
+	[ngModel]="isPushSubscription"
 	(change)="onChange($event)"></ui-switch>
 </div>

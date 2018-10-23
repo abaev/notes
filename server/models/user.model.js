@@ -7,6 +7,7 @@ var userSchema = mongoose.Schema({
   userId: String,
   username: String,
   hashedPassword: String,
+  timezone: String,
   notes: {
   	veryImportant: [{
   		description: String,

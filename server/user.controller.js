@@ -1,15 +1,29 @@
-// This module make CRUD operations, accordind with
-// user permissions and app own logic
+// This module make CRUD operations (accordind with
+// user permissions and app own logic) and 
+// sending push notifications
 
 const User = require('./models/user.model.js');
 const Joi = require('joi');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const uuidv4 = require('uuid/v4');
+const webpush = require('web-push');
+const moment = require('moment-timezone');
 
 const userServ = require('./user.service.js');
 
 const conf = require('./notes.server.config.js');
+
+const vapidKeys = {
+  publicKey: conf.publicKey,
+  privateKey: process.env.VAPID_PRIVATE_KEY
+};
+
+webpush.setVapidDetails(
+  conf.appMailto,
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 
 module.exports.get = get;
 module.exports.update = update;
@@ -17,6 +31,8 @@ module.exports.add = add;
 module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
 module.exports.deleteSubscription = deleteSubscription;
+module.exports.sendNotification = sendNotification;
+module.exports.findAndSendIterator = findAndSendIterator;
 
 
 async function get(req, res, next) {
@@ -61,19 +77,23 @@ async function update (req, res, next) {
 		})).max(3)
 	});
 
+	const validTimezone = Joi.string();
+
 	if(!req.isAuthenticated()) {
 		return next({ statusCode: 403, message: 'Forbidden' });
 	}
 
 	// Do validation
-	if(validNotes.validate(req.body.notes).error) {
-		return next({ statusCode: 400, message: 'Bad request'});
+	if(validNotes.validate(req.body.notes).error
+		&& validTimezone.validate(req.body.timezone).error) {
+			return next({ statusCode: 400, message: 'Bad request'});
 	}
 
 	// Updating user
 	updatedUser = {
 		userId: req.user.userId,
-		notes: req.body.notes
+		notes: req.body.notes,
+		timezone: req.body.timezone
 	};
 
 	try {
@@ -203,4 +223,91 @@ async function deleteSubscription (req, res, next) {
 	} catch(err) {
 		return next(err);
 	}
+}
+
+
+async function sendNotification(subscription, data) {
+	try {
+	 	await webpush.sendNotification(subscription, JSON.stringify(data));
+	 } catch(err) {
+	 		// TODO: Check the Status Code, if 404 or 410
+	 		// the subscription should be removed from application server.
+	 		// Client should to resubscribe the user
+	 		// https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol
+	 		console.error(err);
+	 } 
+}
+
+function findAndSendIterator () {
+	let delayBeforeStart, now, users, notificationDate, data, title;
+	
+	// Define time to start (to start at 00 seconds)
+	delayBeforeStart = 60 - Math.floor(Date.now() / 1000) % 60;
+	
+	setTimeout(() => {
+		
+		setInterval(async function() {
+			
+			now = moment(new Date(Date.now()));
+
+			try {
+				users = await userServ.getAll();
+				
+				users.forEach(user => {
+
+					if(user.subscriptions.length == 0) return;
+					
+					for(noteType in user.notes) {
+						for(i = 0; i < user.notes[noteType].length; i++) {
+							notificationDate = user.notes[noteType][i].notificationDate;
+
+							if(notificationDate) {
+								notificationDate = 
+									moment.tz(user.notes[noteType][i].notificationDate, user.timezone);
+							
+								if(now.isSame(notificationDate, 'minute')) {
+									switch (noteType) {
+										case 'veryImportant':
+											title = 'Very important';
+											break;
+										
+										case 'alsoImportant':
+											title = 'Also important';
+											break;
+										
+										case 'waitALittle':
+											title = 'Wait a little';
+											break;
+										
+										case 'later':
+											title = 'Later';
+											break;
+									}
+									
+									data = {
+								  	notification: {
+								  		title: 'Notes - '+ title,
+								  		body: user.notes[noteType][i].description,
+								  		icon: conf.iconForPush,
+								  		badge: conf.badgeForPush
+								  	}
+								  }
+									
+									user.subscriptions.forEach( subscription =>  {
+										sendNotification(subscription, data);
+									});
+								}
+							}
+						}
+					}
+
+				});
+			
+			} catch(err) {
+				console.error(err);
+			}
+
+		}, 60*1000); 
+	
+	}, delayBeforeStart * 1000);
 }

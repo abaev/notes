@@ -92,11 +92,6 @@ export class NoteComponent implements OnInit {
 	}
 
 
-	onTimeSelect() {
-		console.log(this.time);
-	}
-
-
 	clearNotification() {
 		delete this.note.notificationDate;
 		this.updNote();

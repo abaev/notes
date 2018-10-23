@@ -3,12 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Router }  from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import * as moment from 'moment-timezone';
 
 import { User } from '../user';
 import { ConfigService } from '../config.service';
 import { UserService } from '../user.service';
 import { DeleteAccountModalComponent } from '../delete-account-modal/delete-account-modal.component';
 import { DeleteAccConfirmService } from '../delete-acc-confirm.service';
+
 
 @Component({
   selector: 'app-notes',
@@ -22,7 +24,7 @@ export class NotesComponent implements OnInit {
 	currentNotesNum: number;
 	activeNote: any;
 	isIOS: boolean; 
-	isLoading: boolean;
+	isLoading: boolean; // For showing fading N while loading
 
 	constructor(private userService: UserService,
   	private conf: ConfigService,
@@ -32,10 +34,10 @@ export class NotesComponent implements OnInit {
   	private deviceService: DeviceDetectorService
   ) {	
   		this.user = new User;
-
-  		deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
-    		this.deleteAccount();
-  	});
+  		
+  		// deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
+    // 		this.deleteAccount();
+	  	// });
 
   }
 
@@ -46,6 +48,10 @@ export class NotesComponent implements OnInit {
   	this.getNotes(true);
   	this.currentNotesNum = 0;
   	this.activeNote = {};
+
+  	this.deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
+  		this.deleteAccount();
+  	});
   }
 
 
@@ -57,20 +63,14 @@ export class NotesComponent implements OnInit {
   	
   	// Deleting null elements from notes arrays
   	// for pass validation on server
-  	for(let k in userToSend.notes) {
-  		for(let i = 2; i >= 0; i--) {
-				if(userToSend.notes[k][i] === null) {
-					userToSend.notes[k].splice(i, 1);
-				}
-			}
-  	}
+  	userToSend.notes = this.formatNotesToSend(userToSend.notes);
   	
   	this.isLoading = true;
   	this.userService.updateUser(userToSend).subscribe(res => {
   		this.getNotes();
   	}, error => { 
   			this.isLoading = false;
-  			this.notesError = this.errorMessage(error)
+  			this.notesError = this.errorMessage(error);
   		});
   }
 
@@ -83,15 +83,10 @@ export class NotesComponent implements OnInit {
   	
   	// Deleting null elements from notes arrays
   	// for pass validation on server
-  	for(let k in userToSend.notes) {
-  		for(let i = 2; i >= 0; i--) {
-				if(userToSend.notes[k][i] === null) {
-					userToSend.notes[k].splice(i, 1);
-				}
-			}
-  	}
+  	userToSend.notes = this.formatNotesToSend(userToSend.notes);
   	
   	this.isLoading = true;
+  	
   	this.userService.updateUser(userToSend).subscribe(res => {
   		this.getNotes();
   	}, error => { 
@@ -123,6 +118,11 @@ export class NotesComponent implements OnInit {
   		})
 
   		this.user = res;
+  		
+  		// TODO: Make POST request to send user.timezone,
+  		// for app have updated info about user timezone
+  		// (even when user has changed timezone)
+  		this.user.timezone = moment.tz.guess();
   	}, error => { 
   		// In case of first attempt to load notes status 403
   		// obviosly mean that user not log in yet
@@ -192,10 +192,10 @@ export class NotesComponent implements OnInit {
   }
 
 
-  errorMessage(error: number): string;
-  errorMessage(error: number): number;
-  errorMessage(error: string): string;
-  errorMessage(error: any): any {
+  private errorMessage(error: number): string;
+  private errorMessage(error: number): number;
+  private errorMessage(error: string): string;
+  private errorMessage(error: any): any {
   	switch (error) {
 			case 500:
 				return 'Sorry, server error. Try again later';
@@ -208,5 +208,20 @@ export class NotesComponent implements OnInit {
 			default:
 				return error;
 		}
+  }
+
+
+  private formatNotesToSend(notes: any): any {
+  	// Deleting null elements from notes arrays
+  	// for pass validation on server
+  	for(let k in notes) {
+  		for(let i = 2; i >= 0; i--) {
+				if(notes[k][i] === null) {
+					notes[k].splice(i, 1);
+				}
+			}
+  	}
+
+  	return notes;
   }
 }

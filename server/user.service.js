@@ -8,6 +8,7 @@ module.exports.add = add;
 module.exports.deleteUser = deleteUser;
 module.exports.saveSubscription = saveSubscription;
 module.exports.deleteSubscription = deleteSubscription;
+module.exports.getAll = getAll;
 
 
 async function get(conditions){
@@ -20,11 +21,33 @@ async function get(conditions){
 			// like _id, and __v and others
 			.select('-_id') 
 			.select(conf.userFields).lean().exec();
+		
 		// Delete ALL '_id' fields from doc
-		_deleteProperty(user, '_id');
+		user = _deleteProperty(user, '_id');
 		return user;
 	} catch(err) {
 		throw new Error('Error occured while getting user');
+	}
+}
+
+
+async function getAll(){
+	let users;
+
+	try {
+		users = await User.find()
+			// Include only necessary fields,
+			// without mongooose (or MongoDB?) service fields,
+			// like _id, and __v and others
+			.select('-_id') 
+			.select(conf.userFieldsAll).lean().exec();
+		
+		// Delete ALL '_id' fields from doc
+		users = users.map( user => _deleteProperty(user, '_id'));
+		
+		return users;
+	} catch(err) {
+		throw new Error('Error occured while getting users');
 	}
 }
 
@@ -92,4 +115,6 @@ function _deleteProperty(obj, key) {
 			delete obj[k];
 		} else if(typeof obj[k] === 'object') _deleteProperty(obj[k], key);
 	}
+
+	return obj;
 }

@@ -3,6 +3,7 @@ import { Note } from './note'
 export class User {
 	userId: string;
   username: string;
+  timezone: string;
   notes?: {
   	veryImportant?: Note[],
   	alsoImportant?: Note[],
