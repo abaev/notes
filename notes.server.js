@@ -223,12 +223,6 @@ app.post('/savesubscription', userCtrl.saveSubscription);
 
 app.put('/deletesubscription', userCtrl.deleteSubscription);
 
-// TODO: Delete this
-app.get('/sendpush', function(req, res, next) {
-	userCtrl.sendNotification();
-	return res.status(200).send();
-});
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {
@@ -245,8 +239,6 @@ app.use((err, req, res, next) => {
 
 app.listen(process.env.PORT || conf.listenPort, () => {
 	console.log(`Server listen to: ${process.env.PORT || conf.listenPort}`);
-	// TODO: Delete this
-	console.log(`Server time: ${JSON.stringify(new Date(Date.now()))}`);
 });
 
 

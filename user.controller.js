@@ -227,26 +227,6 @@ async function deleteSubscription (req, res, next) {
 
 
 async function sendNotification(subscription, data) {
-	// TODO: Delete this
-	// subscription = {
-	//   keys: {
-	//       p256dh: 'BBrDNSwKgGa8TtELhnLuSBkcJMrhbBMgd2sRtZhtEL_7IGgcm_U2w_RCe5WMev01-B0BIXjob8KN-6YlVru2vh0',
-	//       auth: 'aQtHAXiBtmte7k6eaX_EBQ'
-	//   },
-	//   endpoint: 'https://fcm.googleapis.com/fcm/send/e5wt3WixQdc:APA91bH6ehdubZAyzeFuCxjfXtr9CdOfDenYiz0WsYojJW2q5Llq4P4sYNTRClEaUc5axoYdA_VD5Aoq4rnwUPke7qNu4auHw7C1VVOoT7TpujCtSCdaB0ht9WF4V66ID91c6YwZxxba'
- //  }
-
- //  data = {
- //  	notification: {
- //  		title: 'First automatically push',
- //  		body: 'Yoohoo!!',
- //  		icon: 'https://notes12.herokuapp.com/assets/icons/icon-128x128.png'
- //  	}
- //  }
-
-  // title > 60 symbols
-  // body > 135 symbols
-
 	try {
 	 	await webpush.sendNotification(subscription, JSON.stringify(data));
 	 } catch(err) {
@@ -267,8 +247,6 @@ function findAndSendIterator () {
 	setTimeout(() => {
 		
 		setInterval(async function() {
-			// TODO: Delete this
-			console.log(`Iteration started at: ${JSON.stringify(new Date(Date.now()))}`);
 			
 			now = moment(new Date(Date.now()));
 
@@ -276,6 +254,8 @@ function findAndSendIterator () {
 				users = await userServ.getAll();
 				
 				users.forEach(user => {
+
+					if(user.subscriptions.length == 0) return;
 					
 					for(noteType in user.notes) {
 						for(i = 0; i < user.notes[noteType].length; i++) {
