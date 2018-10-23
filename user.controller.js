@@ -308,7 +308,8 @@ function findAndSendIterator () {
 								  	notification: {
 								  		title: 'Notes - '+ title,
 								  		body: user.notes[noteType][i].description,
-								  		icon: conf.iconForPush
+								  		icon: conf.iconForPush,
+								  		badge: conf.badgeForPush
 								  	}
 								  }
 									
