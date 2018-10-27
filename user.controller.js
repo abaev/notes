@@ -233,21 +233,12 @@ async function sendNotification(subscription, data, userId) {
 	try {
 	 	await webpush.sendNotification(subscription, JSON.stringify(data));
 
-	 	if(true/*err.statusCode == 404 || err.statusCode == 410*/) {
-	 			try {
-					await userServ.deleteSubscription(userId, subscription.endpoint);
-				} catch(err) {
-					console.error(err);
-				}
-	 		}
-	 		
-
 	 } catch(err) {
 	 		// Check the Status Code, if 404 or 410
 	 		// the subscription should be removed from application server.
 	 		// Client should to resubscribe the user
 	 		// https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs
-	 		if(true/*err.statusCode == 404 || err.statusCode == 410*/) {
+	 		if(err.statusCode == 404 || err.statusCode == 410) {
 	 			try {
 					await userServ.deleteSubscription(userId, subscription.endpoint);
 				} catch(err) {
