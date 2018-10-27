@@ -11,7 +11,7 @@ module.exports.deleteSubscription = deleteSubscription;
 module.exports.getAll = getAll;
 
 
-async function get(conditions){
+async function get(conditions, fieldsToReturn = conf.userFields) {
 	let user;
 
 	try {
@@ -20,7 +20,7 @@ async function get(conditions){
 			// without mongooose (or MongoDB?) service fields,
 			// like _id, and __v and others
 			.select('-_id') 
-			.select(conf.userFields).lean().exec();
+			.select(fieldsToReturn).lean().exec();
 		
 		// Delete ALL '_id' fields from doc
 		user = _deleteProperty(user, '_id');
