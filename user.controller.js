@@ -235,13 +235,13 @@ async function sendNotification(subscription, data, userId) {
 
 	 	if(true/*err.statusCode == 404 || err.statusCode == 410*/) {
 	 			try {
-					await userServ.deleteSubscription(userId, subscription.subscriptionEndpoint);
+					await userServ.deleteSubscription(userId, subscription.endpoint);
 				} catch(err) {
 					console.error(err);
 				}
 	 		}
 	 		
-	 		
+
 	 } catch(err) {
 	 		// Check the Status Code, if 404 or 410
 	 		// the subscription should be removed from application server.
@@ -249,7 +249,7 @@ async function sendNotification(subscription, data, userId) {
 	 		// https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs
 	 		if(true/*err.statusCode == 404 || err.statusCode == 410*/) {
 	 			try {
-					await userServ.deleteSubscription(userId, subscription.subscriptionEndpoint);
+					await userServ.deleteSubscription(userId, subscription.endpoint);
 				} catch(err) {
 					console.error(err);
 				}
