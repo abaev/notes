@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { SwPush } from '@angular/service-worker';
-import { Observable } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
@@ -30,13 +30,32 @@ export class PushNotificationsComponent implements OnInit {
   	this.pushIsEnabled = this.swPush.isEnabled && !this.isSafari;
 
   	this.isPushSubscription = false;
-  	
-  	this.swPush.subscription.subscribe(pushSubscription => {
-			this.isPushSubscription = !!pushSubscription;
+
+  	this.swPush.subscription.pipe(take(1)).subscribe(pushSubscription => {
+
+			if(!pushSubscription) return;
+
+			// Check that pushSubscription correct
+			this.getSubscriptions().subscribe(subs => {
+
+				if( subs.some(s => s.endpoint === pushSubscription.endpoint) ) {
+					this.isPushSubscription = true;
+				} else {
+					// There are no such subscription on app server,
+					// it mean that pushSubscription is no longer valid,
+					// so we unsubscribe from it
+					pushSubscription.unsubscribe().catch(err => {	
+						this.subscriptionError
+            	.emit('Error. Something wrong with Push Notifications');
+            });
+				}
+			}, error => { 
+				this.subscriptionError.emit(error);
+			});
 		});
   }
 
-  
+
   onChange($event: any): void {
   	if($event) {
   		this.subscribeToPush();
@@ -88,11 +107,21 @@ export class PushNotificationsComponent implements OnInit {
             });
 				},
 				error => { 
-					console.log('Server error');
 					// this.isPushSubscription = true;
 		  		this.subscriptionError
 		  			.emit('Error occured while unsubscribing from push notification');
 		  	});
   		});
+  }
+
+
+  private getSubscriptions(): Observable<any> {
+  	return this.userService.getSubscriptions();
+
+  	// return this.userService.getSubscriptions().subscribe(res => {
+  	// 	return of(res.subscriptions);
+  	// }, error => { 
+  	// 	return throwError(error);
+  	// });
   }
 }

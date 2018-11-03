@@ -108,6 +108,13 @@ export class UserService {
   }
 
 
+  getSubscriptions(): Observable<any> {
+  	return this.http.get(this.conf.serverUrl + 'subscriptions',
+  		{ withCredentials: true })
+  			.pipe(catchError(this.handleError));
+  }
+
+
   private handleError(error: HttpErrorResponse) {
   	let message: string | number;
 	  

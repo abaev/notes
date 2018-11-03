@@ -223,6 +223,8 @@ app.post('/savesubscription', userCtrl.saveSubscription);
 
 app.put('/deletesubscription', userCtrl.deleteSubscription);
 
+app.get('/subscriptions', userCtrl.getSubscriptions);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

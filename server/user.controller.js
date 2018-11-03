@@ -14,6 +14,17 @@ const userServ = require('./user.service.js');
 
 const conf = require('./notes.server.config.js');
 
+module.exports.get = get;
+module.exports.update = update;
+module.exports.add = add;
+module.exports.deleteUser = deleteUser;
+module.exports.saveSubscription = saveSubscription;
+module.exports.deleteSubscription = deleteSubscription;
+module.exports.sendNotification = sendNotification;
+module.exports.findAndSendIterator = findAndSendIterator;
+module.exports.getSubscriptions = getSubscriptions;
+
+
 const vapidKeys = {
   publicKey: conf.publicKey,
   privateKey: process.env.VAPID_PRIVATE_KEY
@@ -25,14 +36,6 @@ webpush.setVapidDetails(
   vapidKeys.privateKey
 );
 
-module.exports.get = get;
-module.exports.update = update;
-module.exports.add = add;
-module.exports.deleteUser = deleteUser;
-module.exports.saveSubscription = saveSubscription;
-module.exports.deleteSubscription = deleteSubscription;
-module.exports.sendNotification = sendNotification;
-module.exports.findAndSendIterator = findAndSendIterator;
 
 
 async function get(req, res, next) {
@@ -226,19 +229,32 @@ async function deleteSubscription (req, res, next) {
 }
 
 
-async function sendNotification(subscription, data) {
+async function sendNotification(subscription, data, userId) {
 	try {
 	 	await webpush.sendNotification(subscription, JSON.stringify(data));
+
 	 } catch(err) {
-	 		// TODO: Check the Status Code, if 404 or 410
+	 		// Check the Status Code, if 404 or 410
 	 		// the subscription should be removed from application server.
 	 		// Client should to resubscribe the user
-	 		// https://developers.google.com/web/fundamentals/push-notifications/web-push-protocol
+	 		// https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs
+	 		if(err.statusCode == 404 || err.statusCode == 410) {
+	 			try {
+					await userServ.deleteSubscription(userId, subscription.endpoint);
+				} catch(err) {
+					console.error(err);
+				}
+	 		}
 	 		console.error(err);
 	 } 
 }
 
-function findAndSendIterator () {
+function findAndSendIterator() {
+	// Starting every minute in 00 seconds, checks every user
+	// with push subscriptions for having notes with
+	// notificationDate == current time (accurate to minutes),
+	// and send push notification to such users.
+
 	let delayBeforeStart, now, users, notificationDate, data, title;
 	
 	// Define time to start (to start at 00 seconds)
@@ -294,7 +310,7 @@ function findAndSendIterator () {
 								  }
 									
 									user.subscriptions.forEach( subscription =>  {
-										sendNotification(subscription, data);
+										sendNotification(subscription, data, user.userId);
 									});
 								}
 							}
@@ -310,4 +326,20 @@ function findAndSendIterator () {
 		}, 60*1000); 
 	
 	}, delayBeforeStart * 1000);
+}
+
+
+async function getSubscriptions(req, res, next) {
+	let user;
+
+	if(!req.isAuthenticated()) {
+		return next({ statusCode: 403, message: 'Forbidden' });
+	}
+
+	try {
+		user = await userServ.get({ userId: req.user.userId }, 'subscriptions');
+		res.status(200).send(user.subscriptions);
+	} catch(err) {
+		return next(err);
+	} 
 }
