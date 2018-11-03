@@ -8,6 +8,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const bcrypt = require('bcrypt');
 const morgan = require('morgan');
+const enforce = require('express-sslify');
 
 // MongoDB session store
 const MongoStore = require('connect-mongo')(session);
@@ -23,6 +24,11 @@ const secret = require('./notes.server.secret.js');
 // vapidPrivateKey = VAPID_PRIVATE_KEY
 
 const app = express();
+
+// Redirect HTTP to HTTPS
+// Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
+// a load balancer (e.g. Heroku)
+app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 // NOTE: app.get('env') === 'development' (=== 'production' )
 // NOTE: bcrypt requires for user password must be <= 72 symbols
