@@ -238,7 +238,7 @@ async function sendNotification(subscription, data, userId) {
 	 		// the subscription should be removed from application server.
 	 		// Client should to resubscribe the user
 	 		// https://developers.google.com/web/fundamentals/push-notifications/common-issues-and-reporting-bugs
-	 		if(true /*err.statusCode == 404 || err.statusCode == 410*/) {
+	 		if(err.statusCode == 404 || err.statusCode == 410) {
 	 			try {
 					await userServ.deleteSubscription(userId, subscription.endpoint);
 				} catch(err) {
