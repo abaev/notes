@@ -15,6 +15,7 @@ client/node_modules
 
 mlab.txt
 google.project.txt
+add-all.commit.push-to-heroku.bat
 
 # IDEs and editors
 client/.idea
