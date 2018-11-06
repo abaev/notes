@@ -10,8 +10,8 @@
 	
 	<ng-template #popDate>
 		<ngb-datepicker
-			(select)="onDateSelect($event)"
-			autoClose="true">
+			(select)="onDateSelect($event)">
+			<!-- autoClose="true" -->
 		</ngb-datepicker>
 	</ng-template>
 
@@ -19,17 +19,20 @@
 		<ngb-timepicker [spinners]="true" [(ngModel)]="time"></ngb-timepicker>
 	</ng-template>
 	
-	<div class="btn-group btn-group-sm" role="group" aria-label="Date select">
+	<div class="btn-group btn-group-sm" role="group" aria-label="Date select"	> 
 		
 		<!-- Date and datepicker -->
 		<button class="btn btn-outline-dark btn-sm"
 			[ngbPopover]="popDate" container="body"
 			placement="right"
-			(click)="selectDateTime()"
-			[disabled]="isDisabled()">
+			(click)="selectDateTime(); t.close()"
+			[disabled]="isDisabled()"
+			[ngbTooltip]="note.notificationDate ? false
+			: 'Pick date and time'"
+			#t="ngbTooltip"> 
 			<span class="material-icons">event</span>
 			{{note?.notificationDate | date}}
-		</button>
+		</button> 
 		
 		<!-- Time and timepicker -->
 		<button *ngIf="note.notificationDate"

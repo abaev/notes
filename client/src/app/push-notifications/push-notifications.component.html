@@ -1,6 +1,10 @@
-<div *ngIf="pushIsEnabled">
+<div *ngIf="pushIsEnabled" 
+	[ngbTooltip]="isPushSubscription ?
+		'You will receive notifications about your notes in selected time'
+		: 'Turn it on to receive notifications about your notes'"
+	placement="top">
 	<b>Push notifications</b>&nbsp;
 	<ui-switch defaultBgColor="#dc3545" size="small"
-	[ngModel]="isPushSubscription"
+	[(ngModel)]="isPushSubscription"
 	(change)="onChange($event)"></ui-switch>
 </div>

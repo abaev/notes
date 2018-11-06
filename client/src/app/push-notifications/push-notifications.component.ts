@@ -95,19 +95,12 @@ export class PushNotificationsComponent implements OnInit {
 
 			this.userService.deleteSubscription(pushSubscription.endpoint)
 				.subscribe(() => {
-					pushSubscription.unsubscribe()
-            .then(() => {
-              // this.isPushSubscription = false;
-            })
-            .catch(err => {
-              // this.subscriptionError
-            	// this.isPushSubscription = true;
+					pushSubscription.unsubscribe().catch(err => {
             	this.subscriptionError
             		.emit('Error occured while unsubscribing from push notification');
             });
 				},
 				error => { 
-					// this.isPushSubscription = true;
 		  		this.subscriptionError
 		  			.emit('Error occured while unsubscribing from push notification');
 		  	});
@@ -117,11 +110,5 @@ export class PushNotificationsComponent implements OnInit {
 
   private getSubscriptions(): Observable<any> {
   	return this.userService.getSubscriptions();
-
-  	// return this.userService.getSubscriptions().subscribe(res => {
-  	// 	return of(res.subscriptions);
-  	// }, error => { 
-  	// 	return throwError(error);
-  	// });
   }
 }

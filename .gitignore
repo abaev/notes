@@ -16,6 +16,7 @@ client/node_modules
 /server/google.project.txt
 
 /server/notes.server.secret.js
+/server/add-all.commit.push-to-heroku.bat
 
 #MongoDB data directory
 /server/data/db
