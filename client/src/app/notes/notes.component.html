@@ -33,8 +33,6 @@
 			[noteClass]="{ noteExist: 'app-vi-note',
 				noteEmpty: 'app-vi-note-empty' }"
 			[noteSpec]="{ type: 'veryImportant', index: i }"
-			[activeNote]="activeNote"
-			(selectingDateTime)="onDateTimeSelect($event)"
 			(deleteNote)="onDeleteNote('veryImportant', i)"
 			(updateNote)="onUpdateNote('veryImportant', i, $event)"
 			class="col-sm-4"></app-note>
@@ -48,8 +46,6 @@
 			[noteClass]="{ noteExist: 'app-ai-note',
 				noteEmpty: 'app-ai-note-empty' }"
 			[noteSpec]="{ type: 'alsoImportant', index: i }"
-			[activeNote]="activeNote"
-			(selectingDateTime)="onDateTimeSelect($event)"
 			(deleteNote)="onDeleteNote('alsoImportant', i)"
 			(updateNote)="onUpdateNote('alsoImportant', i, $event)"
 			class="col-sm-4"></app-note>
@@ -63,8 +59,6 @@
 			[noteClass]="{ noteExist: 'app-wal-note',
 				noteEmpty: 'app-wal-note-empty' }"
 			[noteSpec]="{ type: 'waitALittle', index: i }"
-			[activeNote]="activeNote"
-			(selectingDateTime)="onDateTimeSelect($event)"
 			(deleteNote)="onDeleteNote('waitALittle', i)"
 			(updateNote)="onUpdateNote('waitALittle', i, $event)"
 			class="col-sm-4"></app-note>
@@ -78,8 +72,6 @@
 			[noteClass]="{ noteExist: 'app-l-note',
 				noteEmpty: 'app-l-note-empty' }"
 			[noteSpec]="{ type: 'later', index: i }"
-			[activeNote]="activeNote"
-			(selectingDateTime)="onDateTimeSelect($event)"
 			(deleteNote)="onDeleteNote('later', i)"
 			(updateNote)="onUpdateNote('later', i, $event)"
 			class="col-sm-4"></app-note>
@@ -155,8 +147,6 @@
 							[noteClass]="{ noteExist: 'app-vi-note',
 								noteEmpty: 'app-vi-note-empty' }"
 							[noteSpec]="{ type: 'veryImportant', index: i }"
-							[activeNote]="activeNote"
-							(selectingDateTime)="onDateTimeSelect($event)" 
 							(deleteNote)="onDeleteNote('veryImportant', i)"
 							(updateNote)="onUpdateNote('veryImportant', i, $event)"
 							class="col-md-4 d-block w-100"></app-note>
@@ -171,8 +161,6 @@
 							[noteClass]="{ noteExist: 'app-ai-note',
 								noteEmpty: 'app-ai-note-empty' }"
 							[noteSpec]="{ type: 'alsoImportant', index: i }"
-							[activeNote]="activeNote"
-							(selectingDateTime)="onDateTimeSelect($event)"
 							(deleteNote)="onDeleteNote('alsoImportant', i)"
 							(updateNote)="onUpdateNote('alsoImportant', i, $event)"
 							class="col-md-4 d-block w-100"></app-note>
@@ -187,8 +175,6 @@
 							[noteClass]="{ noteExist: 'app-wal-note',
 								noteEmpty: 'app-wal-note-empty' }"
 							[noteSpec]="{ type: 'waitALittle', index: i }"
-							[activeNote]="activeNote"
-							(selectingDateTime)="onDateTimeSelect($event)"
 							(deleteNote)="onDeleteNote('waitALittle', i)"
 							(updateNote)="onUpdateNote('waitALittle', i, $event)"
 							class="col-md-4 d-block w-100"></app-note>
@@ -203,8 +189,6 @@
 							[noteClass]="{ noteExist: 'app-l-note',
 								noteEmpty: 'app-l-note-empty' }"
 							[noteSpec]="{ type: 'later', index: i }"
-							[activeNote]="activeNote"
-							(selectingDateTime)="onDateTimeSelect($event)"
 							(deleteNote)="onDeleteNote('later', i)"
 							(updateNote)="onUpdateNote('later', i, $event)"
 							class="col-md-4 d-block w-100"></app-note>

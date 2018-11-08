@@ -16,10 +16,8 @@ export class NoteComponent implements OnInit {
 	@Input() note: Note;
 	@Input() noteClass: any;
 	@Input() noteSpec: any;
-	@Input() activeNote: any;
 	@Output() deleteNote: EventEmitter<any> = new EventEmitter();
 	@Output() updateNote: EventEmitter<any> = new EventEmitter();
-	@Output() selectingDateTime: EventEmitter<any> = new EventEmitter();
 
 	private time: NgbTimeStruct;
 	descMaxLength = this.configService.descMaxLength;
@@ -84,10 +82,6 @@ export class NoteComponent implements OnInit {
 		this.note.notificationDate = new Date(
 			$event.year, $event.month - 1, $event.day);
 
-		// Selecting was done, so set disabled = false
-		// at all buttons with Date and Time Pickers
-		this.selectingDateTime.emit();
-
 		this.updNote();
 	}
 
@@ -112,23 +106,6 @@ export class NoteComponent implements OnInit {
 
 			this.updNote();
 		}
-
-		// Toggle disabled property
-		if(!this.activeNote.type) {
-			this.selectingDateTime.emit(this.noteSpec);
-		} else { 
-			// If user don't  pick a date,
-			// but press Date or Time buttons,
-			// set disabled = false to all buttons
-			this.selectingDateTime.emit();
-		}
-	}
-
-
-	isDisabled(): boolean {
-		return (this.activeNote.type && (this.activeNote.type !== this.noteSpec.type))
-			|| (this.activeNote.index !== undefined &&
-				(this.activeNote.index !== this.noteSpec.index));
 	}
 
 }

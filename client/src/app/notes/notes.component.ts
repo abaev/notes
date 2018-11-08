@@ -22,7 +22,6 @@ export class NotesComponent implements OnInit {
 	user: User;
 	notesError: string;
 	currentNotesNum: number;
-	activeNote: any;
 	isIOS: boolean; 
 	isLoading: boolean; // For showing fading N while loading
 
@@ -47,7 +46,6 @@ export class NotesComponent implements OnInit {
   	this.isIOS = /ipad|iphone|ipod/i.test(this.deviceService.device);
   	this.getNotes(true);
   	this.currentNotesNum = 0;
-  	this.activeNote = {};
 
   	this.deleteAccConfirmService.deleteConfirmed$.subscribe(() => {
   		this.deleteAccount();
@@ -148,21 +146,6 @@ export class NotesComponent implements OnInit {
   	document.getElementById(id).click();
   }
 
-  onDateTimeSelect($event?: any): void {
-  	// Set disable = true, to avoid
-  	// multiple Date or Time Pickers
-  	if($event) {
-  		this.activeNote = {
-	  		type: $event.type,
-	  		index: $event.index
-	  	}
-  	} else {
-  		// Selecting was done, so set disabled = false
-			// at all buttons with Date and Time Pickers
-			this.activeNote = {};
-  	}
-  	
-  }
 
   logout() {
   	this.userService.logout().subscribe(res => {
