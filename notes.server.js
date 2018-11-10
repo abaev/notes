@@ -26,7 +26,7 @@ const secret = require('./notes.server.secret.js');
 
 const app = express();
 
-app.use(helmet());
+// app.use(helmet());
 
 // Redirect HTTP to HTTPS
 // Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
