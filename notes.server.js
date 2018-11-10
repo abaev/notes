@@ -179,7 +179,8 @@ app.use(session({
   secret: secret,
   // TODO: Set cookie: {} in recomended values when use HTTPS
 	resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie.secure: true;
 }));
 
 
