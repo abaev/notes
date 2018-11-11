@@ -21,9 +21,15 @@ const User = require('./models/user.model.js');
 const userCtrl = require('./user.controller.js');
 const secret = require('./notes.server.secret.js');
 
-// vapidPrivateKey = VAPID_PRIVATE_KEY
 
 const app = express();
+
+// For Node (being behind Heroku) can produce
+// a Set-Cookie response header when cookie : { secure: true}
+app.set('trust proxy', 1);
+
+// For security reasons too
+app.disable('x-powered-by');
 
 // Redirect HTTP to HTTPS
 // Use enforce.HTTPS({ trustProtoHeader: true }) in case you are behind
@@ -33,8 +39,6 @@ app.use(enforce.HTTPS({ trustProtoHeader: true }));
 // NOTE: app.get('env') === 'development' (=== 'production' )
 // NOTE: bcrypt requires for user password must be <= 72 symbols
 
-// TODO: Use Helmet and other methods for security 
-// http://expressjs.com/ru/advanced/best-practice-security.html
 
 // Connecting to MongoDB via mongoose
 mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
@@ -46,14 +50,9 @@ mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
 
 
 // Allow CORS
-// TODO: Delete this, in production server
-// and client side will be the same origin
 app.use(function(req, res, next) {
-	// TODO: Set correct and safe Access-Control-Allow-Origin
   res.header('Access-Control-Allow-Origin', 
     conf.notesUrl);
-  // res.header('Access-Control-Allow-Origin', 
-  //   '*');
   res.header('Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Credentials',
@@ -167,16 +166,12 @@ app.use( express.static(path.join(__dirname, 'public')) );
 
 
 app.use(session({
-  // genid: (req) => {
-  //   console.log('Inside the session middleware');
-  //   console.log(req.sessionID);
-  //   return uuidv4(); // use UUIDs for session IDs
-  // },
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   secret: secret,
   // TODO: Set cookie: {} in recomended values when use HTTPS
 	resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { secure: true }
 }));
 
 
@@ -250,4 +245,5 @@ app.listen(process.env.PORT || conf.listenPort, () => {
 });
 
 
+// Start looking over DB for sending push notifications
 userCtrl.findAndSendIterator();
