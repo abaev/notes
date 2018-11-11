@@ -25,6 +25,7 @@ const secret = require('./notes.server.secret.js');
 // vapidPrivateKey = VAPID_PRIVATE_KEY
 
 const app = express();
+app.set('trust proxy', 1)
 
 // app.use(helmet());
 
