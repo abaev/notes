@@ -8,6 +8,7 @@ client/out-tsc
 
 # dependencies
 client/node_modules
+<<<<<<< HEAD
 /server/node_modules
 /server/public
 /server/.git
@@ -20,6 +21,16 @@ client/node_modules
 
 #MongoDB data directory
 /server/data/db
+=======
+/node_modules
+
+#MongoDB data directory
+/data
+
+mlab.txt
+google.project.txt
+add-all.commit.push-to-heroku.bat
+>>>>>>> 32d00b1514bb3e165aaddf6090d6615c6e48f878
 
 # IDEs and editors
 client/.idea
