@@ -1,6 +1,3 @@
-2021-06-19T05:26:10.545902+00:00 app[api]: Stack changed from heroku-16 to heroku-20 by user lowrydertrue@gmail.com
-2021-06-19T05:27:09.000000+00:00 app[api]: Build started by user lowrydertrue@gmail.com
-2021-06-19T05:27:25.000000+00:00 app[api]: Build failed -- check your build output: https://dashboard.heroku.com/apps/7ee7fa52-4a72-41f0-b914-c0337d6c05ed/activity/builds/d80ea2cf-3a7f-4633-bbee-d6cccdaa0101
 2021-06-19T05:30:24.000000+00:00 app[api]: Build started by user lowrydertrue@gmail.com
 2021-06-19T05:30:40.000000+00:00 app[api]: Build failed -- check your build output: https://dashboard.heroku.com/apps/7ee7fa52-4a72-41f0-b914-c0337d6c05ed/activity/builds/5284fddc-fbdb-4d5e-b9d6-684be5c55f50
 2021-06-19T05:39:31.962175+00:00 app[api]: Stack changed from heroku-20 to heroku-16 by user lowrydertrue@gmail.com
@@ -72,3 +69,32 @@
 2021-06-20T02:45:16.540865+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
 2021-06-20T02:45:16.541008+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
 2021-06-20T02:45:16.541094+00:00 app[web.1]: (node:20) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+2021-06-20T02:50:37.000000+00:00 app[api]: Build started by user lowrydertrue@gmail.com
+2021-06-20T02:50:57.309190+00:00 app[api]: Deploy f35fbe3d by user lowrydertrue@gmail.com
+2021-06-20T02:50:57.309190+00:00 app[api]: Release v274 created by user lowrydertrue@gmail.com
+2021-06-20T02:50:58.000000+00:00 app[api]: Build succeeded
+2021-06-20T02:51:01.098548+00:00 app[web.1]: 
+2021-06-20T02:51:01.098562+00:00 app[web.1]: > notes-server-side@0.0.1 start /app
+2021-06-20T02:51:01.098563+00:00 app[web.1]: > node notes.server.js
+2021-06-20T02:51:01.098563+00:00 app[web.1]: 
+2021-06-20T02:51:01.635051+00:00 app[web.1]: Server listen to: 46278
+2021-06-20T02:51:01.738955+00:00 app[web.1]: Succesfully connected to the MongoDB at URL: mongodb+srv://notes12:i52zgyVGcfd92w5@cluster0.wuzfy.mongodb.net/notesdb?retryWrites=true
+2021-06-20T02:51:01.746070+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Error: cyclic dependency detected
+2021-06-20T02:51:01.746072+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:331:34)
+2021-06-20T02:51:01.746072+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746073+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746073+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746073+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746073+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746074+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746074+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746074+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746074+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:51:01.746075+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:51:01.746134+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+2021-06-20T02:51:01.746152+00:00 app[web.1]: (node:20) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
