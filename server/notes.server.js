@@ -78,6 +78,8 @@ passport.use(new LocalStrategy(
     // Prevent possible vulnerability by using username == null
     // and password == null (I setting null to username and password
     // in case of Google OAuth)
+    console.log(username, password);
+    
     if(username === null && password === null){
     	done(null, false, { message: 'Incorrect username/password' });
     }

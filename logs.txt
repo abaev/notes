@@ -43,3 +43,32 @@
 2021-06-20T02:14:47.582330+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
 2021-06-20T02:14:47.582362+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
 2021-06-20T02:14:47.582394+00:00 app[web.1]: (node:20) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+2021-06-20T02:44:50.000000+00:00 app[api]: Build started by user lowrydertrue@gmail.com
+2021-06-20T02:45:10.158488+00:00 app[api]: Deploy af76d2ff by user lowrydertrue@gmail.com
+2021-06-20T02:45:10.158488+00:00 app[api]: Release v273 created by user lowrydertrue@gmail.com
+2021-06-20T02:45:11.000000+00:00 app[api]: Build succeeded
+2021-06-20T02:45:15.493172+00:00 app[web.1]: 
+2021-06-20T02:45:15.493183+00:00 app[web.1]: > notes-server-side@0.0.1 start /app
+2021-06-20T02:45:15.493184+00:00 app[web.1]: > node notes.server.js
+2021-06-20T02:45:15.493184+00:00 app[web.1]: 
+2021-06-20T02:45:16.380000+00:00 app[web.1]: Server listen to: 45581
+2021-06-20T02:45:16.529797+00:00 app[web.1]: Succesfully connected to the MongoDB at URL: mongodb+srv://notes12:i52zgyVGcfd92w5@cluster0.wuzfy.mongodb.net/notesdb?retryWrites=true
+2021-06-20T02:45:16.540858+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Error: cyclic dependency detected
+2021-06-20T02:45:16.540860+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:331:34)
+2021-06-20T02:45:16.540860+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540861+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540861+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540862+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540862+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540862+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540863+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540863+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540863+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540863+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540864+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540864+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540864+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.540865+00:00 app[web.1]: at serializeObject (/app/node_modules/bson/lib/bson/parser/serializer.js:345:18)
+2021-06-20T02:45:16.540865+00:00 app[web.1]: at serializeInto (/app/node_modules/bson/lib/bson/parser/serializer.js:934:17)
+2021-06-20T02:45:16.541008+00:00 app[web.1]: (node:20) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+2021-06-20T02:45:16.541094+00:00 app[web.1]: (node:20) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.

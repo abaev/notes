@@ -27,6 +27,7 @@ client/node_modules
 #MongoDB data directory
 /data
 
+logs.txt
 mlab.txt
 google.project.txt
 add-all.commit.push-to-heroku.bat
