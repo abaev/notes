@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Server for my Notes app",
   "dependencies": {
-    "bcrypt": "^2.0.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.1",
     "deepcopy": "^1.0.0",
