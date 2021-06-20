@@ -41,12 +41,14 @@ app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 
 // Connecting to MongoDB via mongoose
-mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl).then(() => {
-		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
-	}, err => { 
-		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
-	}
-);
+mongoose.connect(process.env.MONGOLAB_URI || conf.mongodbUrl,
+  {autoIndex: false})
+    .then(() => {
+  		console.log(`Succesfully connected to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
+  	}, err => { 
+  		console.error(`Error connecting to the MongoDB at URL: ${process.env.MONGOLAB_URI || conf.mongodbUrl}`);
+  	}
+  );
 
 
 // Allow CORS
